@@ -148,4 +148,68 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    //  Piglet Interactions 
+    const group  = document.getElementById("piglet-group");
+    const eyeL   = document.getElementById("eye-left");
+    const eyeR   = document.getElementById("eye-right");
+    const hearts = ["heart1","heart2","heart3"].map(id => document.getElementById(id));
+    const stars  = ["star1","star2","star3"].map(id => document.getElementById(id));
+
+    if (group) {
+        function clearAnimClass() { group.classList.remove("bounce","wiggle","spin"); }
+
+        function squintEyes() {
+            eyeL.setAttribute("ry", "2");
+            eyeR.setAttribute("ry", "2");
+            setTimeout(() => { eyeL.setAttribute("ry","5.5"); eyeR.setAttribute("ry","5.5"); }, 500);
+        }
+
+        function popHearts() {
+            hearts.forEach((h, i) => {
+                h.classList.remove("pop");
+                void h.offsetWidth;
+                setTimeout(() => h.classList.add("pop"), i * 80);
+            });
+        }
+
+        function burstStars() {
+            stars.forEach((s, i) => {
+                s.classList.remove("burst");
+                void s.offsetWidth;
+                setTimeout(() => s.classList.add("burst"), i * 60);
+            });
+        }
+
+        let clickTimer = null, clickCount = 0;
+
+        document.getElementById("piglet-svg").addEventListener("click", () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+                clearAnimClass();
+                void group.offsetWidth;
+                if (clickCount === 1) {
+                    group.classList.add("bounce");
+                    squintEyes();
+                    popHearts();
+                } else {
+                    group.classList.add("spin");
+                    squintEyes();
+                    burstStars();
+                }
+                clickCount = 0;
+                group.addEventListener("animationend", clearAnimClass, { once: true });
+            }, 220);
+        });
+
+        document.getElementById("piglet-svg").addEventListener("mouseenter", () => {
+            if (!group.classList.contains("bounce") && !group.classList.contains("spin")) {
+                clearAnimClass();
+                void group.offsetWidth;
+                group.classList.add("wiggle");
+                group.addEventListener("animationend", clearAnimClass, { once: true });
+            }
+        });
+    }
+
 });
