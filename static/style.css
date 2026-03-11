@@ -293,3 +293,211 @@ body {
     width: 1.25rem;
     height: 1.25rem;
 }
+
+
+/* ── Auth Pages ── */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.auth-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 420px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.auth-alert {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.auth-alert-error {
+    background-color: rgba(231, 111, 81, 0.12);
+    border: 1px solid rgba(231, 111, 81, 0.4);
+    color: var(--accent-coral);
+}
+
+.auth-alert-success {
+    background-color: rgba(42, 157, 143, 0.12);
+    border: 1px solid rgba(42, 157, 143, 0.4);
+    color: var(--accent-teal);
+}
+
+.auth-field {
+    margin-bottom: 1.25rem;
+}
+
+.auth-label {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    background-color: var(--bg-input);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    transition: var(--transition);
+    box-sizing: border-box;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: var(--accent-teal);
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2);
+}
+
+.auth-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue));
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 0.5rem;
+}
+
+.auth-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.auth-switch {
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.auth-link {
+    color: var(--accent-teal);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+/* Password Rules Checklist */
+.password-rules {
+    list-style: none;
+    padding: 0.6rem 0.75rem;
+    margin: 0.5rem 0 0;
+    background-color: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.82rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.rule {
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.rule-pass {
+    color: var(--accent-teal);
+}
+
+.rule-fail {
+    color: var(--accent-coral);
+}
+
+
+/* ── Header Auth Buttons ── */
+.header-auth {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 160px;
+    justify-content: flex-end;
+}
+
+.auth-username {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-right: 0.25rem;
+    white-space: nowrap;
+}
+
+.header-btn {
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.header-btn-outline {
+    border: 1.5px solid var(--border);
+    color: var(--text-secondary);
+    background: transparent;
+}
+
+.header-btn-outline:hover {
+    border-color: var(--accent-teal);
+    color: var(--accent-teal);
+}
+
+.header-btn-solid {
+    background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue));
+    color: #fff;
+    border: none;
+}
+
+.header-btn-solid:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
