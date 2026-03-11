@@ -12,7 +12,8 @@
     <div class="auth-wrapper">
 
         <div class="auth-card">
-            <h1 class="header-title" style="margin-bottom: 0.25rem;">PeTS</h1>
+            <img src="{{ url_for('static', filename='piglet.svg') }}" alt="PeTS" class="auth-piglet">
+            <h1 class="header-title">PeTS</h1>
             <p class="auth-subtitle">Create your account</p>
 
             {% with messages = get_flashed_messages() %}

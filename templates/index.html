@@ -26,8 +26,10 @@
                     </button>
                 </div>
 
-                <!-- Title (center) -->
-                <h1 class="header-title">PeTS</h1>
+                <!-- Brand (center) -->
+                <div class="header-brand">
+                    <h1 class="header-title">PeTS</h1>
+                </div>
 
                 <!-- Auth Buttons (right) -->
                 <div class="header-auth">
@@ -105,6 +107,11 @@
             </div>
 
         </div>
+    </div>
+
+    <!-- Floating Piglet (inlined so SVG scripts work) -->
+    <div class="floating-piglet">
+        {% include 'partials/piglet.html' %}
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
