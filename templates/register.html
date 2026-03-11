@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>PeTS - Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="page-body">
+    <div class="auth-wrapper">
+
+        <div class="auth-card">
+            <h1 class="header-title" style="margin-bottom: 0.25rem;">PeTS</h1>
+            <p class="auth-subtitle">Create your account</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="auth-alert {{ 'auth-alert-error' if msg.type == 'error' else 'auth-alert-success' }}">
+                            {{ msg.message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('register') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="auth-field">
+                    <label class="auth-label">Username</label>
+                    <input type="text" name="username" class="auth-input" placeholder="3–30 chars, letters/numbers/_"
+                        value="{{ username or '' }}" required autocomplete="username">
+                    <p class="auth-hint">Letters, numbers, and underscores only</p>
+                </div>
+
+                <div class="auth-field">
+                    <label class="auth-label">Password</label>
+                    <input type="password" name="password" id="password" class="auth-input"
+                        placeholder="Create a strong password" required autocomplete="new-password">
+
+                    <!-- Live password strength checklist -->
+                    <ul class="password-rules" id="rules">
+                        <li id="rule-length"  class="rule">✗ At least 8 characters</li>
+                        <li id="rule-upper"   class="rule">✗ One uppercase letter</li>
+                        <li id="rule-lower"   class="rule">✗ One lowercase letter</li>
+                        <li id="rule-number"  class="rule">✗ One number</li>
+                        <li id="rule-special" class="rule">✗ One special character (!@#$%^&*...)</li>
+                    </ul>
+                </div>
+
+                <div class="auth-field">
+                    <label class="auth-label">Confirm Password</label>
+                    <input type="password" name="confirm_password" id="confirm" class="auth-input"
+                        placeholder="Repeat your password" required autocomplete="new-password">
+                    <p id="match-msg" class="auth-hint" style="display:none;"></p>
+                </div>
+
+                <button type="submit" class="auth-button">Create Account</button>
+            </form>
+
+            <p class="auth-switch">
+                Already have an account? <a href="{{ url_for('login') }}" class="auth-link">Sign in</a>
+            </p>
+            <p class="auth-switch">
+                <a href="{{ url_for('home') }}" class="auth-link">Continue without account →</a>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Apply saved theme on load
+        if (localStorage.getItem('theme') === 'dark' ||
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Live password rules checker
+        const pwd = document.getElementById('password');
+        const confirm = document.getElementById('confirm');
+        const matchMsg = document.getElementById('match-msg');
+
+        const rules = {
+            'rule-length':  p => p.length >= 8,
+            'rule-upper':   p => /[A-Z]/.test(p),
+            'rule-lower':   p => /[a-z]/.test(p),
+            'rule-number':  p => /\d/.test(p),
+            'rule-special': p => /[!@#$%^&*(),.?":{}|<>_\-\[\]\/\\]/.test(p),
+        };
+
+        const labels = {
+            'rule-length':  '8+ characters',
+            'rule-upper':   'One uppercase letter',
+            'rule-lower':   'One lowercase letter',
+            'rule-number':  'One number',
+            'rule-special': 'One special character (!@#$%^&*...)',
+        };
+
+        pwd.addEventListener('input', () => {
+            const val = pwd.value;
+            for (const [id, test] of Object.entries(rules)) {
+                const el = document.getElementById(id);
+                const passing = test(val);
+                el.textContent = (passing ? '✓ ' : '✗ ') + labels[id];
+                el.classList.toggle('rule-pass', passing);
+                el.classList.toggle('rule-fail', !passing);
+            }
+            checkMatch();
+        });
+
+        confirm.addEventListener('input', checkMatch);
+
+        function checkMatch() {
+            if (!confirm.value) { matchMsg.style.display = 'none'; return; }
+            matchMsg.style.display = 'block';
+            if (pwd.value === confirm.value) {
+                matchMsg.textContent = '✓ Passwords match';
+                matchMsg.style.color = 'var(--accent-teal)';
+            } else {
+                matchMsg.textContent = '✗ Passwords do not match';
+                matchMsg.style.color = 'var(--accent-coral)';
+            }
+        }
+    </script>
+</body>
+</html>
