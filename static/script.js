@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const boxes = {
         en: { text: document.getElementById("text-en"), clear: document.getElementById("clear-en"), copy: document.getElementById("copy-en") },
         fi: { text: document.getElementById("text-fi"), clear: document.getElementById("clear-fi"), copy: document.getElementById("copy-fi") },
-        vi: { text: document.getElementById("text-vi"), clear: document.getElementById("clear-vi"), copy: document.getElementById("copy-vi") }
+        vi: { text: document.getElementById("text-vi"), clear: document.getElementById("clear-vi"), copy: document.getElementById("copy-vi") },
+        "zh-Hans": { text: document.getElementById("text-zh"), clear: document.getElementById("clear-zh"), copy: document.getElementById("copy-zh") }
     };
     const spinner = document.getElementById("spinner");
 
