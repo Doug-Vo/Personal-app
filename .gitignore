@@ -25,5 +25,5 @@ instance/
 .webassets-cache
 
 # --- Personal stuff ---
-*.ipynb
+run.ipynb
 deploy.md
