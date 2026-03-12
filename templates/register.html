@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>PeTS - Register</title>
+    <title>Ỉn Ỉn - Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -12,8 +12,10 @@
     <div class="auth-wrapper">
 
         <div class="auth-card">
-            <img src="{{ url_for('static', filename='piglet.svg') }}" alt="PeTS" class="auth-piglet">
-            <h1 class="header-title">PeTS</h1>
+            <div class="header-brand">
+                {% include 'partials/piglet.html' %}
+                <h1 class="header-title">{% block brand_title %}Ỉn Ỉn{% endblock %}</h1>
+            </div>
             <p class="auth-subtitle">Create your account</p>
 
             {% with messages = get_flashed_messages() %}

@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}Ỉn Ỉn{% endblock %}
+{% block brand_title %}Ỉn's Journal{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='journal.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- Tab Nav -->
+<div class="journal-tabs">
+    <a href="{{ url_for('journal', tab='write') }}"
+       class="journal-tab {% if tab == 'write' %}journal-tab-active{% endif %}">
+        <span class="tab-icon">✏️</span>
+        <span class="tab-label">Write</span>
+    </a>
+    <a href="{{ url_for('journal', tab='entries') }}"
+       class="journal-tab {% if tab == 'entries' %}journal-tab-active{% endif %}">
+        <span class="tab-icon">📖</span>
+        <span class="tab-label">Entries</span>
+    </a>
+    <a href="{{ url_for('journal', tab='chart') }}"
+       class="journal-tab {% if tab == 'chart' %}journal-tab-active{% endif %}">
+        <span class="tab-icon">🌿</span>
+        <span class="tab-label">Feelings</span>
+    </a>
+</div>
+
+<!-- ── WRITE TAB ── -->
+{% if tab == 'write' %}
+<div class="translator-card">
+    <form method="POST" action="{{ url_for('journal_new') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        {% set piglet_map = {
+            'Excited':    'piglet_excited.html',
+            'Happy':      'piglet_happy.html',
+            'Calm':       'piglet_calm.html',
+            'Neutral':    'piglet_neutral.html',
+            'Tired':      'piglet_tired.html',
+            'Sad':        'piglet_sad.html',
+            'Anxious':    'piglet_anxious.html',
+            'Frustrated': 'piglet_frustrated.html'
+        } %}
+
+        <!-- Row 1: Feeling (full width) -->
+        <div class="journal-field">
+            <label class="journal-label">💭 How are you feeling?</label>
+            <div class="feeling-grid">
+                {% for f in feelings %}
+                <label class="feeling-option">
+                    <input type="radio" name="feeling" value="{{ f.emoji }} {{ f.word }}" required>
+                    <span class="feeling-btn">
+                        <span class="feeling-emoji">
+                            {% include 'partials/' + piglet_map[f.word] %}
+                        </span>
+                        <span class="feeling-word">{{ f.word }}</span>
+                    </span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Row 2: Date | Challenged -->
+        <div class="journal-row-2 mt-5">
+            <div class="journal-field">
+                <label class="journal-label">📅 Date</label>
+                <input type="date" name="date" class="journal-input" value="{{ today }}" required>
+            </div>
+            <div class="journal-field">
+                <label class="journal-label">⚡ What challenged you today?</label>
+                <input type="text" name="challenged" class="journal-input"
+                    placeholder="Something hard, something that tested you...">
+            </div>
+        </div>
+
+        <!-- Row 3: Reflect -->
+        <div class="journal-field mt-5">
+            <label class="journal-label">🌿 Reflect <span class="journal-required">*</span></label>
+            <textarea name="reflect" class="journal-textarea" rows="7"
+                placeholder="What are you thinking about? How did today feel? What do you want to remember..." required></textarea>
+        </div>
+
+        <!-- Row 4: Save -->
+        <button type="submit" class="auth-button mt-4">Save Entry 🌿</button>
+    </form>
+</div>
+
+<!-- ── ENTRIES TAB ── -->
+{% elif tab == 'entries' %}
+<div class="translator-card">
+    {% if entries %}
+        <p class="journal-count">{{ entries|length }} entr{{ 'y' if entries|length == 1 else 'ies' }}</p>
+        <div class="entries-list">
+        {% set piglet_map = {
+            'Excited':    'piglet_excited.html',
+            'Happy':      'piglet_happy.html',
+            'Calm':       'piglet_calm.html',
+            'Neutral':    'piglet_neutral.html',
+            'Tired':      'piglet_tired.html',
+            'Sad':        'piglet_sad.html',
+            'Anxious':    'piglet_anxious.html',
+            'Frustrated': 'piglet_frustrated.html'
+        } %}
+        {% for entry in entries %}
+            <div class="entry-card">
+                <div class="entry-header">
+                    <div class="entry-meta">
+                        <span class="entry-date">{{ entry.date_str }}</span>
+                        {% set word = entry.feeling.split(' ')|last %}
+                        {% if word in piglet_map %}
+                        <span class="entry-feeling">
+                            <span class="entry-feeling-piglet">{% include 'partials/' + piglet_map[word] %}</span>
+                            <span class="entry-feeling-word">{{ word }}</span>
+                        </span>
+                        {% else %}
+                        <span class="entry-feeling">{{ entry.feeling }}</span>
+                        {% endif %}
+                    </div>
+                    <!-- Delete button + inline confirm popover -->
+                    <div class="entry-delete-wrap">
+                        <button type="button" class="entry-delete" onclick="showDeleteConfirm(this)">✕</button>
+                        <div class="delete-confirm hidden">
+                            <span class="delete-confirm-msg">Delete?</span>
+                            <form method="POST" action="{{ url_for('journal_delete', entry_id=entry._id) }}" style="display:inline">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="delete-confirm-yes">✓</button>
+                            </form>
+                            <button type="button" class="delete-confirm-no" onclick="hideDeleteConfirm(this)">✕</button>
+                        </div>
+                    </div>
+                </div>
+                {% if entry.challenged %}
+                <div class="entry-section">
+                    <span class="entry-section-label">⚡ Challenged</span>
+                    <p class="entry-text">{{ entry.challenged }}</p>
+                </div>
+                {% endif %}
+                <div class="entry-section">
+                    <span class="entry-section-label">🌿 Reflect</span>
+                    <p class="entry-text entry-reflect">{{ entry.reflect }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <div class="journal-empty">
+            <p>No entries yet — start writing! ✏️</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- ── CHART TAB ── -->
+{% elif tab == 'chart' %}
+<div class="translator-card">
+    <div class="chart-controls">
+        <label class="journal-label">Month</label>
+        <div class="month-nav">
+            <button id="prev-month" class="month-btn">‹</button>
+            <span id="month-label" class="month-label"></span>
+            <button id="next-month" class="month-btn">›</button>
+        </div>
+    </div>
+
+    <!-- Summary sits above the calendar, populated by journal.js -->
+    <div id="month-summary" class="month-summary"></div>
+
+    <!-- Calendar + legend side by side -->
+    <div class="chart-body">
+        <div class="chart-calendar">
+            <div class="heatmap-weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span>
+                <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div id="heatmap-grid" class="heatmap-grid"></div>
+        </div>
+
+        <!-- Color legend -->
+        <div class="chart-legend">
+            <p class="chart-legend-title">Feelings</p>
+            <div class="legend-list">
+                <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span><span>Excited</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#22c55e"></span><span>Happy</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#38bdf8"></span><span>Calm</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#a78bfa"></span><span>Neutral</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#94a3b8"></span><span>Tired</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#818cf8"></span><span>Sad</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#fb923c"></span><span>Anxious</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#f43f5e"></span><span>Frustrated</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="heatmap-tooltip" class="heatmap-tooltip hidden"></div>
+</div>
+{% endif %}
+
+{% endblock %}
