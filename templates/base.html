@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{% block title %}Ỉn Ỉn{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="page-body">
+
+<div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-container">
+
+            <!-- Theme Toggle (left) -->
+            <div class="theme-toggle-container">
+                <button id="theme-toggle" class="theme-toggle-button">
+                    <svg id="theme-toggle-dark-icon" class="icon hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="icon" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-1.646 5.646a1 1 0 01-1.414 0l-.707-.707a1 1 0 111.414-1.414l.707.707a1 1 0 010 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1zM5.05 16.95l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM16.95 5.05a1 1 0 01-1.414 0l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1z"></path></svg>
+                </button>
+            </div>
+
+            <!-- Brand (center) -->
+            <div class="header-brand">
+                {% include 'partials/piglet.html' %}
+                <h1 class="header-title">{% block brand_title %}Ỉn Ỉn{% endblock %}</h1>
+            </div>
+
+            <!-- Auth Buttons (right) -->
+            <div class="header-auth">
+                {% if current_user.is_authenticated %}
+                    {% block nav_links %}
+                    <a href="{{ url_for('journal') }}" class="header-btn header-btn-outline">Journal</a>
+                    <a href="{{ url_for('home') }}" class="header-btn header-btn-outline">Translator</a>
+                    {% endblock %}
+
+                    <!-- Account Dropdown -->
+                    <div class="account-dropdown" id="account-dropdown">
+                        <button class="account-dropdown-btn" id="account-dropdown-toggle">
+                            <span class="account-avatar">👤</span>
+                            <span class="account-name">{{ current_user.username }}</span>
+                            <svg class="account-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="account-dropdown-menu" id="account-dropdown-menu">
+                            <div class="account-dropdown-header">
+                                <span class="account-dropdown-username">{{ current_user.username }}</span>
+                            </div>
+                            <a href="{{ url_for('change_password') }}" class="account-dropdown-item">
+                                🔑 Change Password
+                            </a>
+                            <div class="account-dropdown-divider"></div>
+                            <a href="{{ url_for('logout') }}" class="account-dropdown-item account-dropdown-logout">
+                                🚪 Logout
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="header-btn header-btn-outline">Login</a>
+                    <a href="{{ url_for('register') }}" class="header-btn header-btn-solid">Register</a>
+                {% endif %}
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="auth-alert auth-alert-{{ category }} mb-4">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Page content -->
+    {% block content %}{% endblock %}
+
+</div>
+
+<!-- Shared scripts -->
+<script>
+    // ── Theme (runs on every page before paint) ──
+    (function() {
+        const saved  = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+        }
+    })();
+</script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+{% block scripts %}{% endblock %}
+
+</body>
+</html>
