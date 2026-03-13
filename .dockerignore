@@ -1,9 +1,12 @@
 __pycache__/
 *.pyc
-
+*.pyo
+*.pyd
+.env
+.venv
+env/
 venv/
 .git/
-.env
-
-deploy.md
-
+.gitignore
+Dockerfile
+.dockerignore

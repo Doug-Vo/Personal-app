@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}Ỉn Ỉn{% endblock %}
+{% block brand_title %}Ỉn's Planner{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='board.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="board-page">
+
+    <!-- Tab nav: Board | Calendar -->
+    <div class="board-tab-nav">
+        <button class="board-tab-btn active" data-tab="board">
+            <span class="board-tab-icon">🗂️</span>
+            <span>Board</span>
+        </button>
+        <button class="board-tab-btn" data-tab="calendar">
+            <span class="board-tab-icon">📅</span>
+            <span>Calendar</span>
+        </button>
+    </div>
+
+    <!-- ══ BOARD TAB ══ -->
+    <div class="board-tab-panel active" id="panel-board">
+
+        <!-- Add task bar (TOP) -->
+        <div class="board-add-bar">
+            <input
+                id="board-new-title"
+                class="board-new-input"
+                type="text"
+                placeholder="New task…"
+                maxlength="120"
+                autocomplete="off"
+            />
+            <select id="board-new-col" class="board-new-select">
+                <option value="todo">To Do</option>
+                <option value="inprogress">In Progress</option>
+                <option value="done">Done</option>
+            </select>
+            <select id="board-new-priority" class="board-new-select board-priority-select">
+                <option value="0">No priority</option>
+                <option value="1">🟢 Low</option>
+                <option value="2">🟡 Medium</option>
+                <option value="3">🔴 High</option>
+            </select>
+            <input id="board-new-due"  class="board-new-date" type="date" title="Due date (optional)" />
+            <input id="board-new-time" class="board-new-time" type="time" title="Due time (optional)" />
+            <button id="board-add-btn" class="board-add-btn">+ Add</button>
+        </div>
+
+        <!-- Week banner -->
+        <div class="board-week-banner">
+            <span class="board-week-label">Week of</span>
+            <span class="board-week-dates" id="board-week-dates"></span>
+            <span class="board-week-reset-note">✦ Done tasks archive every Monday</span>
+            <button class="board-view-archive-btn" id="board-view-archive-btn">📦 Archives</button>
+        </div>
+
+        <!-- Columns -->
+        <div class="board-columns">
+
+            <!-- To Do -->
+            <div class="board-col" id="col-todo" data-col="todo">
+                <div class="board-col-header board-col-todo">
+                    <span class="board-col-title">To Do</span>
+                    <span class="board-col-count" id="count-todo">0</span>
+                </div>
+                <div class="board-cards" id="cards-todo" data-col="todo"></div>
+            </div>
+
+            <!-- In Progress -->
+            <div class="board-col" id="col-inprogress" data-col="inprogress">
+                <div class="board-col-header board-col-inprogress">
+                    <span class="board-col-title">In Progress</span>
+                    <span class="board-col-count" id="count-inprogress">0</span>
+                </div>
+                <div class="board-cards" id="cards-inprogress" data-col="inprogress"></div>
+            </div>
+
+            <!-- Done -->
+            <div class="board-col" id="col-done" data-col="done">
+                <div class="board-col-header board-col-done">
+                    <span class="board-col-title">Done</span>
+                    <span class="board-col-count" id="count-done">0</span>
+                </div>
+                <div class="board-cards" id="cards-done" data-col="done"></div>
+            </div>
+
+        </div>
+
+        <!-- Archive drawer (hidden by default) -->
+        <div class="board-archive-drawer" id="board-archive-drawer" style="display:none;">
+            <div class="board-archive-drawer-header">
+                <span>📦 Archived Weeks</span>
+                <div class="board-archive-drawer-actions">
+                    <button class="archive-del-btn" id="archive-del-month" title="Delete archives older than 1 month">🗑 &gt;1 month</button>
+                    <button class="archive-del-btn" id="archive-del-week"  title="Delete archives older than 1 week">🗑 &gt;1 week</button>
+                    <button class="archive-del-btn archive-del-all-btn" id="archive-del-all" title="Delete all archives">🗑 All</button>
+                </div>
+                <button class="cal-day-panel-close" id="archive-drawer-close">✕</button>
+            </div>
+            <div id="board-archive"></div>
+        </div>
+
+    </div><!-- /panel-board -->
+
+    <!-- ══ CALENDAR TAB ══ -->
+    <div class="board-tab-panel" id="panel-calendar">
+
+        <!-- Month nav -->
+        <div class="cal-header">
+            <button class="cal-nav-btn" id="cal-prev">‹</button>
+            <div class="cal-header-center">
+                <h2 class="cal-month-title" id="cal-month-title" title="Click to jump to a month">March 2026</h2>
+                <button class="cal-today-btn" id="cal-today-btn">Today</button>
+            </div>
+            <button class="cal-nav-btn" id="cal-next">›</button>
+        </div>
+
+        <!-- Jump to month picker (hidden until title clicked) -->
+        <div class="cal-jump-bar" id="cal-jump-bar" style="display:none;">
+            <select id="cal-jump-month" class="board-new-select">
+                <option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option>
+            </select>
+            <input id="cal-jump-year" class="board-new-date" type="number" min="2020" max="2040" style="width:90px;" />
+            <button id="cal-jump-go" class="board-add-btn">Go</button>
+            <button id="cal-jump-cancel" class="board-card-btn" style="padding:0.4rem 0.8rem;">✕</button>
+        </div>
+
+        <!-- Priority legend -->
+        <div class="cal-legend">
+            <span class="cal-legend-item"><span class="cal-legend-dot cal-legend-cur-week"></span>This week</span>
+            <span class="cal-legend-item"><span class="cal-legend-dot cal-legend-next-week"></span>Next week</span>
+            <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#a78bfa;"></span>Low priority</span>
+            <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#f59e0b;"></span>Medium</span>
+            <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#f87171;"></span>High</span>
+        </div>
+
+        <!-- Calendar grid -->
+        <div class="cal-grid-wrap">
+            <div class="cal-day-headers">
+                <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div>
+                <div>Fri</div><div>Sat</div><div>Sun</div>
+            </div>
+            <div class="cal-grid" id="cal-grid"></div>
+        </div>
+
+        <!-- Task list for selected day -->
+        <div class="cal-day-panel" id="cal-day-panel" style="display:none;">
+            <div class="cal-day-panel-header">
+                <span id="cal-day-panel-title">Tasks for March 13</span>
+                <button class="cal-day-panel-close" id="cal-day-panel-close">✕</button>
+            </div>
+            <div class="cal-quick-add">
+                <input id="cal-new-title" class="board-new-input" type="text"
+                    placeholder="Add task to this day…" maxlength="120" autocomplete="off" />
+                <input id="cal-new-time" class="board-new-time" type="time" title="Time (optional)" />
+                <select id="cal-new-priority" class="board-new-select board-priority-select">
+                    <option value="0">No priority</option>
+                    <option value="1">🟢 Low</option>
+                    <option value="2">🟡 Medium</option>
+                    <option value="3">🔴 High</option>
+                </select>
+                <button id="cal-add-btn" class="board-add-btn">+ Add</button>
+            </div>
+            <div id="cal-day-tasks"></div>
+        </div>
+
+    </div><!-- /panel-calendar -->
+
+</div>
+{% endblock %}

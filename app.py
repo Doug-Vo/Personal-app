@@ -4,7 +4,8 @@ import uuid
 import logging
 import requests
 import bcrypt
-from datetime import datetime
+from collections import defaultdict
+from datetime import datetime, timedelta
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
@@ -13,6 +14,9 @@ from flask_limiter.util import get_remote_address
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from pymongo import MongoClient, DESCENDING
 from bson import ObjectId
+
+from dotenv import load_dotenv
+load_dotenv()  
 
 # ── Logging ──
 logging.basicConfig(
@@ -33,15 +37,15 @@ csrf     = CSRFProtect(app)
 
 # ── Rate Limiting ──
 # Applied only where it matters:
-#   /api/translate  → 40/min  (hits Azure paid API)
-#   /login          → 20/hr   (brute-force protection)
-#   /register       → 10/hr   (prevent mass account creation)
-#   /change-password→ 10/hr   (prevent automated cycling)
-# Journal routes have NO limits — they only write to MongoDB (no external API cost).
+#   /api/translate   → 40/min  (hits Azure paid API)
+#   /login           → 20/hr   (brute-force protection)
+#   /register        → 10/hr   (prevent mass account creation)
+#   /change-password → 10/hr   (prevent automated cycling)
+# Journal + Board routes have NO limits — MongoDB only, no external API cost.
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=[],          # No global default — explicit per-route only
+    default_limits=[],
     storage_uri="memory://"
 )
 
@@ -54,10 +58,14 @@ _mongo_client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
 _db           = _mongo_client["db_webpage"]
 accounts      = _db["account"]
 journal_col   = _db["journal"]
+board_tasks_col   = _db["board_tasks"]
+board_archive_col = _db["board_archive"]
 
 # Indexes (idempotent — safe to run on every startup)
 accounts.create_index("username", unique=True)
 journal_col.create_index([("user_id", 1), ("date", DESCENDING)])
+board_tasks_col.create_index([("user_id", 1), ("created_at", DESCENDING)])
+board_archive_col.create_index([("user_id", 1), ("week_start", DESCENDING)])
 
 # ── Azure Translator ──
 AZURE_KEY      = os.environ.get("AZURE_TRANSLATOR_KEY")
@@ -70,7 +78,6 @@ if not AZURE_KEY:
 if not AZURE_LOCATION:
     logging.error("AZURE_TRANSLATOR_LOCATION not set — translation will fail!")
 
-# Pre-built static headers (UUID injected per-request)
 _AZURE_HEADERS_BASE = {
     "Ocp-Apim-Subscription-Key":    AZURE_KEY or "",
     "Ocp-Apim-Subscription-Region": AZURE_LOCATION or "",
@@ -88,7 +95,6 @@ FEELINGS = [
     {"emoji": "😰", "word": "Anxious",    "score": 2},
     {"emoji": "😤", "word": "Frustrated", "score": 1},
 ]
-# Pre-built lookup so we don't scan the list on every journal submission
 _FEELING_SCORES = {f["word"]: f["score"] for f in FEELINGS}
 
 # ── Flask-Login ──
@@ -334,7 +340,7 @@ def api_translate():
 
 
 # ──────────────────────────────────────────────
-# JOURNAL ROUTES  (no rate limits — MongoDB only, no external API cost)
+# JOURNAL ROUTES
 # ──────────────────────────────────────────────
 
 @app.route('/journal')
@@ -386,7 +392,7 @@ def journal_new():
         "score":      score,
         "challenged": challenged,
         "reflect":    reflect,
-        "created_at": datetime.utcnow()
+        "created_at": datetime.now()
     })
     logging.info(f"Journal entry saved: {current_user.username}")
     flash('Entry saved! 🌿', 'success')
@@ -399,7 +405,7 @@ def journal_delete(entry_id):
     try:
         result = journal_col.delete_one({
             "_id":     ObjectId(entry_id),
-            "user_id": current_user.id  # users can only delete their own entries
+            "user_id": current_user.id
         })
         if result.deleted_count:
             flash('Entry deleted.', 'success')
@@ -427,6 +433,252 @@ def journal_chart_data():
             })
     return jsonify(data)
 
+
+# ──────────────────────────────────────────────
+# BOARD ROUTES
+# ──────────────────────────────────────────────
+
+def _get_week_start(dt=None):
+    """Return the Monday 00:00:00 of the week containing dt (or now)."""
+    d = (dt or datetime.now()).date()
+    return datetime.combine(d - timedelta(days=d.weekday()), datetime.min.time())
+
+
+def _maybe_archive(user_id):
+    """
+    On Mondays: move last week's Done tasks into the archive collection.
+    Idempotent — safe to call on every board load.
+    """
+    now        = datetime.now()
+    week_start = _get_week_start(now)
+
+    if now.weekday() != 0:   # 0 = Monday
+        return
+
+    done_tasks = list(board_tasks_col.find({
+        "user_id":    user_id,
+        "column":     "done",
+        "created_at": {"$lt": week_start}
+    }))
+
+    if not done_tasks:
+        return
+
+    by_week = defaultdict(list)
+    for t in done_tasks:
+        ws = _get_week_start(t["created_at"])
+        by_week[ws].append(t)
+
+    for ws, week_tasks in by_week.items():
+        sun   = ws + timedelta(days=6)
+        fmt   = lambda d: d.strftime('%b %d').replace(' 0', ' ')
+        label = f"{fmt(ws)} – {fmt(sun)}"
+
+        board_archive_col.update_one(
+            {"user_id": user_id, "week_start": ws},
+            {
+                "$set":  {"week_label": label},
+                "$push": {"tasks": {"$each": [
+                    {"title": t["title"], "archived_at": now}
+                    for t in week_tasks
+                ]}}
+            },
+            upsert=True
+        )
+
+    ids = [t["_id"] for t in done_tasks]
+    board_tasks_col.delete_many({"_id": {"$in": ids}})
+    logging.info(f"Archived {len(done_tasks)} done tasks for {user_id}")
+
+
+@app.route('/board')
+@login_required
+def board():
+    return render_template('board.html')
+
+
+@app.route('/board/data')
+@login_required
+def board_data():
+    _maybe_archive(current_user.id)
+
+    tasks = list(board_tasks_col.find(
+        {"user_id": current_user.id},
+        sort=[("created_at", 1)]
+    ))
+    for t in tasks:
+        t['_id']        = str(t['_id'])
+        t['created_at'] = t['created_at'].isoformat() if isinstance(t.get('created_at'), datetime) else ''
+        # Ensure new optional fields are always present with defaults
+        t.setdefault('priority', 0)
+        t.setdefault('due_date', None)
+        t.setdefault('due_time', None)
+
+    archives = list(board_archive_col.find(
+        {"user_id": current_user.id},
+        {"week_label": 1, "tasks": 1},
+        sort=[("week_start", 1)]
+    ))
+    for a in archives:
+        a['_id'] = str(a['_id'])
+
+    return jsonify(tasks=tasks, archives=archives)
+
+
+@app.route('/board/task', methods=['POST'])
+@login_required
+def board_task_create():
+    body   = request.get_json(silent=True) or {}
+    title  = body.get('title', '').strip()[:120]
+    column = body.get('column', 'todo')
+
+    if not title:
+        return jsonify(error="Title required"), 400
+    if column not in ('todo', 'inprogress', 'done'):
+        return jsonify(error="Invalid column"), 400
+
+    priority = body.get('priority', 0)
+    due_date = body.get('due_date') or None   # 'YYYY-MM-DD' string or None
+    due_time = body.get('due_time') or None   # 'HH:MM' string or None
+
+    if priority not in (0, 1, 2, 3):
+        priority = 0
+
+    now = datetime.now()
+    doc = {
+        "user_id":    current_user.id,
+        "title":      title,
+        "column":     column,
+        "priority":   priority,
+        "due_date":   due_date,
+        "due_time":   due_time,
+        "created_at": now,
+        "updated_at": now,
+    }
+    result        = board_tasks_col.insert_one(doc)
+    doc['_id']        = str(result.inserted_id)
+    doc['created_at'] = now.isoformat()
+    doc['updated_at'] = now.isoformat()
+    logging.info(f"Board task created: '{title}' [{column}] by {current_user.username}")
+    return jsonify(doc), 201
+
+
+@app.route('/board/task/<task_id>', methods=['PATCH'])
+@login_required
+def board_task_update(task_id):
+    body    = request.get_json(silent=True) or {}
+    updates = {}
+
+    if 'title' in body:
+        title = body['title'].strip()[:120]
+        if title:
+            updates['title'] = title
+
+    if 'column' in body:
+        col = body['column']
+        if col in ('todo', 'inprogress', 'done'):
+            updates['column'] = col
+
+    if 'priority' in body:
+        p = body['priority']
+        if p in (0, 1, 2, 3):
+            updates['priority'] = p
+
+    if 'due_date' in body:
+        updates['due_date'] = body['due_date'] or None
+
+    if 'due_time' in body:
+        updates['due_time'] = body['due_time'] or None
+
+    if not updates:
+        return jsonify(error="Nothing to update"), 400
+
+    updates['updated_at'] = datetime.now()
+    result = board_tasks_col.update_one(
+        {"_id": ObjectId(task_id), "user_id": current_user.id},
+        {"$set": updates}
+    )
+    if result.matched_count == 0:
+        return jsonify(error="Task not found"), 404
+
+    return jsonify(ok=True)
+
+
+@app.route('/board/task/<task_id>', methods=['DELETE'])
+@login_required
+def board_task_delete(task_id):
+    try:
+        result = board_tasks_col.delete_one(
+            {"_id": ObjectId(task_id), "user_id": current_user.id}
+        )
+        if result.deleted_count == 0:
+            return jsonify(error="Task not found"), 404
+        logging.info(f"Board task deleted: {task_id} by {current_user.username}")
+        return jsonify(ok=True)
+    except Exception as e:
+        logging.error(f"Board delete error: {e}")
+        return jsonify(error="Could not delete task"), 500
+
+
+
+
+@app.route('/board/task/<task_id>/archive', methods=['POST'])
+@login_required
+def board_task_manual_archive(task_id):
+    """Manually archive a single active task into the current week's archive entry."""
+    try:
+        task = board_tasks_col.find_one(
+            {"_id": ObjectId(task_id), "user_id": current_user.id}
+        )
+        if not task:
+            return jsonify(error="Task not found"), 404
+
+        now        = datetime.now()
+        ws         = _get_week_start(now)
+        sun        = ws + timedelta(days=6)
+        fmt        = lambda d: d.strftime('%b %d').replace(' 0', ' ')
+        label      = f"{fmt(ws)} – {fmt(sun)}"
+
+        board_archive_col.update_one(
+            {"user_id": current_user.id, "week_start": ws},
+            {
+                "$set":  {"week_label": label},
+                "$push": {"tasks": {"title": task["title"], "archived_at": now}}
+            },
+            upsert=True
+        )
+        board_tasks_col.delete_one({"_id": ObjectId(task_id)})
+        logging.info(f"Manual archive: '{task['title']}' by {current_user.username}")
+        return jsonify(ok=True)
+    except Exception as e:
+        logging.error(f"Manual archive error: {e}")
+        return jsonify(error="Could not archive task"), 500
+
+
+@app.route('/board/archive/delete', methods=['POST'])
+@login_required
+def board_archive_delete():
+    """Bulk-delete archived weeks: scope = 'week' | 'month' | 'all'."""
+    body  = request.get_json(silent=True) or {}
+    scope = body.get('scope', 'all')
+
+    now = datetime.now()
+    if scope == 'all':
+        cutoff = None
+    elif scope == 'month':
+        cutoff = _get_week_start(now - timedelta(days=30))
+    elif scope == 'week':
+        cutoff = _get_week_start(now - timedelta(days=7))
+    else:
+        return jsonify(error="Invalid scope"), 400
+
+    query = {"user_id": current_user.id}
+    if cutoff:
+        query["week_start"] = {"$lt": cutoff}
+
+    result = board_archive_col.delete_many(query)
+    logging.info(f"Bulk archive delete ({scope}): {result.deleted_count} weeks for {current_user.username}")
+    return jsonify(ok=True, deleted=result.deleted_count)
 
 # ──────────────────────────────────────────────
 # HEALTH CHECK
