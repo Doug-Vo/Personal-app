@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Ỉn Ỉn — Summary{% endblock %}
+{% block brand_title %}Ỉn Ỉn{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/summary.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="summary-standalone">
+
+    <!-- Greeting row (text only — piglet is in header) -->
+    <div class="summary-greeting">
+        <h2 class="summary-greeting-title">Hello, {{ current_user.username }} 🌿</h2>
+        <p class="summary-greeting-sub">Here's how things are going this month.</p>
+    </div>
+
+    <!-- Pre-rendered piglet emotion SVGs, hidden, referenced by summary.js by id -->
+    <div style="display:none;" aria-hidden="true">
+        {% set moods = ['Excited','Happy','Calm','Neutral','Tired','Sad','Anxious','Frustrated'] %}
+        {% set piglet_map = {
+            'Excited':    'piglet_excited.html',
+            'Happy':      'piglet_happy.html',
+            'Calm':       'piglet_calm.html',
+            'Neutral':    'piglet_neutral.html',
+            'Tired':      'piglet_tired.html',
+            'Sad':        'piglet_sad.html',
+            'Anxious':    'piglet_anxious.html',
+            'Frustrated': 'piglet_frustrated.html'
+        } %}
+        {% for mood in moods %}
+        <div id="mood-piglet-{{ mood }}" class="mood-piglet-svg-wrap">
+            {% include 'partials/' + piglet_map[mood] %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="summary-layout" id="summary-layout">
+        <div class="summary-loading-state">Loading your summary…</div>
+    </div>
+
+</div>
+{% endblock %}

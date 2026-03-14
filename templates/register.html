@@ -4,128 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Ỉn Ỉn - Register</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Ỉn Ỉn — Create Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/piglet.png') }}">
+    <script>
+        (function() {
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+        })();
+    </script>
 </head>
-<body class="page-body">
+<body class="page-body auth-page-body">
+
+<div class="auth-scene">
+    <div class="auth-blob auth-blob-1"></div>
+    <div class="auth-blob auth-blob-2"></div>
+
     <div class="auth-wrapper">
-
         <div class="auth-card">
-            <div class="header-brand">
-                {% include 'partials/piglet.html' %}
-                <h1 class="header-title">{% block brand_title %}Ỉn Ỉn{% endblock %}</h1>
-            </div>
-            <p class="auth-subtitle">Create your account</p>
 
-            {% with messages = get_flashed_messages() %}
+            <div class="auth-card-piglet-wrap">
+                <img src="{{ url_for('static', filename='image/piglet.png') }}"
+                     alt="Ỉn" class="auth-card-piglet" id="auth-piglet">
+            </div>
+
+            <h1 class="auth-card-brand">Ỉn Ỉn</h1>
+            <p class="auth-subtitle">Create your account 🌸</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
-                    {% for msg in messages %}
-                        <div class="auth-alert {{ 'auth-alert-error' if msg.type == 'error' else 'auth-alert-success' }}">
-                            {{ msg.message }}
-                        </div>
+                    {% for category, message in messages %}
+                        <div class="auth-alert auth-alert-{{ category }}">{{ message }}</div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
 
-            <form method="POST" action="{{ url_for('register') }}">
+            <form method="POST" action="{{ url_for('register') }}" class="auth-form" id="reg-form">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                 <div class="auth-field">
-                    <label class="auth-label">Username</label>
-                    <input type="text" name="username" class="auth-input" placeholder="3–30 chars, letters/numbers/_"
-                        value="{{ username or '' }}" required autocomplete="username">
+                    <label class="auth-label" for="username">Username</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-input-icon">👤</span>
+                        <input id="username" type="text" name="username" class="auth-input auth-input-icon-pad"
+                               placeholder="3–30 chars, letters/numbers/_"
+                               value="{{ username or '' }}" required autocomplete="username">
+                    </div>
                     <p class="auth-hint">Letters, numbers, and underscores only</p>
                 </div>
 
                 <div class="auth-field">
-                    <label class="auth-label">Password</label>
-                    <input type="password" name="password" id="password" class="auth-input"
-                        placeholder="Create a strong password" required autocomplete="new-password">
+                    <label class="auth-label" for="password">Password</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-input-icon">🔒</span>
+                        <input id="password" type="password" name="password" class="auth-input auth-input-icon-pad"
+                               placeholder="Create a strong password" required autocomplete="new-password">
+                        <button type="button" class="auth-eye-btn" id="toggle-pw" tabindex="-1">👁</button>
+                    </div>
 
-                    <!-- Live password strength checklist -->
+                    <!-- Password strength bar -->
+                    <div class="auth-strength-wrap">
+                        <div class="auth-strength-bar" id="strength-bar">
+                            <div class="auth-strength-fill" id="strength-fill"></div>
+                        </div>
+                        <span class="auth-strength-label" id="strength-label"></span>
+                    </div>
+
+                    <!-- Rules checklist -->
                     <ul class="password-rules" id="rules">
                         <li id="rule-length"  class="rule">✗ At least 8 characters</li>
                         <li id="rule-upper"   class="rule">✗ One uppercase letter</li>
                         <li id="rule-lower"   class="rule">✗ One lowercase letter</li>
                         <li id="rule-number"  class="rule">✗ One number</li>
-                        <li id="rule-special" class="rule">✗ One special character (!@#$%^&*...)</li>
+                        <li id="rule-special" class="rule">✗ One special character (!@#$%…)</li>
                     </ul>
                 </div>
 
                 <div class="auth-field">
-                    <label class="auth-label">Confirm Password</label>
-                    <input type="password" name="confirm_password" id="confirm" class="auth-input"
-                        placeholder="Repeat your password" required autocomplete="new-password">
+                    <label class="auth-label" for="confirm">Confirm Password</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-input-icon">🔒</span>
+                        <input id="confirm" type="password" name="confirm_password"
+                               class="auth-input auth-input-icon-pad"
+                               placeholder="Repeat your password" required autocomplete="new-password">
+                        <button type="button" class="auth-eye-btn" id="toggle-confirm" tabindex="-1">👁</button>
+                    </div>
                     <p id="match-msg" class="auth-hint" style="display:none;"></p>
                 </div>
 
-                <button type="submit" class="auth-button">Create Account</button>
+                <button type="submit" class="auth-button" id="submit-btn">Create Account →</button>
             </form>
 
+            <div class="auth-divider"><span>or</span></div>
+
             <p class="auth-switch">
-                Already have an account? <a href="{{ url_for('login') }}" class="auth-link">Sign in</a>
+                Already have an account?
+                <a href="{{ url_for('login') }}" class="auth-link">Sign in</a>
             </p>
-            <p class="auth-switch">
-                <a href="{{ url_for('home') }}" class="auth-link">Continue without account →</a>
+            <p class="auth-switch" style="margin-top:0.4rem;">
+                <a href="{{ url_for('home') }}" class="auth-link auth-link-muted">Continue without account →</a>
             </p>
+
         </div>
-
     </div>
+</div>
 
-    <script>
-        // Apply saved theme on load
-        if (localStorage.getItem('theme') === 'dark' ||
-            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
+<script>
+    // Show/hide passwords
+    document.getElementById('toggle-pw')?.addEventListener('click', () => {
+        const inp = document.getElementById('password');
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+    });
+    document.getElementById('toggle-confirm')?.addEventListener('click', () => {
+        const inp = document.getElementById('confirm');
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+    });
+
+    // Piglet click
+    document.getElementById('auth-piglet')?.addEventListener('click', function() {
+        this.style.transform = 'scale(1.3) rotate(10deg)';
+        setTimeout(() => { this.style.transform = ''; }, 300);
+    });
+
+    const pwd      = document.getElementById('password');
+    const confirm  = document.getElementById('confirm');
+    const matchMsg = document.getElementById('match-msg');
+    const fill     = document.getElementById('strength-fill');
+    const lbl      = document.getElementById('strength-label');
+
+    const rules = {
+        'rule-length':  { test: p => p.length >= 8,                            label: 'At least 8 characters' },
+        'rule-upper':   { test: p => /[A-Z]/.test(p),                          label: 'One uppercase letter' },
+        'rule-lower':   { test: p => /[a-z]/.test(p),                          label: 'One lowercase letter' },
+        'rule-number':  { test: p => /\d/.test(p),                             label: 'One number' },
+        'rule-special': { test: p => /[!@#$%^&*(),.?":{}|<>_\-\[\]\/\\]/.test(p), label: 'One special character (!@#$%…)' },
+    };
+
+    const strengthLevels = [
+        { max: 0, label: '',         color: 'transparent', width: '0%'   },
+        { max: 1, label: 'Weak',     color: '#f87171',     width: '20%'  },
+        { max: 2, label: 'Fair',     color: '#fb923c',     width: '40%'  },
+        { max: 3, label: 'Good',     color: '#f59e0b',     width: '60%'  },
+        { max: 4, label: 'Strong',   color: '#22c55e',     width: '80%'  },
+        { max: 5, label: 'Excellent',color: '#38bdf8',     width: '100%' },
+    ];
+
+    pwd.addEventListener('input', () => {
+        const val = pwd.value;
+        let passing = 0;
+        for (const [id, r] of Object.entries(rules)) {
+            const el = document.getElementById(id);
+            const ok = r.test(val);
+            if (ok) passing++;
+            el.textContent = (ok ? '✓ ' : '✗ ') + r.label;
+            el.classList.toggle('rule-pass', ok);
+            el.classList.toggle('rule-fail', !ok && val.length > 0);
         }
+        // Strength bar
+        const s = strengthLevels[passing];
+        fill.style.width = s.width;
+        fill.style.background = s.color;
+        lbl.textContent = s.label;
+        lbl.style.color = s.color;
+        checkMatch();
+    });
 
-        // Live password rules checker
-        const pwd = document.getElementById('password');
-        const confirm = document.getElementById('confirm');
-        const matchMsg = document.getElementById('match-msg');
+    confirm.addEventListener('input', checkMatch);
 
-        const rules = {
-            'rule-length':  p => p.length >= 8,
-            'rule-upper':   p => /[A-Z]/.test(p),
-            'rule-lower':   p => /[a-z]/.test(p),
-            'rule-number':  p => /\d/.test(p),
-            'rule-special': p => /[!@#$%^&*(),.?":{}|<>_\-\[\]\/\\]/.test(p),
-        };
-
-        const labels = {
-            'rule-length':  '8+ characters',
-            'rule-upper':   'One uppercase letter',
-            'rule-lower':   'One lowercase letter',
-            'rule-number':  'One number',
-            'rule-special': 'One special character (!@#$%^&*...)',
-        };
-
-        pwd.addEventListener('input', () => {
-            const val = pwd.value;
-            for (const [id, test] of Object.entries(rules)) {
-                const el = document.getElementById(id);
-                const passing = test(val);
-                el.textContent = (passing ? '✓ ' : '✗ ') + labels[id];
-                el.classList.toggle('rule-pass', passing);
-                el.classList.toggle('rule-fail', !passing);
-            }
-            checkMatch();
-        });
-
-        confirm.addEventListener('input', checkMatch);
-
-        function checkMatch() {
-            if (!confirm.value) { matchMsg.style.display = 'none'; return; }
-            matchMsg.style.display = 'block';
-            if (pwd.value === confirm.value) {
-                matchMsg.textContent = '✓ Passwords match';
-                matchMsg.style.color = 'var(--accent-teal)';
-            } else {
-                matchMsg.textContent = '✗ Passwords do not match';
-                matchMsg.style.color = 'var(--accent-coral)';
-            }
+    function checkMatch() {
+        if (!confirm.value) { matchMsg.style.display = 'none'; return; }
+        matchMsg.style.display = 'block';
+        if (pwd.value === confirm.value) {
+            matchMsg.textContent = '✓ Passwords match';
+            matchMsg.style.color = 'var(--accent-matcha)';
+        } else {
+            matchMsg.textContent = '✗ Passwords do not match';
+            matchMsg.style.color = 'var(--accent-rose)';
         }
-    </script>
+    }
+</script>
 </body>
 </html>

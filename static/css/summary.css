@@ -1,0 +1,325 @@
+/* ═══════════════════════════════════════
+   Ỉn Ỉn — Summary Page Styles
+   ═══════════════════════════════════════ */
+
+/* ═══════════════════════════════════════
+   SUMMARY STANDALONE PAGE
+   ═══════════════════════════════════════ */
+
+.summary-standalone {
+    padding: 0.5rem 0;
+}
+.summary-greeting {
+    margin-bottom: 1.25rem;
+}
+.summary-greeting-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.2rem;
+}
+.summary-greeting-sub {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+/* 2×2 grid: status | priority | mood (wide) | piglet (wide) */
+.ssum-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.ssum-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.4rem;
+    box-shadow: var(--shadow-sm);
+}
+.ssum-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.ssum-subtitle {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+.ssum-avg-pill {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    background: var(--accent-soft);
+    color: var(--accent-matcha);
+    border-radius: 9999px;
+    padding: 0.1rem 0.55rem;
+    font-weight: 700;
+}
+
+/* Donut */
+.ssum-donut-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 1rem;
+}
+.ssum-donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+.ssum-big-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+.ssum-big-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; }
+
+/* Legend */
+.ssum-legend { display: flex; flex-direction: column; gap: 0.4rem; }
+.ssum-legend-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.ssum-legend-row span:nth-child(2) { flex: 1; }
+.ssum-legend-row b { font-weight: 800; color: var(--text-primary); }
+.ssum-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+/* Donut tooltip */
+.donut-tooltip {
+    position: fixed;
+    display: none;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+    pointer-events: none;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+/* Mood section: 70/30 split */
+.ssum-card-mood { grid-column: span 2; }
+.ssum-mood-body {
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 1.5rem;
+    align-items: center;
+}
+.ssum-mood-bars { display: flex; flex-direction: column; gap: 0.5rem; }
+.ssum-mood-row  { display: flex; align-items: center; gap: 0.7rem; }
+.ssum-mood-lbl  { width: 82px; font-size: 0.82rem; color: var(--text-secondary); flex-shrink: 0; }
+.ssum-mood-track { flex: 1; height: 11px; background: var(--bg-input); border-radius: 9999px; overflow: hidden; }
+.ssum-mood-fill  { height: 100%; border-radius: 9999px; transition: width 0.7s ease; }
+.ssum-mood-count {
+    width: 28px; font-size: 0.75rem; color: var(--text-muted);
+    text-align: right; flex-shrink: 0;
+    text-decoration: none;
+}
+.ssum-mood-count:hover { color: var(--accent-matcha); text-decoration: underline; }
+.ssum-no-mood-link {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+.ssum-no-mood-link:hover { color: var(--accent-matcha); text-decoration: underline; }
+
+/* Mood emoji side */
+.ssum-mood-emoji-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-align: center;
+}
+.ssum-big-emoji {
+    font-size: 4.5rem;
+    line-height: 1;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+    transition: transform 0.2s ease;
+    cursor: default;
+}
+.ssum-big-emoji:hover { transform: scale(1.12); }
+.ssum-mood-label-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+.ssum-journal-link {
+    font-size: 0.78rem;
+    color: var(--accent-matcha);
+    text-decoration: none;
+    font-weight: 700;
+}
+.ssum-journal-link:hover { text-decoration: underline; }
+
+/* Piglet play zone */
+.ssum-card-piglet {
+    grid-column: span 2;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--accent-soft) 100%);
+}
+.ssum-piglet-inner {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.ssum-piglet-wrap {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s ease;
+}
+.ssum-piglet-wrap:active { cursor: grabbing; }
+.ssum-piglet-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 16px rgba(244,167,185,0.5));
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    animation: piglet-bounce 3s ease-in-out infinite;
+}
+.ssum-piglet-wrap[style*="position: absolute"] .ssum-piglet-img,
+.ssum-piglet-wrap[style*="position:absolute"] .ssum-piglet-img {
+    animation: none;
+}
+.ssum-piglet-hint {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+}
+
+/* Summary loading */
+.summary-loading-state {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .ssum-grid { grid-template-columns: 1fr; }
+    .ssum-card-mood  { grid-column: span 1; }
+    .ssum-card-piglet{ grid-column: span 1; }
+    .ssum-mood-body  { grid-template-columns: 1fr; }
+    .ssum-mood-emoji-zone { flex-direction: row; justify-content: flex-start; gap: 1rem; }
+    .ssum-big-emoji  { font-size: 3rem; }
+    .ssum-donut-wrap { width: 160px; height: 160px; }
+}
+
+/* ── Summary greeting row (text + big piglet) ── */
+.summary-greeting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.summary-greeting-text { flex: 1; }
+.summary-greeting-piglet {
+    flex-shrink: 0;
+}
+/* Scale the header piglet up via a wrapper — reuses .header-piglet SVG */
+.summary-piglet-scale {
+    transform: scale(2.8);
+    transform-origin: center;
+    display: flex;
+    width: 44px;
+    height: 44px;
+    margin: 1.5rem 2rem;
+    cursor: pointer;
+}
+.summary-piglet-scale .header-piglet {
+    width: 44px !important;
+    height: 44px !important;
+    animation: piglet-bounce 3s ease-in-out infinite;
+}
+
+/* ── Mood piglet emotion image ── */
+.ssum-mood-piglet-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(244,167,185,0.4));
+    transition: transform 0.2s ease;
+}
+.ssum-mood-piglet-img:hover { transform: scale(1.1); }
+
+/* Remove old piglet zone card since piglet is now in greeting */
+.ssum-card-piglet { display: none; }
+/* ── Mood piglet emotion SVG (cloned from hidden pre-rendered partials) ── */
+.ssum-mood-piglet-clone {
+    display: flex !important;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+.ssum-mood-piglet-clone svg {
+    width: 90px !important;
+    height: 90px !important;
+    filter: drop-shadow(0 4px 12px rgba(244,167,185,0.4));
+    transition: transform 0.2s ease;
+    animation: piglet-bounce 3s ease-in-out infinite;
+}
+.ssum-mood-piglet-clone svg:hover {
+    transform: scale(1.1);
+    animation: none;
+}
+
+/* Remove old image-based piglet (now using SVG clone) */
+.ssum-mood-piglet-img,
+.ssum-mood-piglet-fallback { display: none !important; }
+
+/* Remove big greeting piglet scale wrapper */
+.summary-piglet-scale,
+.summary-greeting-piglet { display: none !important; }
+.summary-greeting-row { display: block !important; }

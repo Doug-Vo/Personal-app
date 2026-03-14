@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{% block title %}Ỉn Ỉn{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/journal.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/board.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/summary.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/piglet.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='image/piglet.png') }}">
     {% block head %}{% endblock %}
 </head>
 <body class="page-body">
 
 <div class="page-wrapper">
 
-    <!-- Header -->
     <header class="app-header">
         <div class="header-container">
 
-            <!-- LEFT: Account dropdown (authenticated) or Login/Register -->
+            <!-- LEFT: Account dropdown -->
             <div class="header-left">
                 {% if current_user.is_authenticated %}
                     <div class="account-dropdown" id="account-dropdown">
@@ -31,6 +35,10 @@
                             <div class="account-dropdown-header">
                                 <span class="account-dropdown-username">{{ current_user.username }}</span>
                             </div>
+                            <button class="account-dropdown-item account-dropdown-theme" id="theme-toggle">
+                                <span id="theme-toggle-label">🌙 Dark mode</span>
+                            </button>
+                            <div class="account-dropdown-divider"></div>
                             <a href="{{ url_for('change_password') }}" class="account-dropdown-item">
                                 🔑 Change Password
                             </a>
@@ -52,19 +60,21 @@
                 <h1 class="header-title">{% block brand_title %}Ỉn Ỉn{% endblock %}</h1>
             </div>
 
-            <!-- RIGHT: Nav pills + hamburger + theme toggle -->
+            <!-- RIGHT: Nav pills + hamburger -->
             <div class="header-right">
                 {% if current_user.is_authenticated %}
                     {% block nav_links %}
-                    <!-- Desktop nav pills -->
                     <nav class="header-nav">
-                        <a href="{{ url_for('journal') }}"  class="nav-pill {% if request.endpoint == 'journal' %}nav-pill-active{% endif %}">
+                        <a href="{{ url_for('summary') }}" class="nav-pill {% if request.endpoint == 'summary' %}nav-pill-active{% endif %}">
+                            <span class="nav-pill-icon">📊</span>Summary
+                        </a>
+                        <a href="{{ url_for('journal') }}" class="nav-pill {% if request.endpoint == 'journal' %}nav-pill-active{% endif %}">
                             <span class="nav-pill-icon">📓</span>Journal
                         </a>
-                        <a href="{{ url_for('board') }}"    class="nav-pill {% if request.endpoint == 'board' %}nav-pill-active{% endif %}">
+                        <a href="{{ url_for('board') }}" class="nav-pill {% if request.endpoint == 'board' %}nav-pill-active{% endif %}">
                             <span class="nav-pill-icon">🗂️</span>Planner
                         </a>
-                        <a href="{{ url_for('home') }}"     class="nav-pill {% if request.endpoint == 'home' %}nav-pill-active{% endif %}">
+                        <a href="{{ url_for('translator') }}" class="nav-pill {% if request.endpoint == 'translator' %}nav-pill-active{% endif %}">
                             <span class="nav-pill-icon">🌐</span>Translator
                         </a>
                     </nav>
@@ -73,22 +83,18 @@
                     <div style="position:relative;">
                         <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">☰</button>
                         <div class="nav-mobile-menu" id="nav-mobile-menu">
-                            <a href="{{ url_for('journal') }}"  class="nav-mobile-item {% if request.endpoint == 'journal' %}active{% endif %}">📓 Journal</a>
-                            <a href="{{ url_for('board') }}"    class="nav-mobile-item {% if request.endpoint == 'board' %}active{% endif %}">🗂️ Planner</a>
-                            <a href="{{ url_for('home') }}"     class="nav-mobile-item {% if request.endpoint == 'home' %}active{% endif %}">🌐 Translator</a>
+                            <a href="{{ url_for('summary') }}"    class="nav-mobile-item {% if request.endpoint == 'summary' %}active{% endif %}">📊 Summary</a>
+                            <a href="{{ url_for('journal') }}"    class="nav-mobile-item {% if request.endpoint == 'journal' %}active{% endif %}">📓 Journal</a>
+                            <a href="{{ url_for('board') }}"      class="nav-mobile-item {% if request.endpoint == 'board' %}active{% endif %}">🗂️ Planner</a>
+                            <a href="{{ url_for('translator') }}" class="nav-mobile-item {% if request.endpoint == 'translator' %}active{% endif %}">🌐 Translator</a>
                         </div>
                     </div>
                 {% endif %}
-                <button id="theme-toggle" class="theme-toggle-button">
-                    <svg id="theme-toggle-dark-icon" class="icon hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                    <svg id="theme-toggle-light-icon" class="icon" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-1.646 5.646a1 1 0 01-1.414 0l-.707-.707a1 1 0 111.414-1.414l.707.707a1 1 0 010 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1zM5.05 16.95l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM16.95 5.05a1 1 0 01-1.414 0l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1z"></path></svg>
-                </button>
             </div>
 
         </div>
     </header>
 
-    <!-- Flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -97,16 +103,13 @@
         {% endif %}
     {% endwith %}
 
-    <!-- Page content -->
     {% block content %}{% endblock %}
 
 </div>
 
-<!-- Shared scripts -->
 <script>
-    // ── Theme (runs on every page before paint) ──
     (function() {
-        const saved  = localStorage.getItem('theme');
+        const saved = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (saved === 'dark' || (!saved && prefersDark)) {
             document.documentElement.classList.add('dark');
@@ -114,20 +117,17 @@
     })();
 </script>
 <script>
-    // ── Mobile hamburger nav ──
     document.addEventListener('DOMContentLoaded', () => {
-        const hamburger = document.getElementById('nav-hamburger');
+        const hamburger  = document.getElementById('nav-hamburger');
         const mobileMenu = document.getElementById('nav-mobile-menu');
-        if (!hamburger || !mobileMenu) return;
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            mobileMenu.classList.toggle('open');
-        });
-        document.addEventListener('click', () => mobileMenu.classList.remove('open'));
-        mobileMenu.addEventListener('click', e => e.stopPropagation());
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', e => { e.stopPropagation(); mobileMenu.classList.toggle('open'); });
+            document.addEventListener('click', () => mobileMenu.classList.remove('open'));
+            mobileMenu.addEventListener('click', e => e.stopPropagation());
+        }
     });
 </script>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% block scripts %}{% endblock %}
 
 </body>
