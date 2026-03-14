@@ -9,30 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    // ── Theme Toggle (shared across all pages) ──
+    // ── Theme Toggle (inside account dropdown) ──
     const themeToggleBtn = document.getElementById("theme-toggle");
-    const darkIcon       = document.getElementById("theme-toggle-dark-icon");
-    const lightIcon      = document.getElementById("theme-toggle-light-icon");
+    const themeLabel     = document.getElementById("theme-toggle-label");
 
     function applyTheme() {
-        const userTheme         = localStorage.getItem("theme");
-        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (userTheme === "dark" || (!userTheme && systemPrefersDark)) {
-            document.documentElement.classList.add("dark");
-            lightIcon?.classList.add("hidden");
-            darkIcon?.classList.remove("hidden");
-        } else {
-            document.documentElement.classList.remove("dark");
-            lightIcon?.classList.remove("hidden");
-            darkIcon?.classList.add("hidden");
-        }
+        const isDark = document.documentElement.classList.contains("dark");
+        if (themeLabel) themeLabel.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
     }
 
-    themeToggleBtn?.addEventListener("click", () => {
+    themeToggleBtn?.addEventListener("click", (e) => {
+        e.stopPropagation(); // keep dropdown open
         const isDark = document.documentElement.classList.toggle("dark");
         localStorage.setItem("theme", isDark ? "dark" : "light");
-        lightIcon?.classList.toggle("hidden", isDark);
-        darkIcon?.classList.toggle("hidden", !isDark);
+        applyTheme();
     });
 
     applyTheme();

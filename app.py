@@ -15,9 +15,6 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from pymongo import MongoClient, DESCENDING
 from bson import ObjectId
 
-from dotenv import load_dotenv
-load_dotenv()  
-
 # ── Logging ──
 logging.basicConfig(
     level=logging.INFO,
@@ -306,6 +303,14 @@ def change_password():
 
 @app.route('/')
 def home():
+    if current_user.is_authenticated:
+        return redirect(url_for('summary'))
+    return render_template('index.html')
+
+
+@app.route('/translator')
+@login_required
+def translator():
     return render_template('index.html')
 
 
@@ -513,6 +518,9 @@ def board_data():
         t.setdefault('priority', 0)
         t.setdefault('due_date', None)
         t.setdefault('due_time', None)
+        t.setdefault('recur', 'none')
+        t.setdefault('subtasks', [])
+        t.setdefault('notes', '')
 
     archives = list(board_archive_col.find(
         {"user_id": current_user.id},
@@ -544,6 +552,17 @@ def board_task_create():
     if priority not in (0, 1, 2, 3):
         priority = 0
 
+    recur    = body.get('recur', 'none')
+    if recur not in ('none', 'daily', 'weekly', 'monthly'):
+        recur = 'none'
+    subtasks = body.get('subtasks', [])
+    if isinstance(subtasks, list):
+        subtasks = [{"text": str(s.get("text",""))[:200], "done": bool(s.get("done",False))} for s in subtasks[:20]]
+    else:
+        subtasks = []
+    notes    = body.get('notes', '') or ''
+    notes    = notes[:2000]
+
     now = datetime.now()
     doc = {
         "user_id":    current_user.id,
@@ -552,6 +571,9 @@ def board_task_create():
         "priority":   priority,
         "due_date":   due_date,
         "due_time":   due_time,
+        "recur":      recur,
+        "subtasks":   subtasks,
+        "notes":      notes,
         "created_at": now,
         "updated_at": now,
     }
@@ -589,6 +611,19 @@ def board_task_update(task_id):
 
     if 'due_time' in body:
         updates['due_time'] = body['due_time'] or None
+
+    if 'recur' in body:
+        r = body['recur']
+        if r in ('none', 'daily', 'weekly', 'monthly'):
+            updates['recur'] = r
+
+    if 'subtasks' in body:
+        st = body['subtasks']
+        if isinstance(st, list):
+            updates['subtasks'] = [{"text": str(s.get("text",""))[:200], "done": bool(s.get("done",False))} for s in st[:20]]
+
+    if 'notes' in body:
+        updates['notes'] = (body['notes'] or '')[:2000]
 
     if not updates:
         return jsonify(error="Nothing to update"), 400
@@ -679,6 +714,68 @@ def board_archive_delete():
     result = board_archive_col.delete_many(query)
     logging.info(f"Bulk archive delete ({scope}): {result.deleted_count} weeks for {current_user.username}")
     return jsonify(ok=True, deleted=result.deleted_count)
+
+
+@app.route('/summary')
+@login_required
+def summary():
+    return render_template('summary.html')
+
+
+@app.route('/summary/data')
+@login_required
+def summary_data():
+    """Return aggregated data for the Summary tab: task counts + mood data."""
+    # Task column counts (active tasks)
+    pipeline_cols = [
+        {"$match": {"user_id": current_user.id}},
+        {"$group": {"_id": "$column", "count": {"$sum": 1}}}
+    ]
+    col_counts = {r["_id"]: r["count"] for r in board_tasks_col.aggregate(pipeline_cols)}
+
+    # Priority breakdown — active tasks only (todo + inprogress)
+    pipeline_pri = [
+        {"$match": {"user_id": current_user.id, "column": {"$in": ["todo", "inprogress"]}}},
+        {"$group": {"_id": "$priority", "count": {"$sum": 1}}}
+    ]
+    pri_counts = {str(r["_id"]): r["count"] for r in board_tasks_col.aggregate(pipeline_pri)}
+
+    # Total archived tasks
+    archives = list(board_archive_col.find({"user_id": current_user.id}, {"tasks": 1}))
+    archived_total = sum(len(a.get("tasks", [])) for a in archives)
+
+    # Journal mood this month
+    now = datetime.now()
+    month_start = datetime(now.year, now.month, 1)
+    journal_entries = list(journal_col.find(
+        {"user_id": current_user.id, "date": {"$gte": month_start}},
+        {"feeling": 1, "score": 1, "date": 1}
+    ))
+    mood_counts = {}
+    mood_scores = []
+    for e in journal_entries:
+        word = e.get("feeling", "").split(" ", 1)[-1].strip()
+        mood_counts[word] = mood_counts.get(word, 0) + 1
+        mood_scores.append(e.get("score", 4))
+
+    avg_mood = round(sum(mood_scores) / len(mood_scores), 1) if mood_scores else None
+
+    # Journal entries by date this month (for heatmap)
+    mood_by_date = {}
+    for e in journal_entries:
+        if isinstance(e.get("date"), datetime):
+            ds = e["date"].strftime("%Y-%m-%d")
+            mood_by_date[ds] = {"score": e.get("score", 4), "feeling": e.get("feeling", "")}
+
+    return jsonify(
+        task_cols=col_counts,
+        task_priority=pri_counts,
+        archived_total=archived_total,
+        mood_counts=mood_counts,
+        avg_mood=avg_mood,
+        mood_by_date=mood_by_date,
+        month=now.strftime("%B %Y")
+    )
 
 # ──────────────────────────────────────────────
 # HEALTH CHECK
