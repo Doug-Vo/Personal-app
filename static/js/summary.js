@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let tooltip = null;
 
+    // Track all live donut instances so theme changes can redraw them all
+    const liveCharts = [];
+
+    // Watch for theme changes (class toggle on <html>) and redraw all charts
+    const themeObserver = new MutationObserver(() => {
+        liveCharts.forEach(chart => chart.redraw());
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
     try {
         const res  = await fetch('/summary/data');
         const data = await res.json();
@@ -35,18 +44,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const priTotal   = Object.values(tp).reduce((a, b) => a + b, 0);
         const moodTotal  = Object.values(mc).reduce((a, b) => a + b, 0);
 
-        // Dominant mood
         let domMood = null, domCount = 0;
         Object.entries(mc).forEach(([m, c]) => { if (c > domCount) { domMood = m; domCount = c; } });
 
         layout.innerHTML = `
         <div class="ssum-grid">
 
-            <!-- Task Status Donut -->
             <div class="ssum-card">
                 <div class="ssum-card-title">Tasks Overview</div>
                 <div class="ssum-donut-wrap">
-                    <canvas id="donut-status" width="200" height="200"></canvas>
+                    <canvas id="donut-status" width="220" height="220"></canvas>
                     <div class="ssum-donut-center">
                         <span class="ssum-big-num">${total}</span>
                         <span class="ssum-big-label">active</span>
@@ -60,11 +67,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             </div>
 
-            <!-- Priority Donut (active only) -->
             <div class="ssum-card">
                 <div class="ssum-card-title">By Priority <span class="ssum-subtitle">(active tasks)</span></div>
                 <div class="ssum-donut-wrap">
-                    <canvas id="donut-priority" width="200" height="200"></canvas>
+                    <canvas id="donut-priority" width="220" height="220"></canvas>
                     <div class="ssum-donut-center">
                         <span class="ssum-big-num">${priTotal}</span>
                         <span class="ssum-big-label">active</span>
@@ -78,7 +84,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             </div>
 
-            <!-- Mood: 70% bars + 30% piglet emotion -->
             <div class="ssum-card ssum-card-mood">
                 <div class="ssum-card-title">
                     Mood This Month — ${escHtml(data.month||'')}
@@ -100,7 +105,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }).join('')
                         }
                     </div>
-                    <!-- Piglet emotion zone: cloned from the pre-rendered hidden SVGs -->
                     <div class="ssum-mood-emoji-zone" id="ssum-mood-piglet-zone">
                         <span class="ssum-mood-label-big" id="ssum-mood-label">${domMood || ''}</span>
                         ${moodTotal > 0 ? `<a href="/journal?tab=chart" class="ssum-journal-link">View feelings →</a>` : ''}
@@ -110,12 +114,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         </div>`;
 
-        // Inject the piglet emotion SVG into the zone
+        // Inject piglet emotion SVG
         if (domMood) {
-            const src = document.getElementById(`mood-piglet-${domMood}`);
+            const src  = document.getElementById(`mood-piglet-${domMood}`);
             const zone = document.getElementById('ssum-mood-piglet-zone');
             if (src && zone) {
-                // Clone the SVG from the hidden pre-rendered block and inject before the label
                 const clone = src.cloneNode(true);
                 clone.id = '';
                 clone.style.display = '';
@@ -124,101 +127,220 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        drawDonut('donut-status',
+        // Draw both charts and register them for theme-aware redraws
+        const c1 = makeDonut('donut-status',
             [todo, inprogress, done],
             ['#a78bfa','#f59e0b','#22c55e'],
             ['To Do','In Progress','Done']
         );
-        drawDonut('donut-priority',
+        const c2 = makeDonut('donut-priority',
             [tp['3']||0, tp['2']||0, tp['1']||0, tp['0']||0],
             ['#f87171','#f59e0b','#22c55e','#6b7280'],
             ['High','Medium','Low','None']
         );
+        if (c1) liveCharts.push(c1);
+        if (c2) liveCharts.push(c2);
     }
 
-    function drawDonut(canvasId, values, colors, labels) {
+    /* ════════════════════════════════════════
+       EXPLODED DONUT — with hover glow + theme fix
+       ════════════════════════════════════════ */
+    function makeDonut(canvasId, values, colors, labels) {
         const canvas = document.getElementById(canvasId);
-        if (!canvas) return;
-        const ctx   = canvas.getContext('2d');
-        const cx    = canvas.width  / 2;
-        const cy    = canvas.height / 2;
-        const r     = 82, inner = 50;
-        const total = values.reduce((a,b) => a+b, 0);
-        const slices = [];
+        if (!canvas) return null;
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const ctx    = canvas.getContext('2d');
+        const W      = canvas.width;
+        const H      = canvas.height;
+        const cx     = W / 2;
+        const cy     = H / 2;
+        const R      = 82;         // outer radius
+        const INNER  = 48;         // inner hole radius
+        const EXPLODE= 10;         // how far a hovered slice pops out
+        const GAP    = 0.018;      // radians gap between slices
 
+        const total = values.reduce((a, b) => a + b, 0);
         if (total === 0) {
-            ctx.beginPath();
-            ctx.arc(cx, cy, r, 0, Math.PI*2);
-            ctx.arc(cx, cy, inner, 0, Math.PI*2, true);
-            ctx.fillStyle = 'rgba(120,120,120,0.12)';
-            ctx.fill('evenodd');
-            return;
+            drawEmpty();
+            return { redraw: drawEmpty };
         }
 
+        // Build slice metadata
+        const slices = [];
         let start = -Math.PI / 2;
         values.forEach((v, i) => {
             if (v === 0) return;
-            const sweep = (v / total) * Math.PI * 2;
-            slices.push({ start, sweep, color: colors[i], label: labels[i], count: v });
-            ctx.beginPath();
-            ctx.moveTo(cx, cy);
-            ctx.arc(cx, cy, r, start, start + sweep);
-            ctx.arc(cx, cy, inner, start + sweep, start, true);
-            ctx.closePath();
-            ctx.fillStyle = colors[i];
-            ctx.fill();
-            start += sweep;
+            const sweep = (v / total) * Math.PI * 2 - GAP;
+            const mid   = start + sweep / 2;            // midpoint angle for explode direction
+            slices.push({ start: start + GAP / 2, sweep, mid, color: colors[i], label: labels[i], count: v });
+            start += sweep + GAP;
         });
 
-        // Inner hole
-        ctx.beginPath();
-        ctx.arc(cx, cy, inner - 1, 0, Math.PI * 2);
-        ctx.fillStyle = document.documentElement.classList.contains('dark') ? '#192016' : '#ffffff';
-        ctx.fill();
+        // Animation state per slice: current explode offset (0→EXPLODE, animated)
+        const explodeState = slices.map(() => 0);   // 0 = resting
+        let   hoveredIdx   = -1;
+        let   rafId        = null;
+        let   needsRedraw  = true;
 
-        // Hover tooltip
-        function ensureTip() {
-            if (!tooltip) {
-                tooltip = document.createElement('div');
-                tooltip.className = 'donut-tooltip';
-                document.body.appendChild(tooltip);
+        function getHoleBg() {
+            return document.documentElement.classList.contains('dark') ? '#192016' : '#ffffff';
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+
+            slices.forEach((s, i) => {
+                const offset = explodeState[i];
+                const ox = Math.cos(s.mid) * offset;
+                const oy = Math.sin(s.mid) * offset;
+
+                ctx.save();
+                ctx.translate(ox, oy);
+
+                // Glow effect on hovered slice
+                if (i === hoveredIdx && offset > 0) {
+                    ctx.shadowColor  = s.color;
+                    ctx.shadowBlur   = 18;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
+                }
+
+                // Draw slice
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, R, s.start, s.start + s.sweep);
+                ctx.arc(cx, cy, INNER, s.start + s.sweep, s.start, true);
+                ctx.closePath();
+                ctx.fillStyle = s.color;
+                ctx.fill();
+
+                ctx.restore();
+            });
+
+            // Redraw inner hole on top to mask centre artifacts
+            ctx.beginPath();
+            ctx.arc(cx, cy, INNER - 1, 0, Math.PI * 2);
+            ctx.fillStyle = getHoleBg();
+            ctx.fill();
+        }
+
+        function drawEmpty() {
+            ctx.clearRect(0, 0, W, H);
+            ctx.beginPath();
+            ctx.arc(cx, cy, R, 0, Math.PI * 2);
+            ctx.arc(cx, cy, INNER, 0, Math.PI * 2, true);
+            ctx.fillStyle = 'rgba(120,120,120,0.12)';
+            ctx.fill('evenodd');
+            // Redraw hole in case theme changed
+            ctx.beginPath();
+            ctx.arc(cx, cy, INNER - 1, 0, Math.PI * 2);
+            ctx.fillStyle = getHoleBg();
+            ctx.fill();
+        }
+
+        // Animation loop — only runs when something is animating
+        function animate() {
+            let stillAnimating = false;
+            slices.forEach((_, i) => {
+                const target = i === hoveredIdx ? EXPLODE : 0;
+                const diff   = target - explodeState[i];
+                if (Math.abs(diff) > 0.2) {
+                    explodeState[i] += diff * 0.18;   // ease factor
+                    stillAnimating = true;
+                } else {
+                    explodeState[i] = target;
+                }
+            });
+            draw();
+            if (stillAnimating) {
+                rafId = requestAnimationFrame(animate);
+            } else {
+                rafId = null;
             }
         }
-        function getSlice(mx, my) {
-            const dx = mx - cx, dy = my - cy;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist < inner || dist > r) return null;
-            let angle = Math.atan2(dy, dx);
-            if (angle < -Math.PI/2) angle += Math.PI * 2;
-            return slices.find(s => {
-                let end = s.start + s.sweep, st = s.start;
-                if (st < -Math.PI/2) { st += Math.PI*2; end += Math.PI*2; }
-                return angle >= st && angle < end;
-            }) || null;
+
+        function startAnim() {
+            if (!rafId) rafId = requestAnimationFrame(animate);
         }
+
+        // Initial draw
+        draw();
+
+        // Hit-test: which slice is under (mx, my) in canvas coords?
+        function hitSlice(mx, my) {
+            const dx   = mx - cx;
+            const dy   = my - cy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < INNER || dist > R + EXPLODE) return -1;
+            let angle = Math.atan2(dy, dx);
+            if (angle < -Math.PI / 2) angle += Math.PI * 2;
+            for (let i = 0; i < slices.length; i++) {
+                const s   = slices[i];
+                let st    = s.start;
+                let end   = s.start + s.sweep;
+                // Normalise to same half-plane as angle
+                if (st < -Math.PI / 2) { st += Math.PI * 2; end += Math.PI * 2; }
+                if (angle >= st && angle <= end) return i;
+            }
+            return -1;
+        }
+
+        // Mouse events
         canvas.addEventListener('mousemove', e => {
             const rect = canvas.getBoundingClientRect();
-            const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
-            const slice = getSlice((e.clientX - rect.left)*sx, (e.clientY - rect.top)*sy);
-            if (slice) {
-                ensureTip();
-                const pct = Math.round((slice.count / total) * 100);
-                tooltip.innerHTML = `<strong>${slice.label}</strong>: ${slice.count} task${slice.count!==1?'s':''} (${pct}%)`;
-                tooltip.style.display = 'block';
-                tooltip.style.left = (e.clientX + 12) + 'px';
-                tooltip.style.top  = (e.clientY - 32) + 'px';
+            const sx   = W / rect.width;
+            const sy   = H / rect.height;
+            const mx   = (e.clientX - rect.left) * sx;
+            const my   = (e.clientY - rect.top)  * sy;
+            const idx  = hitSlice(mx, my);
+
+            if (idx !== hoveredIdx) {
+                hoveredIdx = idx;
+                startAnim();
+            }
+
+            if (idx >= 0) {
                 canvas.style.cursor = 'pointer';
+                showTip(e, slices[idx], total);
             } else {
-                if (tooltip) tooltip.style.display = 'none';
                 canvas.style.cursor = 'default';
+                hideTip();
             }
         });
+
         canvas.addEventListener('mouseleave', () => {
-            if (tooltip) tooltip.style.display = 'none';
+            hoveredIdx = -1;
             canvas.style.cursor = 'default';
+            hideTip();
+            startAnim();
         });
+
+        // Public redraw — called when theme changes
+        function redraw() {
+            draw();
+        }
+
+        return { redraw };
+    }
+
+    // ── Tooltip ──
+    function ensureTip() {
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.className = 'donut-tooltip';
+            document.body.appendChild(tooltip);
+        }
+    }
+    function showTip(e, slice, total) {
+        ensureTip();
+        const pct = Math.round((slice.count / total) * 100);
+        tooltip.innerHTML = `<strong>${slice.label}</strong>: ${slice.count} task${slice.count !== 1 ? 's' : ''} (${pct}%)`;
+        tooltip.style.display = 'block';
+        tooltip.style.left    = (e.clientX + 14) + 'px';
+        tooltip.style.top     = (e.clientY - 36) + 'px';
+    }
+    function hideTip() {
+        if (tooltip) tooltip.style.display = 'none';
     }
 
     function escHtml(str) {
