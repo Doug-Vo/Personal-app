@@ -68,9 +68,11 @@
 /* Donut */
 .ssum-donut-wrap {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     margin: 0 auto 1rem;
+    /* extra breathing room so exploded slices don't clip */
+    overflow: visible;
 }
 .ssum-donut-center {
     position: absolute;
