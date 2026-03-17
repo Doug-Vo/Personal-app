@@ -65,18 +65,20 @@
                 {% if current_user.is_authenticated %}
                     {% block nav_links %}
                     <nav class="header-nav">
-                        <a href="{{ url_for('summary') }}" class="nav-pill {% if request.endpoint == 'summary' %}nav-pill-active{% endif %}">
-                            <span class="nav-pill-icon">📊</span>Summary
-                        </a>
-                        <a href="{{ url_for('journal') }}" class="nav-pill {% if request.endpoint == 'journal' %}nav-pill-active{% endif %}">
-                            <span class="nav-pill-icon">📓</span>Journal
-                        </a>
-                        <a href="{{ url_for('board') }}" class="nav-pill {% if request.endpoint == 'board' %}nav-pill-active{% endif %}">
-                            <span class="nav-pill-icon">🗂️</span>Planner
-                        </a>
-                        <a href="{{ url_for('translator') }}" class="nav-pill {% if request.endpoint == 'translator' %}nav-pill-active{% endif %}">
-                            <span class="nav-pill-icon">🌐</span>Translator
-                        </a>
+                        <div class="nav-dropdown" id="features-dropdown">
+                            <button class="nav-dropdown-btn" id="features-dropdown-toggle">
+                                <span class="nav-pill-icon">⚡</span> Productive
+                                <svg class="account-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div class="nav-dropdown-menu" id="features-dropdown-menu">
+                                <a href="{{ url_for('summary') }}" class="nav-dropdown-item {% if request.endpoint == 'summary' %}active{% endif %}">📊 Summary</a>
+                                <a href="{{ url_for('journal') }}" class="nav-dropdown-item {% if request.endpoint == 'journal' %}active{% endif %}">📓 Journal</a>
+                                <a href="{{ url_for('board') }}" class="nav-dropdown-item {% if request.endpoint == 'board' %}active{% endif %}">🗂️ Planner</a>
+                                <a href="{{ url_for('translator') }}" class="nav-dropdown-item {% if request.endpoint == 'translator' %}active{% endif %}">🌐 Translator</a>
+                            </div>
+                        </div>
                     </nav>
                     {% endblock %}
                     <!-- Mobile hamburger -->

@@ -779,3 +779,88 @@ body {
     min-width: 56px;
     transition: color 0.3s;
 }
+/* Container */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Button */
+.nav-dropdown-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: var(--transition);
+    /* Force full width for hover fill */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-dropdown-btn:hover {
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+}
+
+/* Menu */
+.nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    min-width: 180px;
+    z-index: 100;
+    flex-direction: column;
+    overflow: hidden; 
+}
+
+/* Show toggle */
+.nav-dropdown-menu.show {
+    display: flex;
+}
+
+/* Items */
+.nav-dropdown-item {
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    border-bottom: 1px solid var(--border);
+    /* Force full width for hover fill */
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.nav-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.nav-dropdown-item:hover {
+    background: var(--accent-soft);
+    color: var(--accent-matcha);
+}
+
+/* Active state */
+.nav-dropdown-item.active {
+    font-weight: 700;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    border-left: 3px solid var(--accent-matcha);
+}
