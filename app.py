@@ -250,7 +250,7 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     if current_user.is_authenticated:
         logging.info(f"Logout: {current_user.username}")
@@ -315,6 +315,7 @@ def translator():
 
 
 @app.route('/api/translate', methods=['POST'])
+@login_required
 @limiter.limit("40 per minute")
 def api_translate():
     try:
@@ -324,6 +325,9 @@ def api_translate():
 
         if not source_text or not source_lang:
             return jsonify({"error": "Missing text or source language."}), 400
+
+        if source_lang not in LANGUAGES:
+            return jsonify({"error": "Unsupported source language."}), 400
 
         if len(source_text) > 5000:
             return jsonify({"error": "Text too long (max 5000 characters)."}), 400
@@ -374,8 +378,8 @@ def journal():
 def journal_new():
     date_str   = request.form.get('date', '').strip()
     feeling    = request.form.get('feeling', '').strip()
-    challenged = request.form.get('challenged', '').strip()
-    reflect    = request.form.get('reflect', '').strip()
+    challenged = request.form.get('challenged', '').strip()[:300]
+    reflect    = request.form.get('reflect', '').strip()[:2000]
 
     if not date_str or not feeling or not reflect:
         flash('Please fill in all required fields.', 'error')
@@ -629,10 +633,13 @@ def board_task_update(task_id):
         return jsonify(error="Nothing to update"), 400
 
     updates['updated_at'] = datetime.now()
-    result = board_tasks_col.update_one(
-        {"_id": ObjectId(task_id), "user_id": current_user.id},
-        {"$set": updates}
-    )
+    try:
+        result = board_tasks_col.update_one(
+            {"_id": ObjectId(task_id), "user_id": current_user.id},
+            {"$set": updates}
+        )
+    except Exception:
+        return jsonify(error="Invalid task ID"), 400
     if result.matched_count == 0:
         return jsonify(error="Task not found"), 404
 
@@ -682,7 +689,7 @@ def board_task_manual_archive(task_id):
             },
             upsert=True
         )
-        board_tasks_col.delete_one({"_id": ObjectId(task_id)})
+        board_tasks_col.delete_one({"_id": ObjectId(task_id), "user_id": current_user.id})
         logging.info(f"Manual archive: '{task['title']}' by {current_user.username}")
         return jsonify(ok=True)
     except Exception as e:

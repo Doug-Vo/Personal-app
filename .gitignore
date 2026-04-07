@@ -27,3 +27,8 @@ instance/
 # --- Personal stuff ---
 run.ipynb
 deploy.md
+
+# --- Claude Code ---
+# settings.local.json holds machine-specific permission overrides — never commit
+.claude/settings.local.json
+# agents/ and CLAUDE.md are project tools and should be committed

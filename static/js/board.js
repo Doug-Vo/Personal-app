@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tmRecur.value    = task.recur || 'none';
         tmDue.value      = task.due_date || '';
         tmTime.value     = task.due_time || '';
-        tmNotes.innerHTML= task.notes   || '';
+        tmNotes.innerHTML= DOMPurify.sanitize(task.notes || '');
 
         renderModalSubtasks(task.subtasks || []);
 
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
             recur:    tmRecur.value,
             due_date: tmDue.value  || null,
             due_time: tmTime.value || null,
-            notes:    tmNotes.innerHTML,
+            notes:    DOMPurify.sanitize(tmNotes.innerHTML),
             subtasks: task.subtasks || [],
         };
 
