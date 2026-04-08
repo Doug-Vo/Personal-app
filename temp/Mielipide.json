@@ -1,153 +1,191 @@
 [
   {
+    "category": "Mielipide",
     "main_question": "Suomalaiset juhlat ovat tylsiä.",
     "hint": "Mitä mieltä olet suomalaisista juhlista? Mitä suomalaisissa juhlissa tehdään? Miksi ne ovat / eivät ole tylsiä?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Syntymäpäivää ei saa unohtaa.",
     "hint": "Onko syntymäpäivä sinun mielestä tärkeä juhla? Miksi / miksi ei? Kenen syntymäpäivää et varmasti unohda? Millaisen lahjan ostat sinun läheisille syntymäpäivänä?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Paras tapa asua",
     "hint": "Mikä on mielestäsi paras tapa asua: omakotitalo, rivitalo, kerrostalo? Miksi? Kumpi on parempi? Omistus- vai vuokra-asunto? Miksi?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Hyvä parisuhde vaatii töitä",
     "hint": "Millainen on hyvä parisuhde? Miten voi pitää huolta parisuhteesta? Millainen on ideaali puoliso? Millaisia asioita rakkaassasi rakastat / inhoat / siedät / toivot / haluat?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Onnellisuus on oma valinta.",
     "hint": "Kuinka paljon ihminen voi itse vaikuttaa siihen, onko hän onnellinen vai ei? Mitä asioita ihminen ei voi itse muuttaa? Voiko positiivinen ajattelu muuttaa ihmisen? Miten? Miksi / miksi ei?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Sosiaalinen media pilaa ihmissuhteet.",
     "hint": "Ihmiset viettävät aikaa enemmän sosiaalisessa mediassa kuin ystävien ja perheen kanssa. Ihmiset ovat yhdessä, mutta katsovat puhelinta. Miten sosiaalinen media muuttaa ystävyyttä ja ihmissuhteita? Mitä hyviä ja huonoja puolia siinä on?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Käytännöllisyys on muotia tärkeämpää.",
     "hint": "Kumpi on sinulle tärkeämpää: tyyli vai mukavuus? Miksi? Mikä sinulle on tärkeää, kun ostat uusia vaatteita? Voiko talvella olla tyylikäs? Miten?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomalaiset eivät osaa pukeutua.",
     "hint": "Suomalaisia on joskus haukuttu \"tuulipukukansaksi\". Miten suomalaiset sinun mielestä pukeutuvat? Miten suomalaiset pukeutuvat muihin maihin verrattuna? Minkä maalaiset sinun mielestä pukeutuvat parhaiten? Miksi?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Ihmiset stressaavat turhaan, miltä he näyttävät.",
     "hint": "Onko sillä väliä, mitä sinulla on päällä tai miltä näytät? Miksi / miksi ei? Mitä ongelmia voi tulla, jos miettii liian paljon ulkonäköä tai jos ei mieti?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Sukulaiset ovat tärkeämpiä kuin ystävät",
     "hint": "Suomeksi sanotaan Veri on vettä sakeampaa. Se tarkoittaa, että sukulaiset ovat tärkeämpiä kuin ystävät. Mitä mieltä olet?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Uusperhe - hyvä vai huono asia?",
     "hint": "Suomessa melkein 50% avioliitoista päättyy eroon. Miksi? Mitä pitäisi tehdä? Tai pitäisikö jotain tehdä? Miten lapsi kasvaa, jos hänellä on monta vanhempaa tai kaksi kotia?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Ketjuyritysten hyödyt ja haitat",
     "hint": "Mitä hyötyä ja haittaa on siitä, että kauppa / ravintola / huoltoasema kuuluu ketjuun? Ostatko itse mieluummin ketjusta vai itsenäiseltä yrittäjältä? Miksi? Onko globaaleissa ketjuissa riskejä? Mitä?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Alle kouluikäinen ei tarvitse vielä puhelinta",
     "hint": "Mikä on sinun mielestäsi sopiva ikä aloittaa kännykän käyttö. Miksi? Mitä hyötyä ja haittaa on siitä, että lapsella on puhelin? Mikä on sopiva puhelinlasku lapselle? Pitäisikö lapsen puhelimen käyttöä rajoittaa? Miten?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Arkielämä Suomessa on helppoa",
     "hint": "Millaisia ongelmia sinulla oli arkielämässä, kun tulit Suomeen? Miten ratkaisit ne? Mitkä asiat Suomessa sujuvat helposti? Mikä on vaikeaa? Millaista suomalainen arki on kotimaasi arkeen verrattuna?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Tinkiminen on hauskaa",
     "hint": "Tykkäätkö tinkiä hinnoista vai tykkäätkö standardihinnoista? Miksi? Miltä tinkiminen sinusta tuntuu? Mitä ajattelet Suomen tinkimiskulttuurista? Onko sitä? Mistä asioista voi tingata ja mistä ei?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Pyörä vai auto?",
     "hint": "Käytätkö itse enemmän pyörää vai autoa? Miksi? Kumpi on mielestäsi parempi? Miksi? Missä tilanteessa? Mitä hyviä puolia autossa/pyörässä on? Mitä huonoja puolia autossa/pyörässä on? Miksi ihmisten pitäisi käyttää enemmän autoa/pyörää?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Ihmiset ostavat liikaa turhaa tavaraa.",
     "hint": "Ihmisillä on usein paljon tavaroita. Mikä on turhaa ja mikä on tarpeellista? Onko sinulla turhaa tavaraa? Mitä? Miksi ihmiset ostavat turhia tavaroita?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Julkisen liikenteen pitäisi olla ilmaista.",
     "hint": "Mitä mieltä olet julkisen liikenteen (juna, bussi, metro, raitiovaunu) hinnoista Suomessa? Mitä hyötyä olisi siitä, että julkinen liikenne olisi halpaa?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Fyysinen terveys on tärkeää myös henkiselle terveydelle",
     "hint": "Onko fyysinen terveys ja henkinen terveys (psyyke) mielestäsi yhtä tärkeitä? Miksi? Miten pidät huolta fyysisestä ja henkisestä terveydestä? Suomessa on paljon masennusta ja myös itsemurhia. Mistä ajattelet, että se johtuu?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Urheilu ja doping",
     "hint": "Mitä mieltä olet dopingista? Voiko huippu-urheilija pärjätä ilman dopingia? Miksi / miksi ei?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Terveydenhuolto Suomessa",
     "hint": "Millaista sairaanhoito on mielestäsi Suomessa? Mitä hyviä ja mitä huonoja puolia Suomen terveydenhuollossa on? Onko sairaaloissa ja terveyskeskuksissa riittävästi henkilökuntaa? Mikä on erilaista sinun kotimaassa?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Päihteet Suomessa",
     "hint": "Mitä ajattelet suomalaisten päihteiden käytöstä (päihteet = alkoholi, tupakka, huumeet, lääkkeiden väärinkäyttö)? Millaisissa tilanteissa päihteiden käyttö on sallittua? Millaisia ongelmia päihteistä voi tulla? Mitä mieltä olet alaikäisten (alle 18-vuotiaiden) päihteiden käytöstä?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Työn pitää olla hauskaa.",
     "hint": "Pitääkö työstä nauttia vai onko se vain tapa saada rahaa? Miksi/miksi ei työn pitäisi olla hauskaa? Millaisesta työstä sinä nautit? Mikä on tylsää?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Opiskelu kannattaa aina.",
     "hint": "Miksi opiskelu on/ei ole tärkeää? Millaisia asioita on hyvä opiskella? Mikä on turhaa? Maailma muuttuu. Muuttuuko koulu?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Nykyään kaikilla on aina kiire.",
     "hint": "Onko ihmisten ajankäyttö muuttunut? Miten? Miksi näyttää siltä, että kaikilla on kiire? Mitä haittaa/hyötyä kiireestä on?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Tulevaisuudessa robotit tekevät ihmisten työt.",
     "hint": "Uskotko, että robotit tekevät ihmisten työt? Miksi / miksi et? Mitä hyötyä ja haittaa automaatiosta on töissä? Miten tekoäly (AI) voi auttaa meitä? Mitä riskejä tekoälyssä on?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Koulupuku on hyvä asia.",
     "hint": "Onko sinun kotimaassa koulupuku? Mitä haittaa ja hyötyä siitä on? Millainen pukeutuminen sopii kouluun?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Lasten kasvatus Suomessa on hyvä / huono.",
     "hint": "Onko tavassa kasvattaa lapsia Suomessa / sinun kotimaassa eroja? Mitä hyviä ja huonoja puolia molemmissa on?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomi tarvitsee lisää työntekijöitä ulkomailta.",
     "hint": "Miten Suomeen voisi houkutella lisää ihmisiä töihin? Millaisiin töihin Suomeen tarvitaan lisää ihmisiä? Mitä haasteita tai ongelmia on siinä, että palkataan ihmisiä suoraan ulkomailta?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Liikunta on pakko, ei vaihtoehto.",
     "hint": "Tykkäätkö sinä liikkua? Miksi / miksi et? Mitä hyötyä liikunnasta on? Voiko siitä olla haittaa? Voiko ihmistä pakottaa liikkumaan? Kuka voi pakottaa? Lääkäri / äiti / pomo? Miten ihmisiä voidaan kannustaa liikkumaan?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomi on hyvä matkailumaa.",
     "hint": "Mitä nähtävää Suomessa on turisteille? Kenelle suosittelet Suomea matkakohteena? Miksi? Käykö Suomessa mielestäsi riittävästi turisteja? Miksi / miksi ei?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Vanhempien täytyy valvoa lasten internetin käyttöä.",
     "hint": "Mitä lapset voivat tehdä internetissä? Voiko internet olla vaarallinen lapsille? Millä tavalla? Kuinka paljon lapsi voi pelata / surffata? Mitä hyötyä ja haittaa netin käyttämisestä on lapsille?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Mielipiteeni taiteesta Suomessa verrattuna taiteeseen kotimaassani.",
     "hint": "Millaisesta taiteesta pidät? Miksi? Seuraatko aktiivisesti taidemaailmaa? Miten suomalainen taide eroaa kotimaasi taiteesta?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Lapsi saa itse päättää, mitä harrastaa.",
     "hint": "Saako lapsi harrastaa mielestäsi, mitä haluaa? Miksi / miksi ei? Mikä on mielestäsi hyvä harrastus lapselle? Miksi? Kuinka paljon lapsi voi harrastaa? Voiko harrastuksesta olla jotain haittaa? Mitä?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomi ei ole tasa-arvoinen maa.",
     "hint": "Miten Suomen tasa-arvo/epätasa-arvo näkyy? Ketkä ovat tasa-arvoisia? Missä asioissa Suomi ei ole tasa-arvoinen?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Nykyään ihmiset eivät välitä toisista.",
     "hint": "Jos näet kadulla ihmisen makaamassa, autatko häntä? Miksi / miksi et? Ketkä ihmiset ovat sinulle tärkeitä? Miksi? Miten autat muita ihmisiä? Miksi autat / et auta heitä?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomen on liian vähän maahanmuuttajia poliitikkoina.",
     "hint": "Mitä asioita maahanmuuttajat voivat edistää? Miksi olisi hyvä, että maahanmuuttajat osallistuisivat aktiivisemmin politiikkaan?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomen verot ovat liian korkeat.",
     "hint": "Mitä mieltä olet Suomen verotuksesta? Millainen Suomen verotus on kotimaasi verotukseen verrattuna?"
   }

@@ -1,133 +1,166 @@
 [
   {
+    "category": "Kertominen",
     "main_question": "Sitä ihmistä en unohda",
     "hint": "Kerro ihmisestä, jota et koskaan unohda. Miksi et voi unohtaa häntä? Missä tutustuitte? Mitä tapahtui?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Riita puhdistaa ilmaa.",
     "hint": "Miten sinä riitelet? Kenen kanssa riitelet? Mistä asioista? Onko sinun mielestä riita hyvä vai huono asia? Miksi? Mistä tietää, että sinä olet vihainen? Mistä asioista sinä suutut? Miksi?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minä ja pukeutumiseni.",
     "hint": "Miten sinä pukeudut? Onko sinulla oma tyyli? Seuraatko muotia? Miksi / miksi et? Mihin olet tyytyväinen ulkonäossäsi? Mihin et? Olisitko valmis menemään kauneusleikkaukseen? Miksi / miksi et?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Kerro ystäväsi tai sukulaisesi elämästä.",
     "hint": "Kerro esimerkiksi: Missä ja milloin hän on syntynyt? Millainen lapsuus hänellä oli? Mitä hän teki nuorena / aikuisena? Missä hän on nyt? Miksi halusit kertoa hänestä?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Millainen ajankäyttäjä olet? Miten suhtaudut aikaan?",
     "hint": "Oletko tavallisesti ajoissa vai myöhässä? Tykkäätkö aikatauluista? Miten organisoit aikaasi vai annatko sen olla? Mihin aikasi kuluu? Mihin et halua hukata aikaasi? Mikä on hyvä tapa sopia aikatauluista?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Millainen riitelijä sinä olet?",
     "hint": "Kuinka usein riitelet? Mistä suutut? Mikä saa sinut vihaiseksi? Mitä et voi ikinä antaa anteeksi? Miten sinä riitelet? Miten käyttäydyt? Nimeä muutama asia, joista sinun kanssasi voisi helposti riidellä."
   },
   {
+    "category": "Kertominen",
     "main_question": "Arkipäiväni",
     "hint": "Millainen on tavallinen arkipäiväsi? Mitä rutiineja sinulla on? Pidätkö rutiineista? Miksi / miksi et? Millainen päivä on huono?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Ravintolat",
     "hint": "Käytkö usein ravintolassa? Mikä on hyvä ravintola mielestäsi? Mikä tekee ravintolasta hyvän? Entä huonon? Mitä eroja kotimaasi ja Suomen ravintoloissa on? Millainen atmosfääri ravintolassa pitäisi olla mielestäsi? Mitä toivoisit ravintoloihin lisää?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minä liikenteessä",
     "hint": "Miten kuljet kotoa töihin / kouluun / kauppaan? Käytätkö julkista liikennettä? Miksi / miksi et? Pelkäätkö jotain liikenteessä? Mitä ja miksi?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Kerro, mitä luonto ja asuinympäristö sinulle merkitsevät.",
     "hint": "Millaisessa paikassa asut? Millaiset mahdollisuudet siellä on liikkua luonnossa? Mitä luonto ja luonnon läheisyys sinulle merkitsevät? Millaisesta luonnosta/ympäristöstä pidät eniten?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Kerro luonnonsuojelusta.",
     "hint": "Mitä ajattelet luonnon suojelemisesta? Millä tavalla voimme suojella luontoa? Toimitko itse ympäristöystävällisesti? Miten ja missä asioissa?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minun maisemani",
     "hint": "Kuvaile maisemaa, joka on sinulle tärkeä. Kerro myös, miksi se on sinulle tärkeä?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Onnettomuus tai sairauskohtaus voi muuttaa koko elämän.",
     "hint": "Onko sinulla tai läheisellä ollut sairauskohtaus tai onnettomuus? Mitä tapahtui? Miten onnettomuus tai sairaus voi muuttaa elämää? Pelkäätkö onnettomuuksia tai sairauksia? Miksi / miksi et?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Vartaloni on temppelini.",
     "hint": "Pidätkö huolta vartalostasi? Miten? Onko vartalo sinulle tärkeä? Miksi / miksi ei? Miten vartalosi on muuttunut elämäsi aikana? Oletko esimerkiksi lihonut / laihtunut paljon?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minulle tärkein aisti",
     "hint": "Mikä aisti (näkö, haju, maku, tunto, kuulo) on sinulle tärkein? Miksi? Millaisista asioista nautit aistien kautta? Mitkä asiat tuottavat sinulle mielihyvää ja tekevät sinut onnelliseksi? Jos joutuisit luopumaan jostakin aistista tai vartalon osasta, mikä se olisi ja miksi?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Aivot kaipaavat huoltoa",
     "hint": "Miten pidät huolta aivoistasi? Milloin aivosi toimivat hyvin? Entä huonosti? Mikä on tärkeää aivojen hyvinvoinnille?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minun hyvinvointi",
     "hint": "Miten pysyt terveenä? Miten hoidat terveyttäsi? Millainen on hyvä / terve elämä? Milloin olit viimeksi sairas? Mitä teet, että et tulisi sairaaksi?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Terveellinen ruoka",
     "hint": "Millainen ruoka on terveellistä? Miksi? Haluaisitko muuttaa jotain ruokavaliossasi? Mitä?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Koulu kotimaassani",
     "hint": "Kuvaile kotimaasi koulujärjestelmää, sen hyviä ja huonoja puolia. Mikä on erilaista sinun kotimaassasi koulussa ja Suomessa? Mitä tiedät? Mitä haluaisit tuoda sinun kotimaan koulusta Suomeen?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minä koulussa",
     "hint": "Millainen koululainen sinä olit? Mikä on paras koulumuistosi? Mitä inhosit koulussa? Mistä pidit? Millainen oli sinun paras opettaja? Miksi?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Ensimmäinen työpaikkani",
     "hint": "Mikä oli sinun ensimmäinen työpaikkasi? Millaista työtä teit? Piditkö siitä? Miksi / miksi et? Miten sait työn? Millainen palkka oli?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Normaali työpäiväni",
     "hint": "Millainen on sinun tavallinen työpäivä? Mitä teet töissä? Milloin sinulla on tauko? Mistä pidät työssäsi? Mistä et?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Valitse yksi teos (kirja, näytelmä, elokuva, runo...), joka on sinulle tärkeä.",
     "hint": "Kerro esimerkiksi: Mikä teos se on? Kuka sen on tehnyt? Millainen teos se on? Miksi se on sinulle tärkeä?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Mitä baarikulttuuri sinulle merkitsee?",
     "hint": "Käytkö joskus baarissa? Miksi / miksi et? Minkä ikäisille baarikulttuuri sopii? Miksi? Mitä hyvää ja huonoa on siinä, että ihmiset käyvät baarissa?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Ulkonäkö - kaunis vai ruma?",
     "hint": "Mitä ulkonäkö sinulle merkitsee? Miten pidät huolta itsestäsi? Miksi ulkonäkö on / ei ole sinulle tärkeää? Ajattelevatko ihmiset liian paljon ulkonäköä? Miksi / miksi ei?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Hyvä loma",
     "hint": "Millainen on hyvä loma? Mitä silloin teet? Milloin sinulla viimeksi oli loma? Mitä teit? Onko hyvä loma kotona vai matkalla? Miksi?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Mökillä on mukavaa",
     "hint": "Onko sinulla / perheellä / tuttavalla mökki? Missä? Millainen? Kuinka usein sinä käyt mökillä? Miksi? Mikä mökillä on mukavaa? Mikä on kamalaa?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Rahankäyttö matkalla",
     "hint": "Kerro esimerkiksi: Mihin rahat menevät matkalla? Kuka päättää, mihin matkaraha käytetään? Onko tärkeää, että matkalla on paljon rahaa? Tykkäätkö shoppailla vai seikkailla? Miksi?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minä ja sosiaalinen media (Facebook, Twitter, Instagram, Snapchat...)",
     "hint": "Mitä sosiaalisia medioita käytät ja kuinka paljon? Mitä hyviä ja huonoja puolia on sosiaalisessa mediassa? Miksi pidät / et pidä sosiaalisesta mediasta?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Lemmikkieläimet",
     "hint": "Onko sinulla lemmikki? Mikä? Kerro siitä. Miksi ihmisillä on lemmikki? Miksi lemmikki on usein tärkeä? Mitä lemmikki voi opettaa lapselle?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minun harrastus",
     "hint": "Kerro harrastuksestasi. Mikä se on? Kuinka kauan olet sitä harrastanut? Mitä hyviä ja huonoja puolia siinä on? Mitä välineitä tarvitset? Mitä se maksaa? Kenelle suosittelisit sitä?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Minulle on tärkeää, mistä olen kotoisin.",
     "hint": "Mitä kansalaisuus sinulle merkitsee? Mikä on sinun kotimaa? Miksi ajattelet niin? Mitä suomalaisuus sinulle merkitsee?"
   },
   {
+    "category": "Kertominen",
     "main_question": "Suomalaiset ystäväni",
     "hint": "Onko sinulla suomalaisia ystäviä? Millaisia he ovat? Miten olet tutustunut heihin? Sanotaan, että suomalaiset ovat ujoja ja hiljaisia. Mitä mieltä olet? Mikä on hyvä tapa tutustua uusiin ihmisiin?"
   }

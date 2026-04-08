@@ -1,0 +1,446 @@
+/* ══════════════════════════════════════════
+   YKI Speaking Exam — yki.css
+   All colors reference vars from base.css
+   ══════════════════════════════════════════ */
+
+/* ── Page layout ── */
+.yki-page {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 3rem;
+}
+
+.yki-card {
+    width: 100%;
+    max-width: 640px;
+}
+
+/* ── Panel base ── */
+.yki-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+/* ── Headings ── */
+.yki-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-matcha), var(--accent-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.yki-subheading {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: -0.5rem 0 0;
+}
+
+/* ── Category selection grid ── */
+.yki-category-grid {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.yki-cat-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1.25rem 1rem;
+    flex: 1 1 160px;
+    max-width: 190px;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-primary);
+}
+
+.yki-cat-btn:hover {
+    border-color: var(--accent-matcha);
+    background: var(--accent-soft);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.yki-cat-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+.yki-cat-name {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.yki-cat-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* ── Category badges ── */
+.yki-category-badge {
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    border: 1px solid var(--accent-matcha);
+    border-radius: 999px;
+    padding: 0.35rem 1.1rem;
+    font-weight: 700;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+.yki-category-badge-sm {
+    background: var(--accent-soft);
+    color: var(--text-muted);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.8rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* ── Crowd sound warning ── */
+.yki-sound-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ── Ready panel ── */
+.yki-ready-msg {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.yki-start-btn {
+    min-width: 180px;
+    width: auto !important;
+    font-size: 1.05rem;
+}
+
+/* ── Phase row ── */
+.yki-phase-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    justify-content: center;
+}
+
+.yki-phase-badge {
+    border-radius: 999px;
+    padding: 0.25rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+}
+
+.yki-phase-prep {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.yki-phase-speak {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+/* ── SVG Timer ring ── */
+.yki-timer-wrap {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.yki-timer-ring {
+    width: 120px;
+    height: 120px;
+}
+
+.yki-ring-track {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 8;
+}
+
+.yki-ring-fill {
+    fill: none;
+    stroke: var(--accent-matcha);
+    stroke-width: 8;
+    stroke-dasharray: 326.73;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 60px 60px;
+    transition: stroke-dashoffset 0.9s linear, stroke 0.3s;
+}
+
+.yki-ring-urgent .yki-ring-fill {
+    stroke: var(--accent-rose);
+}
+
+.yki-timer-display {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    transition: color 0.3s;
+}
+
+.yki-ring-urgent .yki-timer-display {
+    color: var(--accent-rose);
+    animation: yki-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes yki-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.5; }
+}
+
+/* ── Volume control ── */
+.yki-volume-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    justify-content: center;
+}
+
+.yki-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.yki-icon-btn:hover {
+    transform: scale(1.15);
+}
+
+.yki-volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 120px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    outline: none;
+    cursor: pointer;
+}
+
+.yki-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-matcha);
+    cursor: pointer;
+}
+
+.yki-volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent-matcha);
+    cursor: pointer;
+}
+
+/* ── Question block ── */
+.yki-question-block {
+    width: 100%;
+}
+
+.yki-question-text {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem;
+}
+
+.yki-hint-block {
+    background: var(--accent-soft);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+    text-align: left;
+}
+
+.yki-hint-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 0 0 0.4rem;
+}
+
+.yki-hint-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-line;
+}
+
+/* ── Translation block ── */
+.yki-translation-block {
+    background: rgba(167, 139, 250, 0.08);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.yki-translation-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 0 0 0.4rem;
+}
+
+.yki-translation-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ── Action buttons ── */
+.yki-action-row {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.yki-secondary-btn {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.5rem 1.1rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.yki-secondary-btn:hover {
+    border-color: var(--accent-matcha);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+}
+
+.yki-link-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: var(--transition);
+}
+
+.yki-link-btn:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
+/* ── Done panel ── */
+.yki-done-icon {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.yki-done-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.yki-done-sub {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: -0.5rem 0 0;
+}
+
+.yki-done-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .yki-category-grid {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .yki-cat-btn {
+        max-width: 100%;
+        flex-direction: row;
+        text-align: left;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .yki-cat-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .yki-cat-btn > span:not(.yki-cat-icon) {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+
+    .yki-done-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .yki-done-actions button {
+        width: 100%;
+    }
+}

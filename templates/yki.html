@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}Ỉn Ỉn — YKI Speaking{% endblock %}
+{% block brand_title %}YKI Speaking{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/yki.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="yki-page">
+<div class="translator-card yki-card">
+
+    <!-- ══ PANEL 1: Category selection ══ -->
+    <div id="yki-panel-select" class="yki-panel">
+        <h2 class="yki-heading">YKI Mock Speaking Exam</h2>
+        <p class="yki-subheading">Choose a category to practise</p>
+        <div class="yki-category-grid">
+            <button class="yki-cat-btn" data-category="Kertominen">
+                <span class="yki-cat-icon">📖</span>
+                <span class="yki-cat-name">Kertominen</span>
+                <span class="yki-cat-desc">Narration · 90 s prep · 90 s speak</span>
+            </button>
+            <button class="yki-cat-btn" data-category="Mielipide">
+                <span class="yki-cat-icon">💬</span>
+                <span class="yki-cat-name">Mielipide</span>
+                <span class="yki-cat-desc">Opinion · 120 s prep · 120 s speak</span>
+            </button>
+            <button class="yki-cat-btn" data-category="Reagointi">
+                <span class="yki-cat-icon">⚡</span>
+                <span class="yki-cat-name">Reagointi</span>
+                <span class="yki-cat-desc">Reaction · 30 s prep · 30 s speak</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ══ PANEL 2: Ready (question hidden) ══ -->
+    <div id="yki-panel-ready" class="yki-panel hidden">
+        <div class="yki-category-badge" id="yki-ready-badge"></div>
+        <div class="yki-sound-warning">
+            🔊 A loud crowd noise will play when your speaking time starts — to simulate real exam conditions where all candidates speak at once. Adjust volume after pressing Start.
+        </div>
+        <p class="yki-ready-msg">Press <strong>Start</strong> when you are ready. Your question will be revealed.</p>
+        <button id="yki-start-btn" class="auth-button yki-start-btn">Start</button>
+        <button id="yki-back-from-ready" class="yki-link-btn">← Back to categories</button>
+    </div>
+
+    <!-- ══ PANEL 3: Exam (prep + speak share this panel) ══ -->
+    <div id="yki-panel-exam" class="yki-panel hidden">
+
+        <div class="yki-phase-row">
+            <span id="yki-phase-badge" class="yki-phase-badge"></span>
+            <span id="yki-exam-category" class="yki-category-badge-sm"></span>
+        </div>
+
+        <!-- SVG ring timer -->
+        <div class="yki-timer-wrap">
+            <svg class="yki-timer-ring" viewBox="0 0 120 120">
+                <circle class="yki-ring-track" cx="60" cy="60" r="52"/>
+                <circle class="yki-ring-fill" id="yki-ring-fill" cx="60" cy="60" r="52"/>
+            </svg>
+            <div class="yki-timer-display" id="yki-timer-display">0:00</div>
+        </div>
+
+        <!-- Volume control — only visible during speak phase -->
+        <div id="yki-volume-row" class="yki-volume-row hidden">
+            <button id="yki-mute-btn" class="yki-icon-btn" title="Mute / Unmute">🔊</button>
+            <input id="yki-volume-slider" type="range" min="0" max="1" step="0.05"
+                   value="0.5" class="yki-volume-slider" />
+        </div>
+
+        <!-- Question -->
+        <div class="yki-question-block">
+            <p id="yki-question-text" class="yki-question-text"></p>
+            <div id="yki-hint-block" class="yki-hint-block hidden">
+                <p class="yki-hint-label">Guiding questions</p>
+                <p id="yki-hint-text" class="yki-hint-text"></p>
+            </div>
+        </div>
+
+        <!-- Translation -->
+        <div id="yki-translation-block" class="yki-translation-block hidden">
+            <p class="yki-translation-label">English translation</p>
+            <p id="yki-translation-text" class="yki-translation-text"></p>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="yki-action-row">
+            <button id="yki-translate-btn" class="yki-secondary-btn">🌐 Translate to English</button>
+            <button id="yki-skip-prep-btn" class="yki-secondary-btn hidden">⏩ Skip Prep</button>
+        </div>
+    </div>
+
+    <!-- ══ PANEL 4: Done ══ -->
+    <div id="yki-panel-done" class="yki-panel hidden">
+        <div class="yki-done-icon">✅</div>
+        <h3 class="yki-done-title">Well done!</h3>
+        <p class="yki-done-sub">You completed the speaking round.</p>
+        <div class="yki-done-actions">
+            <button id="yki-try-another-btn" class="auth-button">Try Another Question</button>
+            <button id="yki-back-to-select-btn" class="yki-secondary-btn">← Back to Categories</button>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- Hidden audio element — served from static/sound/ -->
+<audio id="yki-crowd-audio"
+       src="{{ url_for('static', filename='sound/crowd-sound.mp3') }}"
+       loop preload="auto"></audio>
+{% endblock %}

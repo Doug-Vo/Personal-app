@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/summary.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/piglet.png') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='image/piglet.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/yki.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
     {% block head %}{% endblock %}
 </head>
@@ -43,6 +44,9 @@
                     </a>
                     <a href="{{ url_for('translator') }}" class="nav-pill {% if request.endpoint == 'translator' %}nav-pill-active{% endif %}">
                         <span class="nav-pill-icon">🌐</span> Translator
+                    </a>
+                    <a href="{{ url_for('yki') }}" class="nav-pill {% if request.endpoint == 'yki' %}nav-pill-active{% endif %}">
+                        <span class="nav-pill-icon">🎤</span> YKI
                     </a>
                 </nav>
                 {% endblock %}
@@ -88,6 +92,7 @@
                             <a href="{{ url_for('journal') }}"    class="nav-mobile-item {% if request.endpoint == 'journal' %}active{% endif %}">📓 Journal</a>
                             <a href="{{ url_for('board') }}"      class="nav-mobile-item {% if request.endpoint == 'board' %}active{% endif %}">🗂️ Planner</a>
                             <a href="{{ url_for('translator') }}" class="nav-mobile-item {% if request.endpoint == 'translator' %}active{% endif %}">🌐 Translator</a>
+                            <a href="{{ url_for('yki') }}" class="nav-mobile-item {% if request.endpoint == 'yki' %}active{% endif %}">🎤 YKI Speaking</a>
                         </div>
                     </div>
                 {% else %}
