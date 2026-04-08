@@ -1,22 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-
-    const featuresToggle = document.getElementById('features-dropdown-toggle');
-    const featuresMenu = document.getElementById('features-dropdown-menu');
-
-    if (featuresToggle && featuresMenu) {
-        featuresToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            featuresMenu.classList.toggle('show');
-        });
-
-        document.addEventListener('click', () => {
-            featuresMenu.classList.remove('show');
-        });
-
-        featuresMenu.addEventListener('click', (e) => e.stopPropagation());
-    }
-    
     // ── Utilities ──
     function debounce(func, delay) {
         let timeoutId;

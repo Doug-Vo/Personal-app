@@ -347,3 +347,146 @@ document.addEventListener('DOMContentLoaded', async () => {
         return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 });
+
+/* ══════════════════════════════════════════
+   Mood Heatmap (moved from Journal → Summary)
+   ══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+    const heatmapGrid = document.getElementById('heatmap-grid');
+    if (!heatmapGrid) return;
+
+    const FEELING_COLORS = {
+        'Excited':    { bg: '#f59e0b', text: '#fff' },
+        'Happy':      { bg: '#22c55e', text: '#fff' },
+        'Calm':       { bg: '#38bdf8', text: '#fff' },
+        'Neutral':    { bg: '#a78bfa', text: '#fff' },
+        'Tired':      { bg: '#94a3b8', text: '#fff' },
+        'Sad':        { bg: '#818cf8', text: '#fff' },
+        'Anxious':    { bg: '#fb923c', text: '#fff' },
+        'Frustrated': { bg: '#f43f5e', text: '#fff' },
+    };
+
+    function feelingColor(feeling) {
+        const word = feeling ? feeling.replace(/^\S+\s+/, '').trim() : '';
+        return FEELING_COLORS[word] || FEELING_COLORS[feeling] || { bg: '#6a9e5e', text: '#fff' };
+    }
+
+    // Reuse the pre-rendered piglet SVGs already in summary.html (hidden divs)
+    function getPigletSvg(word) {
+        const el = document.getElementById(`mood-piglet-${word}`);
+        return el ? el.innerHTML : '';
+    }
+
+    (async () => {
+        let data;
+        try {
+            const res = await fetch('/journal/chart-data');
+            data = await res.json();
+        } catch (e) {
+            return;
+        }
+
+        const lookup = {};
+        data.forEach(d => { lookup[d.date] = d; });
+
+        let current = new Date();
+        current.setDate(1);
+
+        function renderMonth(date) {
+            const year  = date.getFullYear();
+            const month = date.getMonth();
+            const label = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+            document.getElementById('month-label').textContent = label;
+
+            heatmapGrid.innerHTML = '';
+
+            const firstDay    = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                const blank = document.createElement('div');
+                blank.className = 'heatmap-cell heatmap-cell-empty';
+                heatmapGrid.appendChild(blank);
+            }
+
+            const tip         = document.getElementById('heatmap-tooltip');
+            let monthScores   = [];
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const entry   = lookup[dateStr];
+                const cell    = document.createElement('div');
+                cell.className = 'heatmap-cell heatmap-cell-day';
+
+                if (entry) {
+                    const { bg } = feelingColor(entry.feeling);
+                    cell.style.background = bg;
+                    monthScores.push(entry.score);
+
+                    cell.addEventListener('mouseenter', () => {
+                        const word   = entry.feeling.replace(/^\S+\s+/, '').trim();
+                        const pigSvg = getPigletSvg(word);
+                        tip.innerHTML = `<span class="tip-piglet">${pigSvg}</span><span>${word}</span>`;
+                        tip.classList.remove('hidden');
+                    });
+                    cell.addEventListener('mousemove', (e) => {
+                        tip.style.left = e.clientX + 'px';
+                        tip.style.top  = (e.clientY - 42) + 'px';
+                    }, { passive: true });
+                    cell.addEventListener('mouseleave', () => tip.classList.add('hidden'));
+                } else {
+                    cell.style.background = 'var(--border)';
+                    cell.style.opacity    = '0.4';
+                }
+
+                const dayNum = document.createElement('span');
+                dayNum.className   = 'heatmap-day-num';
+                dayNum.textContent = day;
+                cell.appendChild(dayNum);
+                heatmapGrid.appendChild(cell);
+            }
+
+            const summaryEl = document.getElementById('month-summary');
+            if (monthScores.length > 0) {
+                const avg      = (monthScores.reduce((a, b) => a + b, 0) / monthScores.length).toFixed(1);
+                const avgScore = Math.round(parseFloat(avg));
+                const avgLabel = avgScore >= 7 ? 'Excited'
+                               : avgScore >= 6 ? 'Happy'
+                               : avgScore >= 5 ? 'Calm'
+                               : avgScore >= 4 ? 'Neutral'
+                               : avgScore >= 3 ? 'Tired'
+                               : avgScore >= 2 ? 'Sad'
+                               : 'Frustrated';
+                const avgColor  = feelingColor(avgLabel);
+                const avgPiglet = getPigletSvg(avgLabel);
+                summaryEl.innerHTML = `
+                    <div class="summary-stat">
+                        <span class="summary-num">${monthScores.length}</span>
+                        <span class="summary-label">entries</span>
+                    </div>
+                    <div class="summary-stat">
+                        <span class="summary-num summary-avg-pill" style="background:${avgColor.bg};color:${avgColor.text}">
+                            <span class="summary-piglet">${avgPiglet}</span>${avg} · ${avgLabel}
+                        </span>
+                        <span class="summary-label">avg mood</span>
+                    </div>`;
+            } else {
+                summaryEl.innerHTML = '<p class="journal-empty-sm">No entries this month yet.</p>';
+            }
+        }
+
+        renderMonth(current);
+
+        let navLocked = false;
+        function navMonth(delta) {
+            if (navLocked) return;
+            navLocked = true;
+            current.setMonth(current.getMonth() + delta);
+            renderMonth(current);
+            setTimeout(() => { navLocked = false; }, 300);
+        }
+
+        document.getElementById('prev-month')?.addEventListener('click', () => navMonth(-1));
+        document.getElementById('next-month')?.addEventListener('click', () => navMonth(1));
+    })();
+});

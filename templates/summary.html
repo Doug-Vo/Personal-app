@@ -39,5 +39,44 @@
         <div class="summary-loading-state">Loading your summary…</div>
     </div>
 
+    <!-- Mood Heatmap (moved from Journal → Feelings tab) -->
+    <div class="translator-card" style="margin-top:2rem;">
+        <div class="chart-controls">
+            <label class="journal-label">🌿 Mood Heatmap</label>
+            <div class="month-nav">
+                <button id="prev-month" class="month-btn">‹</button>
+                <span id="month-label" class="month-label"></span>
+                <button id="next-month" class="month-btn">›</button>
+            </div>
+        </div>
+
+        <div id="month-summary" class="month-summary"></div>
+
+        <div class="chart-body">
+            <div class="chart-calendar">
+                <div class="heatmap-weekdays">
+                    <span>Sun</span><span>Mon</span><span>Tue</span>
+                    <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                </div>
+                <div id="heatmap-grid" class="heatmap-grid"></div>
+            </div>
+            <div class="chart-legend">
+                <p class="chart-legend-title">Feelings</p>
+                <div class="legend-list">
+                    <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span><span>Excited</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#22c55e"></span><span>Happy</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#38bdf8"></span><span>Calm</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#a78bfa"></span><span>Neutral</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#94a3b8"></span><span>Tired</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#818cf8"></span><span>Sad</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#fb923c"></span><span>Anxious</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#f43f5e"></span><span>Frustrated</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="heatmap-tooltip" class="heatmap-tooltip hidden"></div>
+    </div>
+
 </div>
 {% endblock %}

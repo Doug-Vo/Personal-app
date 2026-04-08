@@ -305,7 +305,7 @@ def change_password():
 def home():
     if current_user.is_authenticated:
         return redirect(url_for('summary'))
-    return render_template('index.html')
+    return redirect(url_for('login'))
 
 
 @app.route('/translator')
