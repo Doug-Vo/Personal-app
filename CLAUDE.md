@@ -6,6 +6,8 @@ Full-stack personal web app with a language translator, mood journal, Kanban boa
 
 ## Running the App
 
+**Live:** [oinky.azurewebsites.net](https://oinky.azurewebsites.net/summary)
+
 **Local development:**
 
 ```bash
@@ -16,13 +18,8 @@ python app.py
 **Docker:**
 
 ```bash
-docker build -t in-in .
-docker run -p 8000:8000 \
-  -e SECRET_KEY=... \
-  -e MONGO_URI=... \
-  -e AZURE_TRANSLATOR_KEY=... \
-  -e AZURE_TRANSLATOR_LOCATION=... \
-  in-in
+docker build -t dougvo/bdapp:v1 .
+docker run -p 8000:8000 --env-file .env dougvo/bdapp:v1
 ```
 
 ## Environment Variables
@@ -32,7 +29,9 @@ docker run -p 8000:8000 \
 | `SECRET_KEY` | Flask session secret |
 | `MONGO_URI` | MongoDB connection string |
 | `AZURE_TRANSLATOR_KEY` | Azure Cognitive Services key |
-| `AZURE_TRANSLATOR_LOCATION` | Azure region (e.g. `eastus`) |
+| `AZURE_TRANSLATOR_LOCATION` | Azure region (e.g. `swedencentral`) |
+| `SESSION_COOKIE_SECURE` | Set to `true` in production |
+| `WEBSITES_PORT` | `8000` — required for Azure App Service |
 
 ## Notes
 

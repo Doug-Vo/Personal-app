@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const tryAnotherBtn   = document.getElementById('yki-try-another-btn');
     const backToSelectBtn = document.getElementById('yki-back-to-select-btn');
 
+    const examSameBtn     = document.getElementById('yki-exam-same-btn');
+    const examDiffBtn     = document.getElementById('yki-exam-diff-btn');
+    const examExitBtn     = document.getElementById('yki-exam-exit-btn');
+
     const crowdAudio      = document.getElementById('yki-crowd-audio');
 
     // ── Constants ──
@@ -56,10 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
         category:    null,
         question:    '',
         hint:        '',
+        translation: '',
         timerId:     null,
         timeLeft:    0,
         totalTime:   0,
-        translating: false,
     };
 
     // ── CSRF ──
@@ -114,13 +118,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ── Audio ──
-    crowdAudio.volume = parseFloat(volumeSlider.value);
+    // ── Audio — restore saved volume from localStorage ──
+    const savedVol    = parseFloat(localStorage.getItem('yki-volume') ?? '0.5');
+    const savedMuted  = localStorage.getItem('yki-muted') === 'true';
+    crowdAudio.volume = savedVol;
+    crowdAudio.muted  = savedMuted;
+    volumeSlider.value = savedVol;
+    muteBtn.textContent = savedMuted ? '🔇' : '🔊';
 
     function startCrowd() {
         crowdAudio.currentTime = 0;
-        crowdAudio.muted = false;
-        muteBtn.textContent = '🔊';
         crowdAudio.play().catch(() => {});
     }
 
@@ -132,19 +139,21 @@ document.addEventListener('DOMContentLoaded', () => {
     volumeSlider.addEventListener('input', () => {
         const vol = parseFloat(volumeSlider.value);
         crowdAudio.volume = vol;
-        // Keep muted flag in sync with slider — treat vol=0 as muted
-        crowdAudio.muted = (vol === 0);
+        crowdAudio.muted  = (vol === 0);
         muteBtn.textContent = crowdAudio.muted ? '🔇' : '🔊';
+        localStorage.setItem('yki-volume', vol);
+        localStorage.setItem('yki-muted', crowdAudio.muted);
     });
 
     muteBtn.addEventListener('click', () => {
         crowdAudio.muted = !crowdAudio.muted;
         muteBtn.textContent = crowdAudio.muted ? '🔇' : '🔊';
-        // If unmuting while slider is at 0, bump volume to a audible level
         if (!crowdAudio.muted && crowdAudio.volume === 0) {
             crowdAudio.volume = 0.3;
             volumeSlider.value = 0.3;
+            localStorage.setItem('yki-volume', 0.3);
         }
+        localStorage.setItem('yki-muted', crowdAudio.muted);
     });
 
     // ── Fetch question ──
@@ -172,8 +181,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fetch question while showing ready panel
         try {
             const data = await loadQuestion(category);
-            state.question = data.question;
-            state.hint     = data.hint;
+            state.question    = data.question;
+            state.hint        = data.hint;
+            state.translation = data.translation || '';
         } catch (e) {
             alert('Could not load question. Please try again.');
             return;
@@ -191,9 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset translation state
         translationBlock.classList.add('hidden');
         translationText.textContent = '';
-        translateBtn.classList.remove('hidden');
-        translateBtn.disabled = false;
-        translateBtn.textContent = '🌐 Translate to English';
+        translateBtn.textContent = '🌐 Show translation';
 
         // Populate question
         questionText.textContent = state.question;
@@ -268,36 +276,36 @@ document.addEventListener('DOMContentLoaded', () => {
     tryAnotherBtn.addEventListener('click', tryAnother);
     backToSelectBtn.addEventListener('click', enterSelect);
 
-    // Translate button
-    translateBtn.addEventListener('click', async () => {
-        if (state.translating) return;
-        state.translating = true;
-        translateBtn.disabled = true;
-        translateBtn.textContent = '…';
-
-        // Clear any previous error before retrying
-        translationBlock.classList.add('hidden');
-        translationText.textContent = '';
-
-        try {
-            const res = await fetch('/api/yki/translate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
-                body: JSON.stringify({ text: state.question }),
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Translation failed');
-            translationText.textContent = data.translation;
+    // Translate button — toggles translation block show/hide
+    translateBtn.addEventListener('click', () => {
+        const isHidden = translationBlock.classList.contains('hidden');
+        if (isHidden) {
+            translationText.textContent = state.translation || 'Translation not available.';
             translationBlock.classList.remove('hidden');
-            translateBtn.classList.add('hidden');   // hide after success
-        } catch (e) {
-            translateBtn.textContent = '🌐 Translate to English';
-            translateBtn.disabled = false;
-            translationText.textContent = 'Translation unavailable. Try again.';
-            translationBlock.classList.remove('hidden');
-        } finally {
-            state.translating = false;
+            translateBtn.textContent = '🌐 Hide translation';
+        } else {
+            translationBlock.classList.add('hidden');
+            translateBtn.textContent = '🌐 Show translation';
         }
+    });
+
+    // Exam navigation buttons
+    examSameBtn.addEventListener('click', async () => {
+        stopTimer();
+        stopCrowd();
+        await enterReady(state.category);
+    });
+
+    examDiffBtn.addEventListener('click', () => {
+        stopTimer();
+        stopCrowd();
+        enterSelect();
+    });
+
+    examExitBtn.addEventListener('click', () => {
+        stopTimer();
+        stopCrowd();
+        enterSelect();
     });
 
 });

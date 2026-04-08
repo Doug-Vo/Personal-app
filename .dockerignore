@@ -1,12 +1,37 @@
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Virtual environments
 .env
 .venv
 env/
 venv/
+
+# Git
 .git/
 .gitignore
+
+# Docker files (no need to copy into image)
 Dockerfile
 .dockerignore
+docker-compose.yml
+
+# Dev / docs (not needed at runtime)
+temp/
+sound/
+.claude/
+readMe.md
+CLAUDE.md
+deploy.md
+run.ipynb
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

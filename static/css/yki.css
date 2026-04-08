@@ -12,7 +12,7 @@
 
 .yki-card {
     width: 100%;
-    max-width: 640px;
+    max-width: 90rem;   /* matches .header-container navbar width */
 }
 
 /* ── Panel base ── */
@@ -46,7 +46,7 @@
 /* ── Category selection grid ── */
 .yki-category-grid {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
@@ -57,9 +57,9 @@
     flex-direction: column;
     align-items: center;
     gap: 0.4rem;
-    padding: 1.25rem 1rem;
-    flex: 1 1 160px;
-    max-width: 190px;
+    padding: 2rem 1.5rem;
+    flex: 1 1 220px;
+    max-width: 320px;
     background: var(--bg-card);
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
@@ -282,10 +282,12 @@
 }
 
 .yki-question-text {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     line-height: 1.7;
     color: var(--text-primary);
     margin: 0 0 0.75rem;
+    max-width: 70ch;          /* keep lines readable even on wide cards */
+    align-self: center;
 }
 
 .yki-hint-block {
@@ -380,6 +382,31 @@
 .yki-link-btn:hover {
     color: var(--text-primary);
     text-decoration: underline;
+}
+
+.yki-link-danger {
+    color: var(--accent-rose);
+}
+
+.yki-link-danger:hover {
+    color: var(--accent-rose);
+    opacity: 0.75;
+}
+
+/* ── Exam navigation row ── */
+.yki-exam-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+}
+
+.yki-nav-sep {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    user-select: none;
 }
 
 /* ── Done panel ── */

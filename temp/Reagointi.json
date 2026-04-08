@@ -2,496 +2,595 @@
   {
     "category": "Reagointi",
     "main_question": "Sinun kaukainen ystävä / sukulainen tulee sinun luokse ensimmäisen kerran. Kerro naapurille, mitä aiot näyttää hänelle sinun kotikaupungissasi.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your distant friend / relative comes to visit you for the first time. Tell your neighbor what you are going to show them in your hometown."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun naapurin oven takana käy joku, mutta naapuri ei ole kotona. Kerro naapurille, miltä vieras näytti.",
-    "hint": ""
+    "hint": "",
+    "translation": "Someone visits your neighbor's door, but the neighbor is not home. Tell your neighbor what the guest looked like."
   },
   {
     "category": "Reagointi",
     "main_question": "Näet kadulla, että kaksi poikaa kiusaa koulukaveria. Mene väliin ja kerro pojille, miksi ei saa kiusata.",
-    "hint": ""
+    "hint": "",
+    "translation": "You see on the street that two boys are bullying a schoolmate. Intervene and tell the boys why bullying is not allowed."
   },
   {
     "category": "Reagointi",
     "main_question": "Ystäväsi kertoo, että hänen isänsä on kuollut. Ystävä on todella surullinen. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend tells you that their father has died. The friend is very sad. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Olet ystävän luona kylässä. Ystävä tarjoaa sinulle ruokaa tai juomaa, jota et voi syödä / juoda (keksi itse, miksi). Kieltäydy kohteliaasti.",
-    "hint": ""
+    "hint": "",
+    "translation": "You are visiting a friend. The friend offers you food or drink that you cannot eat / drink (make up the reason yourself). Refuse politely."
   },
   {
     "category": "Reagointi",
     "main_question": "Ystävä tulee sinun luo kylään. Hänellä on sinulle todella iso ja kallis lahja. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "A friend comes to visit you. They have a really big and expensive gift for you. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Sinulla ja ystävälläsi oli edellisenä päivänä riitaa jostain pienestä asiasta. Soitat ystävällesi ja haluat sopia. Jätä ääniviesti ystävälle.",
-    "hint": ""
+    "hint": "",
+    "translation": "You and your friend had an argument the previous day about some small thing. You call your friend and want to make up. Leave a voice message for your friend."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun auto on mennyt rikki ja tarvitset kyydin ystävältä (keksi itse mihin ja milloin).",
-    "hint": ""
+    "hint": "",
+    "translation": "Your car has broken down and you need a ride from a friend (make up where to and when)."
   },
   {
     "category": "Reagointi",
     "main_question": "Näet kaupungilla vanhan ystäväsi, jota et ole nähnyt pitkään aikaan. Mitä sanot hänelle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You see an old friend in town whom you haven't seen in a long time. What do you say to them?"
   },
   {
     "category": "Reagointi",
     "main_question": "Työkaverisi kutsuu sinut kylään. Et halua mennä. Kieltäydy kohteliaasti ja kerro syy.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your colleague invites you over. You don't want to go. Refuse politely and give a reason."
   },
   {
     "category": "Reagointi",
     "main_question": "Pieni lapsi itkee yksin kaupan parkkipaikalla. Et näe vanhempia. Mitä sanot hänelle?",
-    "hint": ""
+    "hint": "",
+    "translation": "A small child is crying alone in a store parking lot. You don't see the parents. What do you say to them?"
   },
   {
     "category": "Reagointi",
     "main_question": "Ystäväsi on tänään todella kaunis / komea ja pukeutunut hyvin. Kehu häntä.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend is really beautiful / handsome today and well-dressed. Compliment them."
   },
   {
     "category": "Reagointi",
     "main_question": "Haluat kertoa jollekin, kuinka tärkeä hän on sinulle. Kerro myös, miksi hän on sinulle tärkeä.",
-    "hint": ""
+    "hint": "",
+    "translation": "You want to tell someone how important they are to you. Also tell them why they are important to you."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet kuullut, että ystäväsi on puhunut sinusta pahaa selän takana. Mitä sanot hänelle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You have heard that your friend has been talking bad about you behind your back. What do you say to them?"
   },
   {
     "category": "Reagointi",
     "main_question": "Ystäväsi kertoo, että hän saa pian lapsen.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend tells you that they are having a baby soon."
   },
   {
     "category": "Reagointi",
     "main_question": "Ystäväsi on sairastunut vakavasti.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend has become seriously ill."
   },
   {
     "category": "Reagointi",
     "main_question": "Menet häihin, mutta unohdit ostaa häälahjan. Mitä sanot hääparille?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are going to a wedding, but you forgot to buy a wedding gift. What do you say to the wedding couple?"
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun ystävä on kutsunut sinut juhannuksena hänen mökille. Et tiedä, mitä pitää pakata mukaan. Kysy neuvoa työkaverilta.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend has invited you to their cabin for Midsummer. You don't know what to pack. Ask a colleague for advice."
   },
   {
     "category": "Reagointi",
     "main_question": "Menet kahvilaan, mutta kaikki pöydät ovat likaisia. Valita asiasta tarjoilijalle.",
-    "hint": ""
+    "hint": "",
+    "translation": "You go to a cafe, but all the tables are dirty. Complain about this to the waiter."
   },
   {
     "category": "Reagointi",
     "main_question": "Kaveri on lainannut sinulta autoa. Hän on käyttänyt kaikki bensat ja ei ole tankannut. Kerro kaverille, mitä mieltä olet hänen käytöksestä.",
-    "hint": ""
+    "hint": "",
+    "translation": "A friend has borrowed your car. They have used all the gas and haven't refueled. Tell your friend what you think of their behavior."
   },
   {
     "category": "Reagointi",
     "main_question": "Haluat palkata siivoojan kotiin. Kerro ystävällesi, miksi et enää halua siivota itse.",
-    "hint": ""
+    "hint": "",
+    "translation": "You want to hire a cleaner for your home. Tell your friend why you don't want to clean yourself anymore."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet ostanut Ikeasta lampun, joka on pudonnut katosta alas. Jos lamppu olisi pudonnut jonkun päähän, se olisi ollut vaarallista. Valita asiasta Ikeaan ja vaadi korvausta.",
-    "hint": ""
+    "hint": "",
+    "translation": "You bought a lamp from Ikea that fell from the ceiling. If the lamp had fallen on someone's head, it would have been dangerous. Complain about it to Ikea and demand compensation."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet ostanut jonkin huonekalun (keksi itse, minkä). Olet yrittänyt koota sitä, mutta kaikki osat eivät ole pakkauksessa.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have bought some piece of furniture (make up what kind yourself). You have tried to assemble it, but not all parts are in the package."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet Ikeassa ja haluat kokeilla sänkyä. Joku nukkuu sängyssä ja et voi kokeilla sitä. Et myöskään näe sängyn hintaa. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are in Ikea and want to try a bed. Someone is sleeping in the bed and you cannot try it. You also don't see the price of the bed. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Haluat ostaa kaksi samanlaista tuolia. Tuoleja on kuitenkin enää kaksi jäljellä ja toinen tuoli on toisella asiakkaalla. Mitä sanot, että saat tuolin?",
-    "hint": ""
+    "hint": "",
+    "translation": "You want to buy two identical chairs. However, there are only two chairs left and the other chair is with another customer. What do you say to get the chair?"
   },
   {
     "category": "Reagointi",
     "main_question": "Olet ostamassa jotakin kallista (keksi itse, mitä.) Haluat tinkiä tuotteesta. Mitä sanot ja miten perustelet?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are buying something expensive (make up what). You want to haggle over the product. What do you say and how do you justify it?"
   },
   {
     "category": "Reagointi",
     "main_question": "Menet kukkakauppaan ja haluat ostaa kukkia lahjaksi. Kerro myyjälle, kenelle ja millaiseen tilaisuuteen kukat tulevat.",
-    "hint": ""
+    "hint": "",
+    "translation": "You go to a flower shop and want to buy flowers as a gift. Tell the seller who and what kind of occasion the flowers are for."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet ravintolassa ja viereisessä pöydässä on lapsiperhe, jonka lapset käyttäytyvät huonosti. Mitä sanot vanhemmille?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are in a restaurant and at the next table is a family with children who are behaving badly. What do you say to the parents?"
   },
   {
     "category": "Reagointi",
     "main_question": "Ravintolassa on todella hidas palvelu. Valita asiasta tarjoilijalle.",
-    "hint": ""
+    "hint": "",
+    "translation": "The restaurant has really slow service. Complain about this to the waiter."
   },
   {
     "category": "Reagointi",
     "main_question": "Kaupan parkkipaikalla on koira kuumassa autossa. Kerro mielipiteesi koiran omistajalle.",
-    "hint": ""
+    "hint": "",
+    "translation": "There is a dog in a hot car in the store parking lot. Give your opinion to the dog's owner."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun läppärissä on jokin vika. Takuu on vielä voimassa. Soitat liikkeeseen.",
-    "hint": ""
+    "hint": "",
+    "translation": "There is some fault with your laptop. The warranty is still valid. You call the store."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet nähnyt ilmoituksen käytetystä pesukoneesta. Soita myyjälle ja kysy lisätietoja.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have seen an advertisement for a used washing machine. Call the seller and ask for more information."
   },
   {
     "category": "Reagointi",
     "main_question": "Neuvo ystävä sinun kotiin bussilla.",
-    "hint": ""
+    "hint": "",
+    "translation": "Advise a friend on how to get to your home by bus."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet bussissa, mutta et tunne reittiä. Kerro kuljettajalle, missä haluat jäädä pois ja pyydä apua.",
-    "hint": ""
+    "hint": "",
+    "translation": "You are on a bus, but you don't know the route. Tell the driver where you want to get off and ask for help."
   },
   {
     "category": "Reagointi",
     "main_question": "Löydät sohvan, jääkaapin ja paljon roskapusseja metsästä. Soitat kaatopaikalle ja kerrot tilanteesta.",
-    "hint": ""
+    "hint": "",
+    "translation": "You find a sofa, a fridge, and a lot of garbage bags in the forest. You call the landfill and tell them about the situation."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet järven rannalla ja siellä on sorsia. Mummo syöttää sorsille suklaata. Mitä sanot mummolle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are at the lake shore and there are ducks. A grandmother is feeding chocolate to the ducks. What do you say to the grandmother?"
   },
   {
     "category": "Reagointi",
     "main_question": "Olet kaupassa ja haluat ostaa hyvät kengät metsään kävelyä varten. Pyydät apua myyjältä.",
-    "hint": ""
+    "hint": "",
+    "translation": "You are in a store and want to buy good shoes for walking in the forest. You ask the seller for help."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet kävelyllä. Näet, että joku heittää käytetyn jääkaapin metsään. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are taking a walk. You see someone throwing a used fridge into the forest. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Olet muuttamassa uuteen kotiin. Haluat lahjoittaa jonkin vanhan tavarasi (keksi itse, minkä) ystävällesi. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are moving to a new home. You want to donate an old item of yours (make up what) to your friend. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Etsit uutta asuntoa. Välittäjä kysyy, mikä on sinulle tärkeää asuinympäristössä. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are looking for a new apartment. The broker asks what is important to you in a living environment. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Ulkomailla asuva ystäväsi kysyy sinulta, millainen on Suomen luonto. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend living abroad asks you what Finnish nature is like. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Näet kadulla miehen, joka potkii jotain eläintä (mitä?). Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "You see a man on the street kicking an animal (what animal?). What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Tarvitset apteekista jotain ja pyydät, että ystävä auttaa.",
-    "hint": ""
+    "hint": "",
+    "translation": "You need something from the pharmacy and ask a friend to help."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet nähnyt auto-onnettomuuden. Poliisi kysyy sinulta, mitä tapahtui. Vastaa poliisille.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have seen a car accident. The police ask you what happened. Answer the police."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet lenkillä ja näet, että nuori nainen makaa kadulla. Mitä sanot hänelle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are jogging and see a young woman lying on the street. What do you say to her?"
   },
   {
     "category": "Reagointi",
     "main_question": "Olet suojatiellä ja auto melkein törmää sinuun. Mitä sanot kuljettajalle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are on a crosswalk and a car almost hits you. What do you say to the driver?"
   },
   {
     "category": "Reagointi",
     "main_question": "Menet laboratorioon, mutta pelkäät pistämistä.",
-    "hint": ""
+    "hint": "",
+    "translation": "You go to the laboratory, but you are afraid of getting an injection."
   },
   {
     "category": "Reagointi",
     "main_question": "Näet ehkä 10-vuotiaan tytön polttamassa tupakkaa pihalla. Mitä sanot hänelle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You see an approximately 10-year-old girl smoking a cigarette in the yard. What do you say to her?"
   },
   {
     "category": "Reagointi",
     "main_question": "Rattijuoppo tulee sinun kodin parkkipaikalle. Tunnistat henkilön. Soitat poliisille.",
-    "hint": ""
+    "hint": "",
+    "translation": "A drunk driver comes to your home's parking lot. You recognize the person. You call the police."
   },
   {
     "category": "Reagointi",
     "main_question": "Kuulet, että sinun ystävällä on rintasyöpä. Mitä sanot hänelle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You hear that your friend has breast cancer. What do you say to her?"
   },
   {
     "category": "Reagointi",
     "main_question": "Pelkäät, että sinulla on joku muistisairaus. Unohtelet asioita usein. Kysy aiheesta lisää terveydenhoitajalta.",
-    "hint": ""
+    "hint": "",
+    "translation": "You are afraid that you have a memory illness. You forget things often. Ask the public health nurse more about the topic."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet sopinut ystävän kanssa jotain, mutta olet sairas ja et voi tavata.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have agreed on something with a friend, but you are sick and cannot meet."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinulla on kuumetta ja lapsi pitää hakea päiväkodista. Pyydä ystävältä apua.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have a fever and the child needs to be picked up from daycare. Ask a friend for help."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet vaa'alla ja huomaat, että painosi on noussut 10 kg.",
-    "hint": ""
+    "hint": "",
+    "translation": "You are on the scale and notice that your weight has increased by 10 kg."
   },
   {
     "category": "Reagointi",
     "main_question": "Menet kuntosalille ja haluat dieetin ja kunto-ohjelman.",
-    "hint": ""
+    "hint": "",
+    "translation": "You go to the gym and want a diet and fitness program."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinulla on asiaa työkaverillesi ja menet tapaamaan häntä. Hän ei kuitenkaan ole työpisteellään. Lähetä hänelle WhatsAppilla ääniviesti, jossa kerrot asiasi.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have something to say to your colleague and go to meet them. However, they are not at their workstation. Send them a WhatsApp voice message explaining your matter."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun työpaikalle on tullut uusi työntekijä. Hän ei tiedä, mitä tehdä. Auta häntä.",
-    "hint": ""
+    "hint": "",
+    "translation": "A new employee has come to your workplace. They don't know what to do. Help them."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet ollut työhaastattelussa. Soitat haastattelijalle, koska haluat vielä kysyä jotakin. (Keksi itse, mitä.)",
-    "hint": ""
+    "hint": "",
+    "translation": "You have been to a job interview. You call the interviewer because you still want to ask something. (Make up what yourself.)"
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun palkassa on virhe (keksi itse, mikä). Soitat palkanlaskijalle.",
-    "hint": ""
+    "hint": "",
+    "translation": "There is an error in your salary (make up what). You call the payroll accountant."
   },
   {
     "category": "Reagointi",
     "main_question": "Työkaverisi täyttää pian 50 vuotta. Sinä haluat järjestää ohjelmaa. Ehdota työkavereille, miten voitte juhlia.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your colleague is turning 50 soon. You want to organize a program. Suggest to your colleagues how you can celebrate."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet saanut uuden työpaikan ja sinun täytyy irtisanoutua. Kerro pomolle tilanne.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have got a new job and you have to resign. Tell the boss the situation."
   },
   {
     "category": "Reagointi",
     "main_question": "Tiedät todella hyvän työntekijän sinun projektiin. Suosittele häntä sinun pomolle.",
-    "hint": ""
+    "hint": "",
+    "translation": "You know a really good employee for your project. Recommend them to your boss."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun täytyy varata neuvotteluhuone. Kerro, milloin tarvitset sitä ja kuinka ison neuvotteluhuoneen tarvitset.",
-    "hint": ""
+    "hint": "",
+    "translation": "You need to book a meeting room. Tell them when you need it and how big of a meeting room you need."
   },
   {
     "category": "Reagointi",
     "main_question": "Työkaverisi ei ole tehnyt sovittua asiaa (keksi itse, mitä). Olet hänelle vihainen. Kerro, mitä mieltä olet siitä, että hän ei tehnyt, mitä oli sovittu.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your colleague has not done the agreed thing (make up what). You are angry with them. Tell them what you think about them not doing what was agreed upon."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinulla on liikaa töitä ja olet tosi väsynyt. Ehdota sinun pomolle, miten sinun töitä voi helpottaa.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have too much work and you are really tired. Suggest to your boss how your work can be eased."
   },
   {
     "category": "Reagointi",
     "main_question": "Työkaverisi jää äitiyslomalle. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "Your colleague is going on maternity leave. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun ystävä on saanut potkut. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend has been fired. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun ystävä on saanut uuden, tosi hyvän työpaikan. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend has got a new, really good job. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun pomo ilmoittaa, että tulee iso muutos organisaatiossa ja henkilökunnasta irtisanotaan 20%. Kerro työkaverille, mitä ajattelet asiasta.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your boss announces that there will be a big change in the organization and 20% of the staff will be laid off. Tell your colleague what you think about it."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun palkkasi on mielestäsi liian pieni. Perustele pomolle, miksi tarvitset palkankorotuksen.",
-    "hint": ""
+    "hint": "",
+    "translation": "You think your salary is too small. Justify to the boss why you need a raise."
   },
   {
     "category": "Reagointi",
     "main_question": "Haluat osallistua koulutukseen (keksi itse, mihin). Kerro pomolle, mitä hyötyä koulutuksesta on.",
-    "hint": ""
+    "hint": "",
+    "translation": "You want to participate in a training (make up what). Tell the boss what the benefits of the training are."
   },
   {
     "category": "Reagointi",
     "main_question": "Lapsesi tulee kotiin ja itkee. Koulussa on tapahtunut jotakin pahaa (keksi itse, mitä.) Selitä asia opettajalle.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your child comes home and cries. Something bad has happened at school (make up what). Explain the matter to the teacher."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinä näit, kun koulun pihalla joku lapsi kiusasi toista lasta. Soitat kouluun rehtorille ja kerrot asiasta.",
-    "hint": ""
+    "hint": "",
+    "translation": "You saw a child bullying another child in the schoolyard. You call the school principal and report the matter."
   },
   {
     "category": "Reagointi",
     "main_question": "Haluat palauttaa kirjan kirjastoon, mutta se on mennyt rikki. Selitä, mitä tapahtui.",
-    "hint": ""
+    "hint": "",
+    "translation": "You want to return a book to the library, but it has broken. Explain what happened."
   },
   {
     "category": "Reagointi",
     "main_question": "Luet kirjaa kirjastossa, kun joku puhuu kovaan ääneen puhelimessa. Huomauta hänelle asiasta.",
-    "hint": ""
+    "hint": "",
+    "translation": "You are reading a book in the library when someone talks loudly on the phone. Point this out to them."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet odottanut kauan palvelua baaritiskillä. Viereesi tulee mies, joka saa heti palvelua. Mitä sanot baarimikolle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You have been waiting a long time for service at the bar counter. A man comes next to you who gets served immediately. What do you say to the bartender?"
   },
   {
     "category": "Reagointi",
     "main_question": "Portsari ei päästä sinua sisälle ja sanoo, että näytät alaikäiseltä. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "The bouncer won't let you in and says you look underage. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Kaverisi haluaa aloittaa uuden liikuntaharrastuksen. Ehdota hänelle sopivaa lajia.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your friend wants to start a new sports hobby. Suggest a suitable sport for them."
   },
   {
     "category": "Reagointi",
     "main_question": "Yritit mennä kuntosalille aikaisin aamulla, mutta sinun korttisi ei toiminut. Ilmoita asiasta kuntosalille.",
-    "hint": ""
+    "hint": "",
+    "translation": "You tried to go to the gym early in the morning, but your card didn't work. Report this to the gym."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet unohtanut jotakin kuntosalille. Kerro, mitä ja milloin unohdit.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have forgotten something at the gym. Tell them what and when you forgot it."
   },
   {
     "category": "Reagointi",
     "main_question": "Haluat varata taksin lentokentälle. Pyydä apua vastaanotosta. Kerro, milloin ja mihin lento lähtee.",
-    "hint": ""
+    "hint": "",
+    "translation": "You want to book a taxi to the airport. Ask the reception for help. Tell them when and where the flight departs."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet junassa. Sinulla on paikkalippu, mutta joku istuu siinä.",
-    "hint": ""
+    "hint": "",
+    "translation": "You are on a train. You have a seat reservation, but someone is sitting in it."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet kaverin kanssa. Hän katsoo koko ajan puhelinta, eikä puhu sinun kanssa. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are with a friend. They are looking at their phone the whole time and are not talking to you. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Matkustat bussissa. Sinun vieressä istuu nuori, joka soittaa musiikkia kovaa. Sinun päätä särkee. Mitä sanot nuorelle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are traveling on a bus. A young person is sitting next to you playing loud music. Your head hurts. What do you say to the young person?"
   },
   {
     "category": "Reagointi",
     "main_question": "Ystävälläsi on 50-vuotissyntymäpäivä. Annat hänelle lahjaksi taidetta (keksi itse, mitä). Mitä sanot, kun annat lahjan?",
-    "hint": ""
+    "hint": "",
+    "translation": "It is your friend's 50th birthday. You give them art as a gift (make up what it is). What do you say when you give the gift?"
   },
   {
     "category": "Reagointi",
     "main_question": "Olet elokuvateatterissa ja vieruskaverisi naksuttelee popcorneja äänekkäästi.",
-    "hint": ""
+    "hint": "",
+    "translation": "You are at the cinema and the person sitting next to you is crunching popcorn loudly."
   },
   {
     "category": "Reagointi",
     "main_question": "Autosi on rikki ja tiedät, että naapurisi menee samaan paikkaan kuin sinä. Pyydä kyytiä.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your car is broken down and you know your neighbor is going to the same place as you. Ask for a ride."
   },
   {
     "category": "Reagointi",
     "main_question": "Näet pienen koululaisen kahvilassa. Koululainen katsoo tabletilta ohjelmaa, joka ei sovi hänelle. Kerro hänelle, miksi ohjelma on huono ja miksi hänen ei pitäisi katsoa sitä.",
-    "hint": ""
+    "hint": "",
+    "translation": "You see a small school child in a cafe. The school child is watching a program on a tablet that is not suitable for them. Tell them why the program is bad and why they shouldn't watch it."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet ostanut urheiluliikkeestä jonkin tuotteen (keksi itse, minkä). Tuotteessa on jokin vika. Palauta tuote kauppaan ja kerro, miksi haluat palauttaa sen.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have bought a product from a sports store (make up what). There is some defect in the product. Return the product to the store and explain why you want to return it."
   },
   {
     "category": "Reagointi",
     "main_question": "Kävelet kaupungilla, kun toimittaja kysyy sinulta, mitä mieltä olet kotikaupungistasi. Mitä sanot hänelle?",
-    "hint": ""
+    "hint": "",
+    "translation": "You are walking in town when a reporter asks you what you think of your hometown. What do you say to them?"
   },
   {
     "category": "Reagointi",
     "main_question": "Näet lähipuistossasi nuoria, jotka ovat siellä joka päivä koulun jälkeen. Nuoret roskaavat puistoa ja pitävät kovaa meteliä. Ehdota nuorille, mitä muuta he voisivat tehdä kuin olla puistossa.",
-    "hint": ""
+    "hint": "",
+    "translation": "You see young people in your local park who are there every day after school. The youths litter the park and make a lot of noise. Suggest to the youths what else they could do besides being in the park."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinulla on jokin ongelma oleskeluluvan kanssa (keksi itse, mikä). Soita Migriin.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have a problem with your residence permit (make up what). Call Migri."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet saanut YKI-testin tulokset. Haluat hakea kansalaisuutta, mutta sinulla on kysymyksiä. Soita Migriin.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have received your YKI test results. You want to apply for citizenship, but you have questions. Call Migri."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet odottanut Suomen passia jo 16 kuukautta. Haluat kysyä lisää. Soita Migriin.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have been waiting for a Finnish passport for 16 months already. You want to ask for more information. Call Migri."
   },
   {
     "category": "Reagointi",
     "main_question": "Presidentin kansliasta soitetaan sinulle ja saat kutsun 6.12. itsenäisyyspäivän juhlaan, koska olet ollut tosi ahkera suomen kielen opiskelija. Sinun opettaja on suositellut sinua. Mitä sanot?",
-    "hint": ""
+    "hint": "",
+    "translation": "The President's office calls you and you get an invitation to the Independence Day reception on December 6th because you have been a very diligent student of the Finnish language. Your teacher recommended you. What do you say?"
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun kännykkä on mennyt rikki (keksi itse, miten). Kysyt, korvaako kotivakuutus sen.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your cell phone has broken down (make up how). You ask if home insurance covers it."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinun työtilanteesi on muuttunut (keksi itse, miten) ja sinun täytyy muuttaa veroprosenttiasi. Soita verotoimistoon.",
-    "hint": ""
+    "hint": "",
+    "translation": "Your work situation has changed (make up how) and you need to change your tax rate. Call the tax office."
   },
   {
     "category": "Reagointi",
     "main_question": "Sinulla on jokin ongelma Kelan kanssa (keksi itse, mikä). Soita Kelaan.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have some problem with Kela (make up what). Call Kela."
   },
   {
     "category": "Reagointi",
     "main_question": "Olet joutunut rikoksen uhriksi (keksi itse, mitä on tapahtunut). Ilmoita asiasta poliisille.",
-    "hint": ""
+    "hint": "",
+    "translation": "You have become a victim of a crime (make up what happened). Report it to the police."
   }
 ]

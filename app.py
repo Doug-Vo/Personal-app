@@ -26,7 +26,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY']              = os.environ.get('SECRET_KEY', 'dev_key_only_change_in_azure')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE']   = False  # Set True in Azure production
+app.config['SESSION_COOKIE_SECURE']   = os.environ.get('SESSION_COOKIE_SECURE', 'false').lower() == 'true'
 
 # ── Security ──
 talisman = Talisman(app, content_security_policy=None, force_https=False)
@@ -816,27 +816,10 @@ def yki_question():
     return jsonify(
         question=doc.get("main_question", ""),
         hint=doc.get("hint", ""),
+        translation=doc.get("translation", ""),
         category=category
     )
 
-
-@app.route('/api/yki/translate', methods=['POST'])
-@login_required
-@limiter.limit("20 per minute")
-def yki_translate():
-    body = request.get_json(silent=True) or {}
-    text = body.get("text", "").strip()
-    if not text:
-        return jsonify(error="No text provided"), 400
-    if len(text) > 2000:
-        return jsonify(error="Text too long"), 400
-    try:
-        result = translate(text, to_lang='en', from_lang='fi')
-        return jsonify(translation=result)
-    except requests.HTTPError:
-        return jsonify(error="Translation service error"), 502
-    except Exception:
-        return jsonify(error="Translation unavailable"), 500
 
 
 # ──────────────────────────────────────────────

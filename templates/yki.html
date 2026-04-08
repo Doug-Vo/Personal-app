@@ -83,10 +83,19 @@
             <p id="yki-translation-text" class="yki-translation-text"></p>
         </div>
 
-        <!-- Action buttons -->
+        <!-- Action buttons: translate toggle + skip prep -->
         <div class="yki-action-row">
-            <button id="yki-translate-btn" class="yki-secondary-btn">🌐 Translate to English</button>
+            <button id="yki-translate-btn" class="yki-secondary-btn">🌐 Show translation</button>
             <button id="yki-skip-prep-btn" class="yki-secondary-btn hidden">⏩ Skip Prep</button>
+        </div>
+
+        <!-- Navigation buttons: always visible during exam -->
+        <div class="yki-exam-nav">
+            <button id="yki-exam-same-btn" class="yki-link-btn">🔁 Try same topic</button>
+            <span class="yki-nav-sep">·</span>
+            <button id="yki-exam-diff-btn" class="yki-link-btn">🔀 Try different category</button>
+            <span class="yki-nav-sep">·</span>
+            <button id="yki-exam-exit-btn" class="yki-link-btn yki-link-danger">✕ Exit exam</button>
         </div>
     </div>
 
