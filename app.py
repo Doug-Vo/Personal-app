@@ -26,7 +26,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY']              = os.environ.get('SECRET_KEY', 'dev_key_only_change_in_azure')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE']   = False  # Set True in Azure production
+app.config['SESSION_COOKIE_SECURE']   = os.environ.get('SESSION_COOKIE_SECURE', 'false').lower() == 'true'
 
 # ── Security ──
 talisman = Talisman(app, content_security_policy=None, force_https=False)
@@ -57,6 +57,7 @@ accounts      = _db["account"]
 journal_col   = _db["journal"]
 board_tasks_col   = _db["board_tasks"]
 board_archive_col = _db["board_archive"]
+yki_col           = _db["yki-speaking"]
 
 # Indexes (idempotent — safe to run on every startup)
 accounts.create_index("username", unique=True)
@@ -783,6 +784,43 @@ def summary_data():
         mood_by_date=mood_by_date,
         month=now.strftime("%B %Y")
     )
+
+# ──────────────────────────────────────────────
+# YKI ROUTES
+# ──────────────────────────────────────────────
+
+VALID_YKI_CATEGORIES = {"Kertominen", "Mielipide", "Reagointi"}
+
+
+@app.route('/yki')
+@login_required
+def yki():
+    return render_template('yki.html')
+
+
+@app.route('/api/yki/question', methods=['POST'])
+@login_required
+@limiter.limit("60 per minute")
+def yki_question():
+    body     = request.get_json(silent=True) or {}
+    category = body.get("category", "").strip()
+    if category not in VALID_YKI_CATEGORIES:
+        return jsonify(error="Invalid category"), 400
+    results = list(yki_col.aggregate([
+        {"$match": {"category": category}},
+        {"$sample": {"size": 1}}
+    ]))
+    if not results:
+        return jsonify(error="No questions found for this category"), 404
+    doc = results[0]
+    return jsonify(
+        question=doc.get("main_question", ""),
+        hint=doc.get("hint", ""),
+        translation=doc.get("translation", ""),
+        category=category
+    )
+
+
 
 # ──────────────────────────────────────────────
 # HEALTH CHECK

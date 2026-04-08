@@ -8,7 +8,7 @@
 | Frontend | Vanilla ES6, Jinja2 templates, custom CSS |
 | Database | MongoDB (`db_webpage`) |
 | External API | Azure Cognitive Services (translation) |
-| Hosting | Docker (configurable port via `PORT` env var) |
+| Hosting | Azure App Service B1, Sweden Central (`oinky.azurewebsites.net`), Docker image `dougvo/bdapp` |
 
 ## File Structure
 
@@ -28,7 +28,12 @@ Personal-Translator/
 │   │   ├── script.js               # Translator page (debounced input → POST /api/translate)
 │   │   ├── journal.js              # Journal tabs: write / entries / heatmap
 │   │   ├── board.js                # Kanban drag-and-drop, task modal, calendar tab
-│   │   └── summary.js              # Exploding donut charts, mood piglet swap
+│   │   ├── summary.js              # Exploding donut charts, mood piglet swap
+│   │   └── yki.js                  # YKI exam state machine + timers + audio
+│   ├── css/
+│   │   └── yki.css                 # YKI feature-scoped styles
+│   ├── sound/
+│   │   └── crowd-sound.mp3         # Crowd noise played during YKI speaking phase
 │   └── image/
 │       └── piglet.png
 └── templates/
@@ -40,6 +45,7 @@ Personal-Translator/
     ├── journal.html
     ├── board.html
     ├── summary.html
+    ├── yki.html                    # YKI speaking exam — 4-panel UI
     └── partials/                   # Inline SVG piglet illustrations (one per mood)
         ├── piglet.html             # Default piglet (used in navbar/header)
         ├── piglet_excited.html
@@ -61,6 +67,7 @@ Personal-Translator/
 | Journal | `GET /journal`, `POST /journal/new`, `POST /journal/delete/<id>`, `GET /journal/chart-data` |
 | Board | `GET /board`, `GET /board/data`, `POST /board/task`, `PATCH /board/task/<id>`, `DELETE /board/task/<id>`, `POST /board/task/<id>/archive`, `DELETE /board/archive/delete` |
 | Summary | `GET /summary`, `GET /summary/data` |
+| YKI | `GET /yki`, `POST /api/yki/question` |
 | Health | `GET /healthz` |
 
 ## MongoDB Collections
@@ -71,6 +78,7 @@ Personal-Translator/
 | `journal` | `user_id`, `date`, `feeling`, `score`, `challenged`, `reflect` |
 | `board_tasks` | `user_id`, `title`, `column`, `priority`, `due_date`, `due_time`, `recur`, `subtasks[]`, `notes` |
 | `board_archive` | `user_id`, `week_start`, `week_label`, `tasks[]` |
+| `yki-speaking` | `category`, `main_question`, `hint`, `translation` (169 docs) |
 
 ## Supported Languages
 

@@ -1,13 +1,16 @@
 # Ỉn Ỉn — Personal Productivity App
 
-Ỉn Ỉn is a personal web app built around a piglet mascot. It started as a simple translator (PeTS) and has grown into a full productivity suite with journaling, task planning, and a summary dashboard — all behind a user account system.
+Ỉn Ỉn is a personal web app built around a piglet mascot. It started as a simple translator (PeTS) and has grown into a full productivity suite with journaling, task planning, a summary dashboard, and a YKI Finnish speaking exam simulator — all behind a user account system.
 
+**Live:** [oinky.azurewebsites.net](https://oinky.azurewebsites.net/summary)
+
+---
 
 ## Features
 
 ### 🌐 Translator
 
-Real-time translation across four languages — **English**, **Finnish**, **Vietnamese**, and **Mandarin Chinese** — as you type (600 ms debounce). 
+Real-time translation across four languages — **English**, **Finnish**, **Vietnamese**, and **Mandarin Chinese** — as you type (600 ms debounce).
 
 ### 📓 Journal
 
@@ -32,6 +35,16 @@ A dashboard showing this month at a glance:
 - Donut chart of active tasks by priority
 - Mood bar chart for the current month with average mood score (out of 7), dominant-mood piglet illustration, and a link to the journal feelings tab
 
+### 🎤 YKI Speaking Exam
+
+A Finnish speaking exam simulator with three question categories:
+
+- **Kertominen** — narrative tasks (90s prep / 90s speak)
+- **Mielipide** — opinion tasks (120s prep / 120s speak)
+- **Reagointi** — reaction tasks (30s prep / 30s speak)
+
+Features an SVG countdown ring timer, crowd-noise audio during speaking time (with volume control persisted across sessions), instant English translation toggle, and mid-exam navigation to retry or switch category.
+
 ### 🔐 Auth
 
 Username/password accounts (bcrypt). Supports register, login, logout, and change password. Validation enforces username length/characters and password strength (uppercase, lowercase, digit, special character).
@@ -47,8 +60,9 @@ Username/password accounts (bcrypt). Supports register, login, logout, and chang
 | Translation | Azure Cognitive Services Translator |
 | Auth | Flask-Login, bcrypt, Flask-WTF (CSRF) |
 | Security | Flask-Talisman, Flask-Limiter |
-| Frontend | Vanilla JS (ES6), Tailwind CSS (CDN), custom CSS |
+| Frontend | Vanilla JS (ES6), Jinja2 templates, custom CSS |
 | Containerization | Docker |
+| Hosting | Azure App Service (Sweden Central) |
 
 ---
 
@@ -60,11 +74,8 @@ Username/password accounts (bcrypt). Supports register, login, logout, and chang
 # Install dependencies
 pip install -r requirements.txt
 
-# Set environment variables
-export SECRET_KEY=...
-export MONGO_URI=...
-export AZURE_TRANSLATOR_KEY=...
-export AZURE_TRANSLATOR_LOCATION=...   # e.g. eastus
+# Copy and fill in your env vars
+cp .env.example .env
 
 python app.py
 # → http://127.0.0.1:8000
@@ -74,13 +85,19 @@ python app.py
 
 ```bash
 docker build -t in-in .
-docker run -p 8000:8000 \
-  -e SECRET_KEY=... \
-  -e MONGO_URI=... \
-  -e AZURE_TRANSLATOR_KEY=... \
-  -e AZURE_TRANSLATOR_LOCATION=... \
-  in-in
+docker run -p 8000:8000 --env-file .env in-in
 ```
+
+### Environment Variables
+
+| Variable | Purpose |
+| --- | --- |
+| `SECRET_KEY` | Flask session secret |
+| `MONGO_URI` | MongoDB connection string |
+| `AZURE_TRANSLATOR_KEY` | Azure Cognitive Services key |
+| `AZURE_TRANSLATOR_LOCATION` | Azure region (e.g. `swedencentral`) |
+| `SESSION_COOKIE_SECURE` | Set to `true` in production |
+| `WEBSITES_PORT` | `8000` — required for Azure App Service |
 
 ---
 
@@ -95,3 +112,5 @@ docker run -p 8000:8000 \
 4. **Board** — `GET /board/data` triggers `_maybe_archive()` on the server (Monday-only, idempotent) then returns all active tasks and archived weeks as JSON. Drag-and-drop column changes are `PATCH`ed immediately.
 
 5. **Summary** — `GET /summary/data` runs two MongoDB aggregation pipelines (task counts by column, by priority) plus a journal query for the current month, and returns everything in one JSON payload.
+
+6. **YKI** — Questions are stored in MongoDB (`yki-speaking` collection, 169 documents). On category select, a random question is fetched via `POST /api/yki/question`. Pre-stored English translations are shown instantly on demand — no real-time Azure call needed.

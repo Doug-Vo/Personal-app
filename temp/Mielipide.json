@@ -1,154 +1,230 @@
 [
   {
+    "category": "Mielipide",
     "main_question": "Suomalaiset juhlat ovat tylsiä.",
-    "hint": "Mitä mieltä olet suomalaisista juhlista? Mitä suomalaisissa juhlissa tehdään? Miksi ne ovat / eivät ole tylsiä?"
+    "hint": "Mitä mieltä olet suomalaisista juhlista? Mitä suomalaisissa juhlissa tehdään? Miksi ne ovat / eivät ole tylsiä?",
+    "translation": "Finnish parties are boring. Hint: What do you think of Finnish parties? What is done at Finnish parties? Why are they / are they not boring?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Syntymäpäivää ei saa unohtaa.",
-    "hint": "Onko syntymäpäivä sinun mielestä tärkeä juhla? Miksi / miksi ei? Kenen syntymäpäivää et varmasti unohda? Millaisen lahjan ostat sinun läheisille syntymäpäivänä?"
+    "hint": "Onko syntymäpäivä sinun mielestä tärkeä juhla? Miksi / miksi ei? Kenen syntymäpäivää et varmasti unohda? Millaisen lahjan ostat sinun läheisille syntymäpäivänä?",
+    "translation": "A birthday must not be forgotten. Hint: Do you think a birthday is an important celebration? Why / why not? Whose birthday will you definitely not forget? What kind of gift do you buy for your loved ones on a birthday?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Paras tapa asua",
-    "hint": "Mikä on mielestäsi paras tapa asua: omakotitalo, rivitalo, kerrostalo? Miksi? Kumpi on parempi? Omistus- vai vuokra-asunto? Miksi?"
+    "hint": "Mikä on mielestäsi paras tapa asua: omakotitalo, rivitalo, kerrostalo? Miksi? Kumpi on parempi? Omistus- vai vuokra-asunto? Miksi?",
+    "translation": "The best way to live. Hint: What do you think is the best way to live: a detached house, a terraced house, an apartment building? Why? Which is better? An owner-occupied or a rental apartment? Why?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Hyvä parisuhde vaatii töitä",
-    "hint": "Millainen on hyvä parisuhde? Miten voi pitää huolta parisuhteesta? Millainen on ideaali puoliso? Millaisia asioita rakkaassasi rakastat / inhoat / siedät / toivot / haluat?"
+    "hint": "Millainen on hyvä parisuhde? Miten voi pitää huolta parisuhteesta? Millainen on ideaali puoliso? Millaisia asioita rakkaassasi rakastat / inhoat / siedät / toivot / haluat?",
+    "translation": "A good relationship requires work. Hint: What is a good relationship like? How can one take care of a relationship? What is an ideal spouse like? What kind of things do you love / hate / tolerate / hope for / want in your loved one?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Onnellisuus on oma valinta.",
-    "hint": "Kuinka paljon ihminen voi itse vaikuttaa siihen, onko hän onnellinen vai ei? Mitä asioita ihminen ei voi itse muuttaa? Voiko positiivinen ajattelu muuttaa ihmisen? Miten? Miksi / miksi ei?"
+    "hint": "Kuinka paljon ihminen voi itse vaikuttaa siihen, onko hän onnellinen vai ei? Mitä asioita ihminen ei voi itse muuttaa? Voiko positiivinen ajattelu muuttaa ihmisen? Miten? Miksi / miksi ei?",
+    "translation": "Happiness is one's own choice. Hint: How much can a person themselves influence whether they are happy or not? What things can a person not change themselves? Can positive thinking change a person? How? Why / why not?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Sosiaalinen media pilaa ihmissuhteet.",
-    "hint": "Ihmiset viettävät aikaa enemmän sosiaalisessa mediassa kuin ystävien ja perheen kanssa. Ihmiset ovat yhdessä, mutta katsovat puhelinta. Miten sosiaalinen media muuttaa ystävyyttä ja ihmissuhteita? Mitä hyviä ja huonoja puolia siinä on?"
+    "hint": "Ihmiset viettävät aikaa enemmän sosiaalisessa mediassa kuin ystävien ja perheen kanssa. Ihmiset ovat yhdessä, mutta katsovat puhelinta. Miten sosiaalinen media muuttaa ystävyyttä ja ihmissuhteita? Mitä hyviä ja huonoja puolia siinä on?",
+    "translation": "Social media ruins relationships. Hint: People spend more time on social media than with friends and family. People are together, but look at their phones. How does social media change friendship and relationships? What are the pros and cons of it?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Käytännöllisyys on muotia tärkeämpää.",
-    "hint": "Kumpi on sinulle tärkeämpää: tyyli vai mukavuus? Miksi? Mikä sinulle on tärkeää, kun ostat uusia vaatteita? Voiko talvella olla tyylikäs? Miten?"
+    "hint": "Kumpi on sinulle tärkeämpää: tyyli vai mukavuus? Miksi? Mikä sinulle on tärkeää, kun ostat uusia vaatteita? Voiko talvella olla tyylikäs? Miten?",
+    "translation": "Practicality is more important than fashion. Hint: Which is more important to you: style or comfort? Why? What is important to you when you buy new clothes? Can one be stylish in winter? How?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomalaiset eivät osaa pukeutua.",
-    "hint": "Suomalaisia on joskus haukuttu \"tuulipukukansaksi\". Miten suomalaiset sinun mielestä pukeutuvat? Miten suomalaiset pukeutuvat muihin maihin verrattuna? Minkä maalaiset sinun mielestä pukeutuvat parhaiten? Miksi?"
+    "hint": "Suomalaisia on joskus haukuttu \"tuulipukukansaksi\". Miten suomalaiset sinun mielestä pukeutuvat? Miten suomalaiset pukeutuvat muihin maihin verrattuna? Minkä maalaiset sinun mielestä pukeutuvat parhaiten? Miksi?",
+    "translation": "Finns do not know how to dress. Hint: Finns have sometimes been mocked as a \"tracksuit nation\". How do Finns dress in your opinion? How do Finns dress compared to other countries? People from which country dress the best in your opinion? Why?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Ihmiset stressaavat turhaan, miltä he näyttävät.",
-    "hint": "Onko sillä väliä, mitä sinulla on päällä tai miltä näytät? Miksi / miksi ei? Mitä ongelmia voi tulla, jos miettii liian paljon ulkonäköä tai jos ei mieti?"
+    "hint": "Onko sillä väliä, mitä sinulla on päällä tai miltä näytät? Miksi / miksi ei? Mitä ongelmia voi tulla, jos miettii liian paljon ulkonäköä tai jos ei mieti?",
+    "translation": "People stress unnecessarily about what they look like. Hint: Does it matter what you are wearing or what you look like? Why / why not? What problems can arise if one thinks too much about appearance or if one doesn't think about it?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Sukulaiset ovat tärkeämpiä kuin ystävät",
-    "hint": "Suomeksi sanotaan Veri on vettä sakeampaa. Se tarkoittaa, että sukulaiset ovat tärkeämpiä kuin ystävät. Mitä mieltä olet?"
+    "hint": "Suomeksi sanotaan Veri on vettä sakeampaa. Se tarkoittaa, että sukulaiset ovat tärkeämpiä kuin ystävät. Mitä mieltä olet?",
+    "translation": "Relatives are more important than friends. Hint: In Finnish they say Blood is thicker than water. It means that relatives are more important than friends. What do you think?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Uusperhe - hyvä vai huono asia?",
-    "hint": "Suomessa melkein 50% avioliitoista päättyy eroon. Miksi? Mitä pitäisi tehdä? Tai pitäisikö jotain tehdä? Miten lapsi kasvaa, jos hänellä on monta vanhempaa tai kaksi kotia?"
+    "hint": "Suomessa melkein 50% avioliitoista päättyy eroon. Miksi? Mitä pitäisi tehdä? Tai pitäisikö jotain tehdä? Miten lapsi kasvaa, jos hänellä on monta vanhempaa tai kaksi kotia?",
+    "translation": "Blended family - a good or a bad thing? Hint: Almost 50% of marriages in Finland end in divorce. Why? What should be done? Or should anything be done? How does a child grow if they have multiple parents or two homes?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Ketjuyritysten hyödyt ja haitat",
-    "hint": "Mitä hyötyä ja haittaa on siitä, että kauppa / ravintola / huoltoasema kuuluu ketjuun? Ostatko itse mieluummin ketjusta vai itsenäiseltä yrittäjältä? Miksi? Onko globaaleissa ketjuissa riskejä? Mitä?"
+    "hint": "Mitä hyötyä ja haittaa on siitä, että kauppa / ravintola / huoltoasema kuuluu ketjuun? Ostatko itse mieluummin ketjusta vai itsenäiseltä yrittäjältä? Miksi? Onko globaaleissa ketjuissa riskejä? Mitä?",
+    "translation": "The pros and cons of chain companies. Hint: What are the benefits and harms of a store / restaurant / gas station belonging to a chain? Do you prefer to buy from a chain or an independent entrepreneur? Why? Are there risks in global chains? What?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Alle kouluikäinen ei tarvitse vielä puhelinta",
-    "hint": "Mikä on sinun mielestäsi sopiva ikä aloittaa kännykän käyttö. Miksi? Mitä hyötyä ja haittaa on siitä, että lapsella on puhelin? Mikä on sopiva puhelinlasku lapselle? Pitäisikö lapsen puhelimen käyttöä rajoittaa? Miten?"
+    "hint": "Mikä on sinun mielestäsi sopiva ikä aloittaa kännykän käyttö. Miksi? Mitä hyötyä ja haittaa on siitä, että lapsella on puhelin? Mikä on sopiva puhelinlasku lapselle? Pitäisikö lapsen puhelimen käyttöä rajoittaa? Miten?",
+    "translation": "A preschooler does not need a phone yet. Hint: What do you think is a suitable age to start using a cell phone. Why? What are the pros and cons of a child having a phone? What is a suitable phone bill for a child? Should a child's phone use be restricted? How?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Arkielämä Suomessa on helppoa",
-    "hint": "Millaisia ongelmia sinulla oli arkielämässä, kun tulit Suomeen? Miten ratkaisit ne? Mitkä asiat Suomessa sujuvat helposti? Mikä on vaikeaa? Millaista suomalainen arki on kotimaasi arkeen verrattuna?"
+    "hint": "Millaisia ongelmia sinulla oli arkielämässä, kun tulit Suomeen? Miten ratkaisit ne? Mitkä asiat Suomessa sujuvat helposti? Mikä on vaikeaa? Millaista suomalainen arki on kotimaasi arkeen verrattuna?",
+    "translation": "Everyday life in Finland is easy. Hint: What kind of problems did you have in everyday life when you came to Finland? How did you solve them? What things go easily in Finland? What is difficult? What is Finnish everyday life like compared to everyday life in your home country?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Tinkiminen on hauskaa",
-    "hint": "Tykkäätkö tinkiä hinnoista vai tykkäätkö standardihinnoista? Miksi? Miltä tinkiminen sinusta tuntuu? Mitä ajattelet Suomen tinkimiskulttuurista? Onko sitä? Mistä asioista voi tingata ja mistä ei?"
+    "hint": "Tykkäätkö tinkiä hinnoista vai tykkäätkö standardihinnoista? Miksi? Miltä tinkiminen sinusta tuntuu? Mitä ajattelet Suomen tinkimiskulttuurista? Onko sitä? Mistä asioista voi tingata ja mistä ei?",
+    "translation": "Haggling is fun. Hint: Do you like to haggle over prices or do you like standard prices? Why? How does haggling feel to you? What do you think about Finland's haggling culture? Is there one? What things can be haggled over and what cannot?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Pyörä vai auto?",
-    "hint": "Käytätkö itse enemmän pyörää vai autoa? Miksi? Kumpi on mielestäsi parempi? Miksi? Missä tilanteessa? Mitä hyviä puolia autossa/pyörässä on? Mitä huonoja puolia autossa/pyörässä on? Miksi ihmisten pitäisi käyttää enemmän autoa/pyörää?"
+    "hint": "Käytätkö itse enemmän pyörää vai autoa? Miksi? Kumpi on mielestäsi parempi? Miksi? Missä tilanteessa? Mitä hyviä puolia autossa/pyörässä on? Mitä huonoja puolia autossa/pyörässä on? Miksi ihmisten pitäisi käyttää enemmän autoa/pyörää?",
+    "translation": "Bike or car? Hint: Do you use a bike or a car more yourself? Why? Which do you think is better? Why? In what situation? What are the good sides of a car/bike? What are the bad sides of a car/bike? Why should people use a car/bike more?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Ihmiset ostavat liikaa turhaa tavaraa.",
-    "hint": "Ihmisillä on usein paljon tavaroita. Mikä on turhaa ja mikä on tarpeellista? Onko sinulla turhaa tavaraa? Mitä? Miksi ihmiset ostavat turhia tavaroita?"
+    "hint": "Ihmisillä on usein paljon tavaroita. Mikä on turhaa ja mikä on tarpeellista? Onko sinulla turhaa tavaraa? Mitä? Miksi ihmiset ostavat turhia tavaroita?",
+    "translation": "People buy too much useless stuff. Hint: People often have a lot of stuff. What is useless and what is necessary? Do you have useless stuff? What? Why do people buy useless stuff?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Julkisen liikenteen pitäisi olla ilmaista.",
-    "hint": "Mitä mieltä olet julkisen liikenteen (juna, bussi, metro, raitiovaunu) hinnoista Suomessa? Mitä hyötyä olisi siitä, että julkinen liikenne olisi halpaa?"
+    "hint": "Mitä mieltä olet julkisen liikenteen (juna, bussi, metro, raitiovaunu) hinnoista Suomessa? Mitä hyötyä olisi siitä, että julkinen liikenne olisi halpaa?",
+    "translation": "Public transport should be free. Hint: What do you think of public transport (train, bus, subway, tram) prices in Finland? What would be the benefit of public transport being cheap?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Fyysinen terveys on tärkeää myös henkiselle terveydelle",
-    "hint": "Onko fyysinen terveys ja henkinen terveys (psyyke) mielestäsi yhtä tärkeitä? Miksi? Miten pidät huolta fyysisestä ja henkisestä terveydestä? Suomessa on paljon masennusta ja myös itsemurhia. Mistä ajattelet, että se johtuu?"
+    "hint": "Onko fyysinen terveys ja henkinen terveys (psyyke) mielestäsi yhtä tärkeitä? Miksi? Miten pidät huolta fyysisestä ja henkisestä terveydestä? Suomessa on paljon masennusta ja myös itsemurhia. Mistä ajattelet, että se johtuu?",
+    "translation": "Physical health is also important for mental health. Hint: Do you think physical health and mental health (psyche) are equally important? Why? How do you take care of physical and mental health? There is a lot of depression and also suicides in Finland. What do you think it is caused by?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Urheilu ja doping",
-    "hint": "Mitä mieltä olet dopingista? Voiko huippu-urheilija pärjätä ilman dopingia? Miksi / miksi ei?"
+    "hint": "Mitä mieltä olet dopingista? Voiko huippu-urheilija pärjätä ilman dopingia? Miksi / miksi ei?",
+    "translation": "Sports and doping. Hint: What do you think about doping? Can a top athlete succeed without doping? Why / why not?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Terveydenhuolto Suomessa",
-    "hint": "Millaista sairaanhoito on mielestäsi Suomessa? Mitä hyviä ja mitä huonoja puolia Suomen terveydenhuollossa on? Onko sairaaloissa ja terveyskeskuksissa riittävästi henkilökuntaa? Mikä on erilaista sinun kotimaassa?"
+    "hint": "Millaista sairaanhoito on mielestäsi Suomessa? Mitä hyviä ja mitä huonoja puolia Suomen terveydenhuollossa on? Onko sairaaloissa ja terveyskeskuksissa riittävästi henkilökuntaa? Mikä on erilaista sinun kotimaassa?",
+    "translation": "Healthcare in Finland. Hint: What do you think medical care is like in Finland? What are the pros and cons of Finnish healthcare? Is there enough staff in hospitals and health centers? What is different in your home country?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Päihteet Suomessa",
-    "hint": "Mitä ajattelet suomalaisten päihteiden käytöstä (päihteet = alkoholi, tupakka, huumeet, lääkkeiden väärinkäyttö)? Millaisissa tilanteissa päihteiden käyttö on sallittua? Millaisia ongelmia päihteistä voi tulla? Mitä mieltä olet alaikäisten (alle 18-vuotiaiden) päihteiden käytöstä?"
+    "hint": "Mitä ajattelet suomalaisten päihteiden käytöstä (päihteet = alkoholi, tupakka, huumeet, lääkkeiden väärinkäyttö)? Millaisissa tilanteissa päihteiden käyttö on sallittua? Millaisia ongelmia päihteistä voi tulla? Mitä mieltä olet alaikäisten (alle 18-vuotiaiden) päihteiden käytöstä?",
+    "translation": "Intoxicants in Finland. Hint: What do you think about Finns' use of intoxicants (intoxicants = alcohol, tobacco, drugs, abuse of medicines)? In what situations is the use of intoxicants allowed? What kind of problems can come from intoxicants? What do you think about the use of intoxicants by minors (under 18 years old)?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Työn pitää olla hauskaa.",
-    "hint": "Pitääkö työstä nauttia vai onko se vain tapa saada rahaa? Miksi/miksi ei työn pitäisi olla hauskaa? Millaisesta työstä sinä nautit? Mikä on tylsää?"
+    "hint": "Pitääkö työstä nauttia vai onko se vain tapa saada rahaa? Miksi/miksi ei työn pitäisi olla hauskaa? Millaisesta työstä sinä nautit? Mikä on tylsää?",
+    "translation": "Work must be fun. Hint: Should one enjoy work or is it just a way to get money? Why/why should work not be fun? What kind of work do you enjoy? What is boring?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Opiskelu kannattaa aina.",
-    "hint": "Miksi opiskelu on/ei ole tärkeää? Millaisia asioita on hyvä opiskella? Mikä on turhaa? Maailma muuttuu. Muuttuuko koulu?"
+    "hint": "Miksi opiskelu on/ei ole tärkeää? Millaisia asioita on hyvä opiskella? Mikä on turhaa? Maailma muuttuu. Muuttuuko koulu?",
+    "translation": "Studying always pays off. Hint: Why is studying / is not studying important? What kind of things are good to study? What is useless? The world is changing. Is the school changing?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Nykyään kaikilla on aina kiire.",
-    "hint": "Onko ihmisten ajankäyttö muuttunut? Miten? Miksi näyttää siltä, että kaikilla on kiire? Mitä haittaa/hyötyä kiireestä on?"
+    "hint": "Onko ihmisten ajankäyttö muuttunut? Miten? Miksi näyttää siltä, että kaikilla on kiire? Mitä haittaa/hyötyä kiireestä on?",
+    "translation": "Nowadays everyone is always in a hurry. Hint: Has people's use of time changed? How? Why does it seem that everyone is in a hurry? What harm/benefit is there from hurrying?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Tulevaisuudessa robotit tekevät ihmisten työt.",
-    "hint": "Uskotko, että robotit tekevät ihmisten työt? Miksi / miksi et? Mitä hyötyä ja haittaa automaatiosta on töissä? Miten tekoäly (AI) voi auttaa meitä? Mitä riskejä tekoälyssä on?"
+    "hint": "Uskotko, että robotit tekevät ihmisten työt? Miksi / miksi et? Mitä hyötyä ja haittaa automaatiosta on töissä? Miten tekoäly (AI) voi auttaa meitä? Mitä riskejä tekoälyssä on?",
+    "translation": "In the future robots will do people's jobs. Hint: Do you believe that robots will do people's jobs? Why / why not? What are the pros and cons of automation at work? How can artificial intelligence (AI) help us? What are the risks in artificial intelligence?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Koulupuku on hyvä asia.",
-    "hint": "Onko sinun kotimaassa koulupuku? Mitä haittaa ja hyötyä siitä on? Millainen pukeutuminen sopii kouluun?"
+    "hint": "Onko sinun kotimaassa koulupuku? Mitä haittaa ja hyötyä siitä on? Millainen pukeutuminen sopii kouluun?",
+    "translation": "A school uniform is a good thing. Hint: Is there a school uniform in your home country? What are the pros and cons of it? What kind of clothing is suitable for school?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Lasten kasvatus Suomessa on hyvä / huono.",
-    "hint": "Onko tavassa kasvattaa lapsia Suomessa / sinun kotimaassa eroja? Mitä hyviä ja huonoja puolia molemmissa on?"
+    "hint": "Onko tavassa kasvattaa lapsia Suomessa / sinun kotimaassa eroja? Mitä hyviä ja huonoja puolia molemmissa on?",
+    "translation": "Raising children in Finland is good / bad. Hint: Are there differences in the way children are raised in Finland / your home country? What are the pros and cons of both?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomi tarvitsee lisää työntekijöitä ulkomailta.",
-    "hint": "Miten Suomeen voisi houkutella lisää ihmisiä töihin? Millaisiin töihin Suomeen tarvitaan lisää ihmisiä? Mitä haasteita tai ongelmia on siinä, että palkataan ihmisiä suoraan ulkomailta?"
+    "hint": "Miten Suomeen voisi houkutella lisää ihmisiä töihin? Millaisiin töihin Suomeen tarvitaan lisää ihmisiä? Mitä haasteita tai ongelmia on siinä, että palkataan ihmisiä suoraan ulkomailta?",
+    "translation": "Finland needs more employees from abroad. Hint: How could more people be attracted to work in Finland? For what kind of jobs are more people needed in Finland? What challenges or problems are there in hiring people directly from abroad?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Liikunta on pakko, ei vaihtoehto.",
-    "hint": "Tykkäätkö sinä liikkua? Miksi / miksi et? Mitä hyötyä liikunnasta on? Voiko siitä olla haittaa? Voiko ihmistä pakottaa liikkumaan? Kuka voi pakottaa? Lääkäri / äiti / pomo? Miten ihmisiä voidaan kannustaa liikkumaan?"
+    "hint": "Tykkäätkö sinä liikkua? Miksi / miksi et? Mitä hyötyä liikunnasta on? Voiko siitä olla haittaa? Voiko ihmistä pakottaa liikkumaan? Kuka voi pakottaa? Lääkäri / äiti / pomo? Miten ihmisiä voidaan kannustaa liikkumaan?",
+    "translation": "Exercise is a must, not an option. Hint: Do you like to exercise? Why / why not? What are the benefits of exercise? Can it be harmful? Can a person be forced to exercise? Who can force? Doctor / mother / boss? How can people be encouraged to exercise?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomi on hyvä matkailumaa.",
-    "hint": "Mitä nähtävää Suomessa on turisteille? Kenelle suosittelet Suomea matkakohteena? Miksi? Käykö Suomessa mielestäsi riittävästi turisteja? Miksi / miksi ei?"
+    "hint": "Mitä nähtävää Suomessa on turisteille? Kenelle suosittelet Suomea matkakohteena? Miksi? Käykö Suomessa mielestäsi riittävästi turisteja? Miksi / miksi ei?",
+    "translation": "Finland is a good tourist country. Hint: What is there to see in Finland for tourists? Who do you recommend Finland to as a travel destination? Why? Do you think enough tourists visit Finland? Why / why not?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Vanhempien täytyy valvoa lasten internetin käyttöä.",
-    "hint": "Mitä lapset voivat tehdä internetissä? Voiko internet olla vaarallinen lapsille? Millä tavalla? Kuinka paljon lapsi voi pelata / surffata? Mitä hyötyä ja haittaa netin käyttämisestä on lapsille?"
+    "hint": "Mitä lapset voivat tehdä internetissä? Voiko internet olla vaarallinen lapsille? Millä tavalla? Kuinka paljon lapsi voi pelata / surffata? Mitä hyötyä ja haittaa netin käyttämisestä on lapsille?",
+    "translation": "Parents must monitor children's internet use. Hint: What can children do on the internet? Can the internet be dangerous for children? In what way? How much can a child play / surf? What are the pros and cons of using the internet for children?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Mielipiteeni taiteesta Suomessa verrattuna taiteeseen kotimaassani.",
-    "hint": "Millaisesta taiteesta pidät? Miksi? Seuraatko aktiivisesti taidemaailmaa? Miten suomalainen taide eroaa kotimaasi taiteesta?"
+    "hint": "Millaisesta taiteesta pidät? Miksi? Seuraatko aktiivisesti taidemaailmaa? Miten suomalainen taide eroaa kotimaasi taiteesta?",
+    "translation": "My opinion on art in Finland compared to art in my home country. Hint: What kind of art do you like? Why? Do you actively follow the art world? How does Finnish art differ from art in your home country?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Lapsi saa itse päättää, mitä harrastaa.",
-    "hint": "Saako lapsi harrastaa mielestäsi, mitä haluaa? Miksi / miksi ei? Mikä on mielestäsi hyvä harrastus lapselle? Miksi? Kuinka paljon lapsi voi harrastaa? Voiko harrastuksesta olla jotain haittaa? Mitä?"
+    "hint": "Saako lapsi harrastaa mielestäsi, mitä haluaa? Miksi / miksi ei? Mikä on mielestäsi hyvä harrastus lapselle? Miksi? Kuinka paljon lapsi voi harrastaa? Voiko harrastuksesta olla jotain haittaa? Mitä?",
+    "translation": "A child can decide for themselves what their hobby is. Hint: In your opinion, can a child have whatever hobby they want? Why / why not? What do you think is a good hobby for a child? Why? How much can a child have as a hobby? Can a hobby have any harm? What?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomi ei ole tasa-arvoinen maa.",
-    "hint": "Miten Suomen tasa-arvo/epätasa-arvo näkyy? Ketkä ovat tasa-arvoisia? Missä asioissa Suomi ei ole tasa-arvoinen?"
+    "hint": "Miten Suomen tasa-arvo/epätasa-arvo näkyy? Ketkä ovat tasa-arvoisia? Missä asioissa Suomi ei ole tasa-arvoinen?",
+    "translation": "Finland is not an equal country. Hint: How does Finland's equality/inequality show? Who is equal? In what matters is Finland not equal?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Nykyään ihmiset eivät välitä toisista.",
-    "hint": "Jos näet kadulla ihmisen makaamassa, autatko häntä? Miksi / miksi et? Ketkä ihmiset ovat sinulle tärkeitä? Miksi? Miten autat muita ihmisiä? Miksi autat / et auta heitä?"
+    "hint": "Jos näet kadulla ihmisen makaamassa, autatko häntä? Miksi / miksi et? Ketkä ihmiset ovat sinulle tärkeitä? Miksi? Miten autat muita ihmisiä? Miksi autat / et auta heitä?",
+    "translation": "Nowadays people do not care about each other. Hint: If you see a person lying on the street, do you help them? Why / why not? Which people are important to you? Why? How do you help other people? Why do you help / not help them?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomen on liian vähän maahanmuuttajia poliitikkoina.",
-    "hint": "Mitä asioita maahanmuuttajat voivat edistää? Miksi olisi hyvä, että maahanmuuttajat osallistuisivat aktiivisemmin politiikkaan?"
+    "hint": "Mitä asioita maahanmuuttajat voivat edistää? Miksi olisi hyvä, että maahanmuuttajat osallistuisivat aktiivisemmin politiikkaan?",
+    "translation": "Finland has too few immigrants as politicians. Hint: What issues can immigrants promote? Why would it be good if immigrants participated more actively in politics?"
   },
   {
+    "category": "Mielipide",
     "main_question": "Suomen verot ovat liian korkeat.",
-    "hint": "Mitä mieltä olet Suomen verotuksesta? Millainen Suomen verotus on kotimaasi verotukseen verrattuna?"
+    "hint": "Mitä mieltä olet Suomen verotuksesta? Millainen Suomen verotus on kotimaasi verotukseen verrattuna?",
+    "translation": "Finland's taxes are too high. Hint: What do you think of Finland's taxation? What is Finland's taxation like compared to taxation in your home country?"
   }
 ]
