@@ -5,7 +5,7 @@ import logging
 import requests
 import bcrypt
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
@@ -57,13 +57,15 @@ accounts      = _db["account"]
 journal_col   = _db["journal"]
 board_tasks_col   = _db["board_tasks"]
 board_archive_col = _db["board_archive"]
-yki_col           = _db["yki-speaking"]
+yki_col           = _db["yki-speaking-question"]
+yki_notes_col     = _db["yki_notes"]
 
 # Indexes (idempotent — safe to run on every startup)
 accounts.create_index("username", unique=True)
 journal_col.create_index([("user_id", 1), ("date", DESCENDING)])
 board_tasks_col.create_index([("user_id", 1), ("created_at", DESCENDING)])
 board_archive_col.create_index([("user_id", 1), ("week_start", DESCENDING)])
+yki_notes_col.create_index([("user_id", 1), ("question", 1)], unique=True)
 
 # ── Azure Translator ──
 AZURE_KEY      = os.environ.get("AZURE_TRANSLATOR_KEY")
@@ -791,6 +793,16 @@ def summary_data():
 
 VALID_YKI_CATEGORIES = {"Kertominen", "Mielipide", "Reagointi"}
 
+VALID_YKI_TOPICS = {
+    "Ihminen ja lähipiiri",
+    "Arkielämä",
+    "Luonto ja ympäristö",
+    "Terveys ja hyvinvointi",
+    "Työ ja koulutus",
+    "Vapaa-aika",
+    "Yhteiskunta",
+}
+
 
 @app.route('/yki')
 @login_required
@@ -804,22 +816,86 @@ def yki():
 def yki_question():
     body     = request.get_json(silent=True) or {}
     category = body.get("category", "").strip()
+    topic    = body.get("topic", "").strip()
     if category not in VALID_YKI_CATEGORIES:
         return jsonify(error="Invalid category"), 400
+    match_filter = {"Category": category}
+    if topic and topic in VALID_YKI_TOPICS:
+        match_filter["Topic"] = topic
     results = list(yki_col.aggregate([
-        {"$match": {"category": category}},
+        {"$match": match_filter},
         {"$sample": {"size": 1}}
     ]))
     if not results:
-        return jsonify(error="No questions found for this category"), 404
+        return jsonify(error="No questions found"), 404
     doc = results[0]
     return jsonify(
-        question=doc.get("main_question", ""),
-        hint=doc.get("hint", ""),
-        translation=doc.get("translation", ""),
-        category=category
+        question=doc.get("Main question", ""),
+        translation=doc.get("Translation of the main question in English", ""),
+        hint=doc.get("Hint", ""),
+        hint_translation=doc.get("Translation of the hint", ""),
+        topic=doc.get("Topic", ""),
+        category=category,
     )
 
+
+@app.route('/api/yki/prefs', methods=['GET'])
+@login_required
+def yki_prefs_get():
+    user = accounts.find_one({"_id": ObjectId(current_user.id)}, {"yki_volume": 1, "yki_muted": 1})
+    return jsonify(
+        volume=user.get("yki_volume", 0.5) if user else 0.5,
+        muted=user.get("yki_muted", False) if user else False,
+    )
+
+
+@app.route('/api/yki/prefs', methods=['POST'])
+@login_required
+@limiter.limit("30 per minute")
+def yki_prefs_set():
+    body   = request.get_json(silent=True) or {}
+    update = {}
+    volume = body.get("volume")
+    muted  = body.get("muted")
+    if volume is not None:
+        try:
+            v = float(volume)
+            if 0.0 <= v <= 1.0:
+                update["yki_volume"] = v
+        except (TypeError, ValueError):
+            pass
+    if muted is not None:
+        update["yki_muted"] = bool(muted)
+    if update:
+        accounts.update_one({"_id": ObjectId(current_user.id)}, {"$set": update})
+    return jsonify(ok=True)
+
+
+@app.route('/api/yki/notes', methods=['GET'])
+@login_required
+def yki_notes_get():
+    question = request.args.get('question', '').strip()
+    if not question:
+        return jsonify(notes='')
+    doc = yki_notes_col.find_one({'user_id': current_user.id, 'question': question})
+    return jsonify(notes=doc.get('notes', '') if doc else '')
+
+
+@app.route('/api/yki/notes', methods=['POST'])
+@login_required
+@limiter.limit("60 per minute")
+def yki_notes_save():
+    body     = request.get_json(silent=True) or {}
+    question = body.get('question', '').strip()
+    notes    = str(body.get('notes', '')).strip()[:2000]
+    if not question:
+        return jsonify(error='Missing question'), 400
+    yki_notes_col.update_one(
+        {'user_id': current_user.id, 'question': question},
+        {'$set': {'notes': notes, 'updated_at': datetime.now(timezone.utc)}},
+        upsert=True,
+    )
+    return jsonify(ok=True)
 
 
 # ──────────────────────────────────────────────
