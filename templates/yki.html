@@ -10,10 +10,11 @@
 <div class="yki-page">
 <div class="translator-card yki-card">
 
-    <!-- ══ PANEL 1: Category selection ══ -->
-    <div id="yki-panel-select" class="yki-panel">
+    <!-- ══ PANEL 1: Start — category + topic + launch ══ -->
+    <div id="yki-panel-start" class="yki-panel">
         <h2 class="yki-heading">YKI Mock Speaking Exam</h2>
-        <p class="yki-subheading">Choose a category to practise</p>
+
+        <p class="yki-section-label">Category</p>
         <div class="yki-category-grid">
             <button class="yki-cat-btn" data-category="Kertominen">
                 <span class="yki-cat-icon">📖</span>
@@ -30,35 +31,82 @@
                 <span class="yki-cat-name">Reagointi</span>
                 <span class="yki-cat-desc">Reaction · 30 s prep · 30 s speak</span>
             </button>
+            <button id="yki-history-link-btn" class="yki-cat-btn yki-cat-history-btn">
+                <span class="yki-cat-icon">📋</span>
+                <span class="yki-cat-name">Past Questions</span>
+                <span class="yki-cat-desc">Review your recent practice</span>
+            </button>
         </div>
+
+        <p class="yki-section-label">Topic <span class="yki-section-optional">(optional — leave unselected for random)</span></p>
+        <div class="yki-topic-grid">
+            <button class="yki-topic-btn" data-topic="Ihminen ja lähipiiri">
+                <span class="yki-topic-name">Ihminen ja lähipiiri</span>
+                <span class="yki-topic-en">Human &amp; close circle</span>
+            </button>
+            <button class="yki-topic-btn" data-topic="Arkielämä">
+                <span class="yki-topic-name">Arkielämä</span>
+                <span class="yki-topic-en">Everyday life</span>
+            </button>
+            <button class="yki-topic-btn" data-topic="Luonto ja ympäristö">
+                <span class="yki-topic-name">Luonto ja ympäristö</span>
+                <span class="yki-topic-en">Nature &amp; environment</span>
+            </button>
+            <button class="yki-topic-btn" data-topic="Terveys ja hyvinvointi">
+                <span class="yki-topic-name">Terveys ja hyvinvointi</span>
+                <span class="yki-topic-en">Health &amp; well-being</span>
+            </button>
+            <button class="yki-topic-btn" data-topic="Työ ja koulutus">
+                <span class="yki-topic-name">Työ ja koulutus</span>
+                <span class="yki-topic-en">Work &amp; education</span>
+            </button>
+            <button class="yki-topic-btn" data-topic="Vapaa-aika">
+                <span class="yki-topic-name">Vapaa-aika</span>
+                <span class="yki-topic-en">Free time</span>
+            </button>
+            <button class="yki-topic-btn" data-topic="Yhteiskunta">
+                <span class="yki-topic-name">Yhteiskunta</span>
+                <span class="yki-topic-en">Society</span>
+            </button>
+            <button class="yki-topic-btn yki-topic-random" data-topic="">
+                <span class="yki-topic-name">🔀 Random</span>
+                <span class="yki-topic-en">Any topic</span>
+            </button>
+        </div>
+
+        <button id="yki-start-btn" class="auth-button yki-start-btn" disabled>Start Exam</button>
     </div>
 
-    <!-- ══ PANEL 2: Ready (question hidden) ══ -->
-    <div id="yki-panel-ready" class="yki-panel hidden">
-        <div class="yki-category-badge" id="yki-ready-badge"></div>
-        <div class="yki-sound-warning">
-            🔊 A loud crowd noise will play when your speaking time starts — to simulate real exam conditions where all candidates speak at once. Adjust volume after pressing Start.
-        </div>
-        <p class="yki-ready-msg">Press <strong>Start</strong> when you are ready. Your question will be revealed.</p>
-        <button id="yki-start-btn" class="auth-button yki-start-btn">Start</button>
-        <button id="yki-back-from-ready" class="yki-link-btn">← Back to categories</button>
-    </div>
-
-    <!-- ══ PANEL 3: Exam (prep + speak share this panel) ══ -->
+    <!-- ══ PANEL 2: Exam (prep + speak share this panel) ══ -->
     <div id="yki-panel-exam" class="yki-panel hidden">
 
         <div class="yki-phase-row">
             <span id="yki-phase-badge" class="yki-phase-badge"></span>
             <span id="yki-exam-category" class="yki-category-badge-sm"></span>
+            <span id="yki-exam-topic" class="yki-topic-badge"></span>
         </div>
 
-        <!-- SVG ring timer -->
-        <div class="yki-timer-wrap">
-            <svg class="yki-timer-ring" viewBox="0 0 120 120">
-                <circle class="yki-ring-track" cx="60" cy="60" r="52"/>
-                <circle class="yki-ring-fill" id="yki-ring-fill" cx="60" cy="60" r="52"/>
-            </svg>
-            <div class="yki-timer-display" id="yki-timer-display">0:00</div>
+        <!-- Sound warning — only during prep -->
+        <div id="yki-prep-sound-warning" class="yki-sound-warning hidden">
+            🔊 A loud crowd noise will play when speaking time starts. Adjust volume once it begins.
+        </div>
+
+        <!-- Timer + control buttons side by side -->
+        <div class="yki-exam-controls">
+            <div class="yki-timer-wrap">
+                <svg class="yki-timer-ring" viewBox="0 0 120 120">
+                    <circle class="yki-ring-track" cx="60" cy="60" r="52"/>
+                    <circle class="yki-ring-fill" id="yki-ring-fill" cx="60" cy="60" r="52"/>
+                </svg>
+                <div class="yki-timer-display" id="yki-timer-display">0:00</div>
+            </div>
+            <div class="yki-control-btns">
+                <button id="yki-skip-prep-btn" class="yki-ctrl-btn hidden">⏩ Skip Prep</button>
+                <button id="yki-pause-btn" class="yki-ctrl-btn">⏸ Pause</button>
+                <button id="yki-notes-toggle-btn" class="yki-ctrl-btn">📝 Notes</button>
+                <button id="yki-pick-another-btn" class="yki-ctrl-btn">🔀 Pick Another</button>
+                <button id="yki-end-exam-btn" class="yki-ctrl-btn yki-ctrl-end">✕ End Exam</button>
+            </div>
         </div>
 
         <!-- Volume control — only visible during speak phase -->
@@ -68,52 +116,71 @@
                    value="0.5" class="yki-volume-slider" />
         </div>
 
-        <!-- Question -->
-        <div class="yki-question-block">
-            <p id="yki-question-text" class="yki-question-text"></p>
-            <div id="yki-hint-block" class="yki-hint-block hidden">
-                <p class="yki-hint-label">Guiding questions</p>
-                <p id="yki-hint-text" class="yki-hint-text"></p>
+        <!-- Question + translation side by side -->
+        <div class="yki-content-grid">
+            <div class="yki-qcol-fi">
+                <div class="yki-question-box">
+                    <p class="yki-box-label">Question</p>
+                    <p id="yki-question-text" class="yki-question-text"></p>
+                </div>
+                <div id="yki-hint-block" class="yki-hint-block hidden">
+                    <p class="yki-hint-label">Guiding questions</p>
+                    <p id="yki-hint-text" class="yki-hint-text"></p>
+                </div>
+            </div>
+            <div class="yki-qcol-en">
+                <div class="yki-trans-box">
+                    <p class="yki-box-label">Translation</p>
+                    <p id="yki-question-translation" class="yki-en-text"></p>
+                </div>
+                <div id="yki-hint-trans-block" class="yki-trans-box hidden">
+                    <p class="yki-box-label">Hint translation</p>
+                    <p id="yki-hint-translation" class="yki-en-text"></p>
+                </div>
             </div>
         </div>
 
-        <!-- Translation -->
-        <div id="yki-translation-block" class="yki-translation-block hidden">
-            <p class="yki-translation-label">English translation</p>
-            <p id="yki-translation-text" class="yki-translation-text"></p>
-        </div>
-
-        <!-- Action buttons: translate toggle + skip prep -->
-        <div class="yki-action-row">
-            <button id="yki-translate-btn" class="yki-secondary-btn">🌐 Show translation</button>
-            <button id="yki-skip-prep-btn" class="yki-secondary-btn hidden">⏩ Skip Prep</button>
-        </div>
-
-        <!-- Navigation buttons: always visible during exam -->
-        <div class="yki-exam-nav">
-            <button id="yki-exam-same-btn" class="yki-link-btn">🔁 Try same topic</button>
-            <span class="yki-nav-sep">·</span>
-            <button id="yki-exam-diff-btn" class="yki-link-btn">🔀 Try different category</button>
-            <span class="yki-nav-sep">·</span>
-            <button id="yki-exam-exit-btn" class="yki-link-btn yki-link-danger">✕ Exit exam</button>
+        <!-- Notes area -->
+        <div id="yki-notes-area" class="yki-notes-area hidden">
+            <textarea id="yki-notes-text" class="yki-notes-textarea"
+                      placeholder="Jot down your ideas here…" rows="4"></textarea>
         </div>
     </div>
 
-    <!-- ══ PANEL 4: Done ══ -->
+    <!-- ══ PANEL 3: Done ══ -->
     <div id="yki-panel-done" class="yki-panel hidden">
         <div class="yki-done-icon">✅</div>
         <h3 class="yki-done-title">Well done!</h3>
         <p class="yki-done-sub">You completed the speaking round.</p>
         <div class="yki-done-actions">
             <button id="yki-try-another-btn" class="auth-button">Try Another Question</button>
-            <button id="yki-back-to-select-btn" class="yki-secondary-btn">← Back to Categories</button>
+            <button id="yki-back-to-start-btn" class="yki-secondary-btn">← Back to Start</button>
+            <button id="yki-view-history-btn" class="yki-secondary-btn">📋 View History</button>
         </div>
+    </div>
+
+    <!-- ══ PANEL 4: History ══ -->
+    <div id="yki-panel-history" class="yki-panel hidden">
+        <h2 class="yki-heading">Recent Questions</h2>
+        <div id="yki-history-list" class="yki-history-list"></div>
+        <button id="yki-history-back-btn" class="yki-secondary-btn">← Back to Start</button>
     </div>
 
 </div>
 </div>
 
-<!-- Hidden audio element — served from static/sound/ -->
+<!-- Pick Another confirmation modal -->
+<div id="yki-pick-modal" class="yki-modal hidden">
+    <div class="yki-modal-box">
+        <p class="yki-modal-msg">Your notes and this question <strong>won't be saved</strong> to history.</p>
+        <div class="yki-modal-actions">
+            <button id="yki-confirm-pick" class="auth-button">Get New Question</button>
+            <button id="yki-cancel-pick" class="yki-secondary-btn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden audio element -->
 <audio id="yki-crowd-audio"
        src="{{ url_for('static', filename='sound/crowd-sound.mp3') }}"
        loop preload="auto"></audio>
