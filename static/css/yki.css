@@ -80,26 +80,18 @@
     color: var(--text-primary);
 }
 
-.yki-cat-btn:hover {
+.yki-cat-btn:hover,
+.yki-cat-btn.yki-selected {
     border-color: var(--accent-matcha);
     background: var(--accent-soft);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
-.yki-cat-btn.yki-selected {
-    border-color: var(--accent-matcha);
-    background: var(--accent-soft);
-    box-shadow: var(--shadow-md);
-}
-
-.yki-cat-history-btn {
-    border-style: dashed;
-}
-
-.yki-cat-icon { font-size: 1.4rem; line-height: 1; }
-.yki-cat-name { font-weight: 700; font-size: 0.95rem; }
-.yki-cat-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
+.yki-cat-history-btn { border-style: dashed; }
+.yki-cat-icon        { font-size: 1.4rem; line-height: 1; }
+.yki-cat-name        { font-weight: 700; font-size: 0.95rem; }
+.yki-cat-desc        { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
 
 /* ── Topic grid — 4 columns, Random on own row ── */
 .yki-topic-grid {
@@ -136,77 +128,34 @@
 .yki-topic-en   { font-size: 0.7rem; color: var(--text-muted); }
 
 /* Per-topic accent colors */
-.yki-topic-btn[data-topic="Ihminen ja lähipiiri"] {
-    border-left-color: #f43f5e;
-    background: rgba(244, 63, 94, 0.04);
-}
+.yki-topic-btn[data-topic="Ihminen ja lähipiiri"]    { border-left-color: #f43f5e; background: rgba(244,63,94,.04); }
 .yki-topic-btn[data-topic="Ihminen ja lähipiiri"]:hover,
-.yki-topic-btn[data-topic="Ihminen ja lähipiiri"].yki-selected {
-    background: rgba(244, 63, 94, 0.10);
-    border-color: #f43f5e;
-}
+.yki-topic-btn[data-topic="Ihminen ja lähipiiri"].yki-selected { background: rgba(244,63,94,.12); border-color: #f43f5e; }
 
-.yki-topic-btn[data-topic="Arkielämä"] {
-    border-left-color: #f97316;
-    background: rgba(249, 115, 22, 0.04);
-}
+.yki-topic-btn[data-topic="Arkielämä"]               { border-left-color: #f97316; background: rgba(249,115,22,.04); }
 .yki-topic-btn[data-topic="Arkielämä"]:hover,
-.yki-topic-btn[data-topic="Arkielämä"].yki-selected {
-    background: rgba(249, 115, 22, 0.10);
-    border-color: #f97316;
-}
+.yki-topic-btn[data-topic="Arkielämä"].yki-selected  { background: rgba(249,115,22,.12); border-color: #f97316; }
 
-.yki-topic-btn[data-topic="Luonto ja ympäristö"] {
-    border-left-color: #22c55e;
-    background: rgba(34, 197, 94, 0.04);
-}
+.yki-topic-btn[data-topic="Luonto ja ympäristö"]     { border-left-color: #22c55e; background: rgba(34,197,94,.04); }
 .yki-topic-btn[data-topic="Luonto ja ympäristö"]:hover,
-.yki-topic-btn[data-topic="Luonto ja ympäristö"].yki-selected {
-    background: rgba(34, 197, 94, 0.10);
-    border-color: #22c55e;
-}
+.yki-topic-btn[data-topic="Luonto ja ympäristö"].yki-selected { background: rgba(34,197,94,.12); border-color: #22c55e; }
 
-.yki-topic-btn[data-topic="Terveys ja hyvinvointi"] {
-    border-left-color: #06b6d4;
-    background: rgba(6, 182, 212, 0.04);
-}
+.yki-topic-btn[data-topic="Terveys ja hyvinvointi"]  { border-left-color: #06b6d4; background: rgba(6,182,212,.04); }
 .yki-topic-btn[data-topic="Terveys ja hyvinvointi"]:hover,
-.yki-topic-btn[data-topic="Terveys ja hyvinvointi"].yki-selected {
-    background: rgba(6, 182, 212, 0.10);
-    border-color: #06b6d4;
-}
+.yki-topic-btn[data-topic="Terveys ja hyvinvointi"].yki-selected { background: rgba(6,182,212,.12); border-color: #06b6d4; }
 
-.yki-topic-btn[data-topic="Työ ja koulutus"] {
-    border-left-color: #8b5cf6;
-    background: rgba(139, 92, 246, 0.04);
-}
+.yki-topic-btn[data-topic="Työ ja koulutus"]         { border-left-color: #8b5cf6; background: rgba(139,92,246,.04); }
 .yki-topic-btn[data-topic="Työ ja koulutus"]:hover,
-.yki-topic-btn[data-topic="Työ ja koulutus"].yki-selected {
-    background: rgba(139, 92, 246, 0.10);
-    border-color: #8b5cf6;
-}
+.yki-topic-btn[data-topic="Työ ja koulutus"].yki-selected { background: rgba(139,92,246,.12); border-color: #8b5cf6; }
 
-.yki-topic-btn[data-topic="Vapaa-aika"] {
-    border-left-color: #eab308;
-    background: rgba(234, 179, 8, 0.04);
-}
+.yki-topic-btn[data-topic="Vapaa-aika"]              { border-left-color: #eab308; background: rgba(234,179,8,.04); }
 .yki-topic-btn[data-topic="Vapaa-aika"]:hover,
-.yki-topic-btn[data-topic="Vapaa-aika"].yki-selected {
-    background: rgba(234, 179, 8, 0.10);
-    border-color: #eab308;
-}
+.yki-topic-btn[data-topic="Vapaa-aika"].yki-selected { background: rgba(234,179,8,.12); border-color: #eab308; }
 
-.yki-topic-btn[data-topic="Yhteiskunta"] {
-    border-left-color: #64748b;
-    background: rgba(100, 116, 139, 0.04);
-}
+.yki-topic-btn[data-topic="Yhteiskunta"]             { border-left-color: #64748b; background: rgba(100,116,139,.04); }
 .yki-topic-btn[data-topic="Yhteiskunta"]:hover,
-.yki-topic-btn[data-topic="Yhteiskunta"].yki-selected {
-    background: rgba(100, 116, 139, 0.10);
-    border-color: #64748b;
-}
+.yki-topic-btn[data-topic="Yhteiskunta"].yki-selected { background: rgba(100,116,139,.12); border-color: #64748b; }
 
-/* Random spans full row */
 .yki-topic-random {
     grid-column: 1 / -1;
     justify-self: center;
@@ -216,16 +165,8 @@
 }
 
 /* ── Start button ── */
-.yki-start-btn {
-    min-width: 180px;
-    width: auto !important;
-    font-size: 1.05rem;
-}
-
-.yki-start-btn:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-}
+.yki-start-btn { min-width: 180px; width: auto !important; font-size: 1.05rem; }
+.yki-start-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
 /* ── Badges ── */
 .yki-category-badge {
@@ -234,8 +175,7 @@
     border: 1px solid var(--accent-matcha);
     border-radius: 999px;
     padding: 0.35rem 1.1rem;
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 700; font-size: 1rem;
     font-family: 'Nunito', sans-serif;
 }
 
@@ -249,8 +189,8 @@
 }
 
 .yki-topic-badge {
-    background: rgba(167, 139, 250, 0.08);
-    border: 1px solid rgba(167, 139, 250, 0.2);
+    background: rgba(167,139,250,.08);
+    border: 1px solid rgba(167,139,250,.2);
     border-radius: 999px;
     padding: 0.2rem 0.75rem;
     font-size: 0.8rem;
@@ -258,10 +198,10 @@
     color: var(--text-secondary);
 }
 
-/* ── Crowd sound warning ── */
+/* ── Sound warning ── */
 .yki-sound-warning {
-    background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.4);
+    background: rgba(245,158,11,.1);
+    border: 1px solid rgba(245,158,11,.4);
     border-radius: var(--radius);
     padding: 0.6rem 1rem;
     color: var(--text-secondary);
@@ -284,67 +224,34 @@
 .yki-phase-badge {
     border-radius: 999px;
     padding: 0.25rem 0.9rem;
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: 0.8rem; font-weight: 700;
     font-family: 'Nunito', sans-serif;
 }
 
 .yki-phase-prep  { background: rgba(56,189,248,.15); color: #38bdf8; border: 1px solid rgba(56,189,248,.35); }
 .yki-phase-speak { background: rgba(34,197,94,.15);  color: #22c55e; border: 1px solid rgba(34,197,94,.35); }
 
-/* ── Exam controls: timer + button column side by side ── */
-.yki-exam-controls {
+/* ── Big timer ── */
+.yki-timer-block {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
 }
-
-/* ── SVG Timer ring ── */
-.yki-timer-wrap {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    flex-shrink: 0;
-}
-
-.yki-timer-ring { width: 120px; height: 120px; }
-
-.yki-ring-track {
-    fill: none;
-    stroke: var(--border);
-    stroke-width: 8;
-}
-
-.yki-ring-fill {
-    fill: none;
-    stroke: var(--accent-matcha);
-    stroke-width: 8;
-    stroke-dasharray: 326.73;
-    stroke-dashoffset: 0;
-    stroke-linecap: round;
-    transform: rotate(-90deg);
-    transform-origin: 60px 60px;
-    transition: stroke-dashoffset 0.9s linear, stroke 0.3s;
-}
-
-.yki-ring-urgent .yki-ring-fill { stroke: var(--accent-rose); }
 
 .yki-timer-display {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.75rem;
+    font-size: 6.5rem;
     font-weight: 700;
     color: var(--text-primary);
+    line-height: 1;
+    letter-spacing: -0.02em;
     transition: color 0.3s;
 }
 
-.yki-ring-urgent .yki-timer-display {
-    color: var(--accent-rose);
+.yki-timer-urgent {
+    color: var(--accent-rose) !important;
     animation: yki-pulse 0.8s ease-in-out infinite;
 }
 
@@ -353,50 +260,21 @@
     50%       { opacity: 0.5; }
 }
 
-/* ── Control buttons column ── */
-.yki-control-btns {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    min-width: 148px;
-}
-
-.yki-ctrl-btn {
-    background: transparent;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.42rem 0.85rem;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: var(--transition);
-    text-align: left;
+.yki-timer-bar-wrap {
     width: 100%;
+    max-width: 480px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
 }
 
-.yki-ctrl-btn:hover {
-    border-color: var(--accent-matcha);
-    background: var(--accent-soft);
-    color: var(--accent-deep);
-}
-
-.yki-ctrl-btn.yki-btn-active {
-    border-color: var(--accent-matcha);
-    background: var(--accent-soft);
-    color: var(--accent-deep);
-}
-
-.yki-ctrl-end {
-    color: var(--accent-rose);
-    border-color: rgba(244, 63, 94, 0.4);
-}
-
-.yki-ctrl-end:hover {
-    background: rgba(244, 63, 94, 0.08);
-    border-color: var(--accent-rose);
-    color: var(--accent-rose);
+.yki-timer-bar-fill {
+    height: 100%;
+    width: 100%;
+    background: var(--accent-matcha);
+    border-radius: 3px;
+    transition: width 0.9s linear, background 0.3s;
 }
 
 /* ── Volume control ── */
@@ -422,12 +300,10 @@
 .yki-volume-slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 120px;
-    height: 4px;
+    width: 120px; height: 4px;
     border-radius: 2px;
     background: var(--border);
-    outline: none;
-    cursor: pointer;
+    outline: none; cursor: pointer;
 }
 
 .yki-volume-slider::-webkit-slider-thumb {
@@ -512,27 +388,48 @@
     white-space: pre-line;
 }
 
-/* ── Translation box ── */
+/* ── Translation box with toggle header ── */
 .yki-trans-box {
-    background: rgba(167, 139, 250, 0.06);
-    border: 1px solid rgba(167, 139, 250, 0.2);
+    background: rgba(167,139,250,.06);
+    border: 1px solid rgba(167,139,250,.2);
     border-radius: var(--radius);
     padding: 0.85rem 1rem;
     flex: 1;
 }
+
+.yki-trans-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+}
+
+.yki-trans-header .yki-box-label { margin: 0; }
+
+.yki-toggle-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+
+.yki-toggle-btn:hover { color: var(--text-primary); }
 
 .yki-en-text {
     color: var(--text-muted);
     font-style: italic;
     font-size: 0.95rem;
     line-height: 1.6;
-    margin: 0;
+    margin: 0.35rem 0 0;
 }
 
 /* ── Notes area ── */
-.yki-notes-area {
-    width: 100%;
-}
+.yki-notes-area { width: 100%; }
 
 .yki-notes-textarea {
     width: 100%;
@@ -553,7 +450,53 @@
 .yki-notes-textarea:focus       { border-color: var(--accent-matcha); }
 .yki-notes-textarea::placeholder { color: var(--text-muted); }
 
-/* ── Action buttons ── */
+/* ── Action buttons row (below content) ── */
+.yki-action-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.yki-ctrl-btn {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.42rem 0.85rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.yki-ctrl-btn:hover {
+    border-color: var(--accent-matcha);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+}
+
+.yki-ctrl-btn.yki-btn-active {
+    border-color: var(--accent-matcha);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+}
+
+.yki-ctrl-end {
+    color: var(--accent-rose);
+    border-color: rgba(244,63,94,.4);
+}
+
+.yki-ctrl-end:hover {
+    background: rgba(244,63,94,.08);
+    border-color: var(--accent-rose);
+    color: var(--accent-rose);
+}
+
+/* ── Secondary / link buttons ── */
 .yki-secondary-btn {
     background: transparent;
     border: 1.5px solid var(--border);
@@ -627,8 +570,6 @@
     gap: 0.65rem;
 }
 
-.yki-history-grid { margin-top: 0; }
-
 .yki-history-meta {
     display: flex;
     gap: 0.5rem;
@@ -636,9 +577,15 @@
     flex-wrap: wrap;
 }
 
+.yki-practice-btn {
+    margin-left: auto;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+}
+
 .yki-history-notes {
-    background: rgba(234, 179, 8, 0.06);
-    border: 1px solid rgba(234, 179, 8, 0.25);
+    background: rgba(234,179,8,.06);
+    border: 1px solid rgba(234,179,8,.25);
     border-radius: var(--radius);
     padding: 0.65rem 0.85rem;
     text-align: left;
@@ -659,11 +606,11 @@
     padding: 1rem 0;
 }
 
-/* ── Pick Another modal ── */
+/* ── Modal ── */
 .yki-modal {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(0,0,0,.45);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -701,18 +648,11 @@
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
-    .yki-topic-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .yki-topic-random {
-        width: calc(50% - 0.3rem);
-    }
-
-    .yki-category-grid {
-        flex-direction: column;
-        align-items: stretch;
-    }
+    .yki-topic-grid        { grid-template-columns: repeat(2, 1fr); }
+    .yki-topic-random      { width: calc(50% - 0.3rem); }
+    .yki-category-grid     { flex-direction: column; align-items: stretch; }
+    .yki-content-grid      { grid-template-columns: 1fr; }
+    .yki-timer-display     { font-size: 4.5rem; }
 
     .yki-cat-btn {
         max-width: 100%;
@@ -730,24 +670,6 @@
         gap: 0.1rem;
     }
 
-    .yki-exam-controls {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .yki-control-btns {
-        flex-direction: row;
-        flex-wrap: wrap;
-        min-width: unset;
-        justify-content: center;
-    }
-
-    .yki-ctrl-btn { width: auto; }
-
-    .yki-content-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .yki-done-actions { flex-direction: column; width: 100%; }
-    .yki-done-actions button { width: 100%; }
+    .yki-done-actions           { flex-direction: column; width: 100%; }
+    .yki-done-actions button    { width: 100%; }
 }
