@@ -39,6 +39,7 @@ docker run -p 8000:8000 --env-file .env dougvo/bdapp:v1
 - No build step — edit HTML/CSS/JS directly, refresh to see changes
 - `board.js` is the most complex file; the calendar tab and task modal share the same data loaded on page init
 - `summary.js` draws charts on `<canvas>` — verify redraws work correctly after dark mode toggle
+- `yki.js` runs a full state machine for the YKI speaking exam; see `behaviors.md` for the state transitions and persistence rules before editing it
 
 @.claude/rules/architecture.md
 @.claude/rules/behaviors.md

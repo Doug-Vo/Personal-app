@@ -91,21 +91,11 @@
             🔊 A loud crowd noise will play when speaking time starts. Adjust volume once it begins.
         </div>
 
-        <!-- Timer + control buttons side by side -->
-        <div class="yki-exam-controls">
-            <div class="yki-timer-wrap">
-                <svg class="yki-timer-ring" viewBox="0 0 120 120">
-                    <circle class="yki-ring-track" cx="60" cy="60" r="52"/>
-                    <circle class="yki-ring-fill" id="yki-ring-fill" cx="60" cy="60" r="52"/>
-                </svg>
-                <div class="yki-timer-display" id="yki-timer-display">0:00</div>
-            </div>
-            <div class="yki-control-btns">
-                <button id="yki-skip-prep-btn" class="yki-ctrl-btn hidden">⏩ Skip Prep</button>
-                <button id="yki-pause-btn" class="yki-ctrl-btn">⏸ Pause</button>
-                <button id="yki-notes-toggle-btn" class="yki-ctrl-btn">📝 Notes</button>
-                <button id="yki-pick-another-btn" class="yki-ctrl-btn">🔀 Pick Another</button>
-                <button id="yki-end-exam-btn" class="yki-ctrl-btn yki-ctrl-end">✕ End Exam</button>
+        <!-- Big timer -->
+        <div class="yki-timer-block">
+            <div id="yki-timer-display" class="yki-timer-display">0:00</div>
+            <div class="yki-timer-bar-wrap">
+                <div id="yki-timer-bar" class="yki-timer-bar-fill"></div>
             </div>
         </div>
 
@@ -130,12 +120,18 @@
             </div>
             <div class="yki-qcol-en">
                 <div class="yki-trans-box">
-                    <p class="yki-box-label">Translation</p>
-                    <p id="yki-question-translation" class="yki-en-text"></p>
+                    <div class="yki-trans-header">
+                        <p class="yki-box-label">Translation</p>
+                        <button id="yki-q-translate-btn" class="yki-toggle-btn">▼ Show</button>
+                    </div>
+                    <p id="yki-question-translation" class="yki-en-text hidden"></p>
                 </div>
                 <div id="yki-hint-trans-block" class="yki-trans-box hidden">
-                    <p class="yki-box-label">Hint translation</p>
-                    <p id="yki-hint-translation" class="yki-en-text"></p>
+                    <div class="yki-trans-header">
+                        <p class="yki-box-label">Hint translation</p>
+                        <button id="yki-h-translate-btn" class="yki-toggle-btn">▼ Show</button>
+                    </div>
+                    <p id="yki-hint-translation" class="yki-en-text hidden"></p>
                 </div>
             </div>
         </div>
@@ -144,6 +140,16 @@
         <div id="yki-notes-area" class="yki-notes-area hidden">
             <textarea id="yki-notes-text" class="yki-notes-textarea"
                       placeholder="Jot down your ideas here…" rows="4"></textarea>
+        </div>
+
+        <!-- Action buttons row -->
+        <div class="yki-action-row">
+            <button id="yki-skip-prep-btn" class="yki-ctrl-btn hidden">⏩ Skip Prep</button>
+            <button id="yki-pause-btn" class="yki-ctrl-btn">⏸ Pause</button>
+            <button id="yki-notes-toggle-btn" class="yki-ctrl-btn">📝 Notes</button>
+            <button id="yki-pick-another-btn" class="yki-ctrl-btn">🔀 Pick Another (Same Topic)</button>
+            <button id="yki-restart-btn" class="yki-ctrl-btn">↩ Restart</button>
+            <button id="yki-end-exam-btn" class="yki-ctrl-btn yki-ctrl-end">✕ End Exam</button>
         </div>
     </div>
 
@@ -169,13 +175,13 @@
 </div>
 </div>
 
-<!-- Pick Another confirmation modal -->
-<div id="yki-pick-modal" class="yki-modal hidden">
+<!-- Unsaved-progress warning modal (shared by Pick Another + Restart) -->
+<div id="yki-unsaved-modal" class="yki-modal hidden">
     <div class="yki-modal-box">
         <p class="yki-modal-msg">Your notes and this question <strong>won't be saved</strong> to history.</p>
         <div class="yki-modal-actions">
-            <button id="yki-confirm-pick" class="auth-button">Get New Question</button>
-            <button id="yki-cancel-pick" class="yki-secondary-btn">Cancel</button>
+            <button id="yki-confirm-unsaved" class="auth-button">Continue</button>
+            <button id="yki-cancel-unsaved" class="yki-secondary-btn">Cancel</button>
         </div>
     </div>
 </div>

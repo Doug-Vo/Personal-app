@@ -22,28 +22,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const examCategory = document.getElementById('yki-exam-category');
     const examTopic    = document.getElementById('yki-exam-topic');
     const timerDisplay = document.getElementById('yki-timer-display');
-    const ringFill     = document.getElementById('yki-ring-fill');
-    const timerWrap    = document.querySelector('.yki-timer-wrap');
+    const timerBar     = document.getElementById('yki-timer-bar');
 
     const prepSoundWarn = document.getElementById('yki-prep-sound-warning');
     const volumeRow     = document.getElementById('yki-volume-row');
     const muteBtn       = document.getElementById('yki-mute-btn');
     const volumeSlider  = document.getElementById('yki-volume-slider');
 
-    const questionText       = document.getElementById('yki-question-text');
-    const questionTrans      = document.getElementById('yki-question-translation');
-    const hintBlock          = document.getElementById('yki-hint-block');
-    const hintText           = document.getElementById('yki-hint-text');
-    const hintTransBlock     = document.getElementById('yki-hint-trans-block');
-    const hintTrans          = document.getElementById('yki-hint-translation');
+    const questionText   = document.getElementById('yki-question-text');
+    const qTranslateBtn  = document.getElementById('yki-q-translate-btn');
+    const questionTrans  = document.getElementById('yki-question-translation');
 
-    const skipPrepBtn      = document.getElementById('yki-skip-prep-btn');
-    const pauseBtn         = document.getElementById('yki-pause-btn');
-    const notesToggleBtn   = document.getElementById('yki-notes-toggle-btn');
-    const pickAnotherBtn   = document.getElementById('yki-pick-another-btn');
-    const endExamBtn       = document.getElementById('yki-end-exam-btn');
-    const notesArea        = document.getElementById('yki-notes-area');
-    const notesText        = document.getElementById('yki-notes-text');
+    const hintBlock      = document.getElementById('yki-hint-block');
+    const hintText       = document.getElementById('yki-hint-text');
+    const hintTransBlock = document.getElementById('yki-hint-trans-block');
+    const hTranslateBtn  = document.getElementById('yki-h-translate-btn');
+    const hintTrans      = document.getElementById('yki-hint-translation');
+
+    const notesArea       = document.getElementById('yki-notes-area');
+    const notesText       = document.getElementById('yki-notes-text');
+    const skipPrepBtn     = document.getElementById('yki-skip-prep-btn');
+    const pauseBtn        = document.getElementById('yki-pause-btn');
+    const notesToggleBtn  = document.getElementById('yki-notes-toggle-btn');
+    const pickAnotherBtn  = document.getElementById('yki-pick-another-btn');
+    const restartBtn      = document.getElementById('yki-restart-btn');
+    const endExamBtn      = document.getElementById('yki-end-exam-btn');
 
     // Done panel
     const tryAnotherBtn  = document.getElementById('yki-try-another-btn');
@@ -54,16 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyList    = document.getElementById('yki-history-list');
     const historyBackBtn = document.getElementById('yki-history-back-btn');
 
-    // Pick Another modal
-    const pickModal    = document.getElementById('yki-pick-modal');
-    const confirmPick  = document.getElementById('yki-confirm-pick');
-    const cancelPick   = document.getElementById('yki-cancel-pick');
+    // Unsaved modal (shared by Pick Another + Restart)
+    const unsavedModal   = document.getElementById('yki-unsaved-modal');
+    const confirmUnsaved = document.getElementById('yki-confirm-unsaved');
+    const cancelUnsaved  = document.getElementById('yki-cancel-unsaved');
 
     const crowdAudio = document.getElementById('yki-crowd-audio');
 
     // ── Constants ──
-    const CIRCUMFERENCE = 2 * Math.PI * 52;
-
     const TIMERS = {
         Kertominen: { prep: 90,  speak: 90  },
         Mielipide:  { prep: 120, speak: 120 },
@@ -87,9 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
         paused:           false,
     };
 
-    // UI selection state on the start panel
-    let uiCategory = null;
-    let uiTopic    = null; // null = nothing picked (→ random); '' = Random button
+    // UI selection on start panel
+    let uiCategory    = null;
+    let uiTopic       = null;
+
+    // Pending action for the unsaved modal
+    let pendingAction = null;
 
     // ── CSRF ──
     function getCsrf() {
@@ -108,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         state.timeLeft  = seconds;
         state.totalTime = seconds;
         state.paused    = false;
+        timerBar.style.width      = '100%';
+        timerBar.style.background = '';
         updateTimerUI();
         state.timerId = setInterval(tick, 1000);
     }
@@ -135,13 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
         timerDisplay.textContent = `${mins}:${secs}`;
 
         const fraction = state.totalTime > 0 ? state.timeLeft / state.totalTime : 0;
-        ringFill.style.strokeDashoffset = CIRCUMFERENCE * (1 - fraction);
+        timerBar.style.width = `${fraction * 100}%`;
 
-        if (state.timeLeft <= 10 && state.timeLeft > 0) {
-            timerWrap.classList.add('yki-ring-urgent');
-        } else {
-            timerWrap.classList.remove('yki-ring-urgent');
-        }
+        const urgent = state.timeLeft <= 10 && state.timeLeft > 0;
+        timerDisplay.classList.toggle('yki-timer-urgent', urgent);
+        timerBar.style.background = urgent ? 'var(--accent-rose)' : '';
     }
 
     // ── Pause / Resume ──
@@ -219,6 +223,24 @@ document.addEventListener('DOMContentLoaded', () => {
         saveVolPrefs();
     });
 
+    // ── Translation toggles ──
+    function resetTranslationToggles() {
+        questionTrans.classList.add('hidden');
+        qTranslateBtn.textContent = '▼ Show';
+        hintTrans.classList.add('hidden');
+        hTranslateBtn.textContent = '▼ Show';
+    }
+
+    qTranslateBtn.addEventListener('click', () => {
+        const hidden = questionTrans.classList.toggle('hidden');
+        qTranslateBtn.textContent = hidden ? '▼ Show' : '▲ Hide';
+    });
+
+    hTranslateBtn.addEventListener('click', () => {
+        const hidden = hintTrans.classList.toggle('hidden');
+        hTranslateBtn.textContent = hidden ? '▼ Show' : '▲ Hide';
+    });
+
     // ── Notes persistence ──
     async function fetchPreviousNotes(question) {
         if (!question) return '';
@@ -274,13 +296,14 @@ document.addEventListener('DOMContentLoaded', () => {
             historyList.innerHTML = '<p class="yki-history-empty">No questions yet — complete a round to build history.</p>';
             return;
         }
-        historyList.innerHTML = history.map(e => `
+        historyList.innerHTML = history.map((e, i) => `
             <div class="yki-history-card">
                 <div class="yki-history-meta">
                     <span class="yki-category-badge-sm">${escHtml(e.category)}</span>
                     <span class="yki-topic-badge">${escHtml(e.topic)}</span>
+                    <button class="yki-practice-btn yki-secondary-btn" data-practice-idx="${i}">▶ Practice</button>
                 </div>
-                <div class="yki-content-grid yki-history-grid">
+                <div class="yki-content-grid">
                     <div class="yki-qcol-fi">
                         <div class="yki-question-box">
                             <p class="yki-box-label">Question</p>
@@ -336,30 +359,45 @@ document.addEventListener('DOMContentLoaded', () => {
         showPanel('start');
     }
 
-    // → PREP
-    async function enterPrep(category, topic) {
+    function resetStartPanel() {
+        document.querySelectorAll('.yki-cat-btn[data-category], .yki-topic-btn').forEach(b => b.classList.remove('yki-selected'));
+        uiCategory        = null;
+        uiTopic           = null;
+        startBtn.disabled = true;
+    }
+
+    // → PREP (preloaded = history entry to replay without fetching)
+    async function enterPrep(category, topic, preloaded = null) {
         state.category = category;
         state.topic    = topic;
 
-        startBtn.disabled    = true;
-        startBtn.textContent = 'Loading…';
-
-        try {
-            const data = await loadQuestion(state.category, state.topic);
-            state.question         = data.question;
-            state.translation      = data.translation || '';
-            state.hint             = data.hint || '';
-            state.hint_translation = data.hint_translation || '';
-        } catch {
-            alert('Could not load question. Please try again.');
+        if (preloaded) {
+            state.question         = preloaded.question;
+            state.translation      = preloaded.translation || '';
+            state.hint             = preloaded.hint || '';
+            state.hint_translation = preloaded.hint_translation || '';
+        } else {
+            startBtn.disabled    = true;
+            startBtn.textContent = 'Loading…';
+            try {
+                const data = await loadQuestion(state.category, state.topic);
+                state.question         = data.question;
+                state.translation      = data.translation || '';
+                state.hint             = data.hint || '';
+                state.hint_translation = data.hint_translation || '';
+            } catch {
+                alert('Could not load question. Please try again.');
+                startBtn.disabled    = false;
+                startBtn.textContent = 'Start Exam';
+                return;
+            }
             startBtn.disabled    = false;
             startBtn.textContent = 'Start Exam';
-            return;
         }
 
         state.phase = 'PREP';
 
-        // Populate content
+        // Populate question/translation
         questionText.textContent  = state.question;
         questionTrans.textContent = state.translation;
 
@@ -373,6 +411,8 @@ document.addEventListener('DOMContentLoaded', () => {
             hintBlock.classList.add('hidden');
             hintTransBlock.classList.add('hidden');
         }
+
+        resetTranslationToggles();
 
         // Fetch and populate previous notes
         const prevNotes = await fetchPreviousNotes(state.question);
@@ -392,15 +432,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         prepSoundWarn.classList.remove('hidden');
         skipPrepBtn.classList.remove('hidden');
+        endExamBtn.classList.add('hidden');
         volumeRow.classList.add('hidden');
         pauseBtn.textContent = '⏸ Pause';
         pauseBtn.classList.remove('yki-btn-active');
         state.paused = false;
 
         showPanel('exam');
-
-        startBtn.disabled    = false;
-        startBtn.textContent = 'Start Exam';
         startTimer(TIMERS[state.category].prep);
     }
 
@@ -412,6 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
         phaseBadge.className   = 'yki-phase-badge yki-phase-speak';
         prepSoundWarn.classList.add('hidden');
         skipPrepBtn.classList.add('hidden');
+        endExamBtn.classList.remove('hidden');
         volumeRow.classList.remove('hidden');
         pauseBtn.textContent = '⏸ Pause';
         pauseBtn.classList.remove('yki-btn-active');
@@ -444,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.yki-cat-btn[data-category]').forEach(b => b.classList.remove('yki-selected'));
             btn.classList.add('yki-selected');
-            uiCategory = btn.dataset.category;
+            uiCategory        = btn.dataset.category;
             startBtn.disabled = false;
         });
     });
@@ -466,35 +505,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Exam buttons ──
     pauseBtn.addEventListener('click', togglePause);
-
     skipPrepBtn.addEventListener('click', enterSpeak);
+    endExamBtn.addEventListener('click', finishExam);
 
     notesToggleBtn.addEventListener('click', () => {
         const hidden = notesArea.classList.toggle('hidden');
         notesToggleBtn.textContent = hidden ? '📝 Notes' : '📝 Hide Notes';
     });
 
-    endExamBtn.addEventListener('click', finishExam);
-
+    // Pick Another — show modal, on confirm load new question (no save)
     pickAnotherBtn.addEventListener('click', () => {
-        pickModal.classList.remove('hidden');
+        pendingAction = 'pickAnother';
+        unsavedModal.classList.remove('hidden');
     });
 
-    cancelPick.addEventListener('click', () => {
-        pickModal.classList.add('hidden');
+    // Restart — show modal, on confirm go back to start (no save)
+    restartBtn.addEventListener('click', () => {
+        pendingAction = 'restart';
+        unsavedModal.classList.remove('hidden');
     });
 
-    confirmPick.addEventListener('click', async () => {
-        pickModal.classList.add('hidden');
-        stopTimer();
-        stopCrowd();
-        // Load new question without saving current to history/DB
-        await enterPrep(state.category, state.topic);
+    confirmUnsaved.addEventListener('click', async () => {
+        unsavedModal.classList.add('hidden');
+        if (pendingAction === 'pickAnother') {
+            stopTimer();
+            stopCrowd();
+            await enterPrep(state.category, state.topic);
+        } else if (pendingAction === 'restart') {
+            stopTimer();
+            stopCrowd();
+            resetStartPanel();
+            enterStart();
+        }
+        pendingAction = null;
     });
 
-    // Close modal on backdrop click
-    pickModal.addEventListener('click', e => {
-        if (e.target === pickModal) pickModal.classList.add('hidden');
+    cancelUnsaved.addEventListener('click', () => {
+        unsavedModal.classList.add('hidden');
+        pendingAction = null;
+    });
+
+    unsavedModal.addEventListener('click', e => {
+        if (e.target === unsavedModal) {
+            unsavedModal.classList.add('hidden');
+            pendingAction = null;
+        }
     });
 
     // ── Done panel ──
@@ -503,10 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     backToStartBtn.addEventListener('click', () => {
-        document.querySelectorAll('.yki-cat-btn, .yki-topic-btn').forEach(b => b.classList.remove('yki-selected'));
-        uiCategory = null;
-        uiTopic    = null;
-        startBtn.disabled = true;
+        resetStartPanel();
         enterStart();
     });
 
@@ -514,5 +566,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── History panel ──
     historyBackBtn.addEventListener('click', enterStart);
+
+    // Practice a question from history (event delegation)
+    historyList.addEventListener('click', e => {
+        const btn = e.target.closest('[data-practice-idx]');
+        if (!btn) return;
+        const idx   = parseInt(btn.dataset.practiceIdx);
+        const entry = getHistory()[idx];
+        if (!entry) return;
+        const topic = (entry.topic === 'Random') ? '' : entry.topic;
+        enterPrep(entry.category, topic, entry);
+    });
 
 });
