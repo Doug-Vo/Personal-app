@@ -80,20 +80,29 @@
     color: var(--text-primary);
 }
 
-.yki-cat-btn:hover,
-.yki-cat-btn.yki-selected {
+.yki-cat-btn:hover {
     border-color: var(--accent-matcha);
     background: var(--accent-soft);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
-.yki-cat-history-btn { border-style: dashed; }
-.yki-cat-icon        { font-size: 1.4rem; line-height: 1; }
-.yki-cat-name        { font-weight: 700; font-size: 0.95rem; }
-.yki-cat-desc        { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
+.yki-cat-btn.yki-selected {
+    border-color: var(--accent-matcha);
+    border-width: 2px;
+    background: rgba(152,191,125,.2);
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px rgba(152,191,125,.18), var(--shadow-md);
+    color: var(--accent-deep);
+    font-weight: 700;
+}
 
-/* ── Topic grid — 4 columns, Random on own row ── */
+.yki-cat-history-btn { border-style: dashed; }
+.yki-cat-icon  { font-size: 1.4rem; line-height: 1; }
+.yki-cat-name  { font-weight: 700; font-size: 0.95rem; }
+.yki-cat-desc  { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
+
+/* ── Topic grid — 4 columns ── */
 .yki-topic-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -118,43 +127,56 @@
     text-align: center;
 }
 
-.yki-topic-btn:hover,
+.yki-topic-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
 .yki-topic-btn.yki-selected {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+    border-width: 2px;
+    font-weight: 700;
 }
 
 .yki-topic-name { font-weight: 700; font-size: 0.8rem; }
 .yki-topic-en   { font-size: 0.7rem; color: var(--text-muted); }
 
-/* Per-topic accent colors */
+/* Per-topic accent colors (hover + selected use same strong state) */
 .yki-topic-btn[data-topic="Ihminen ja lähipiiri"]    { border-left-color: #f43f5e; background: rgba(244,63,94,.04); }
 .yki-topic-btn[data-topic="Ihminen ja lähipiiri"]:hover,
-.yki-topic-btn[data-topic="Ihminen ja lähipiiri"].yki-selected { background: rgba(244,63,94,.12); border-color: #f43f5e; }
+.yki-topic-btn[data-topic="Ihminen ja lähipiiri"].yki-selected
+    { background: rgba(244,63,94,.16); border-color: #f43f5e; box-shadow: 0 0 0 3px rgba(244,63,94,.12), var(--shadow-md); }
 
 .yki-topic-btn[data-topic="Arkielämä"]               { border-left-color: #f97316; background: rgba(249,115,22,.04); }
 .yki-topic-btn[data-topic="Arkielämä"]:hover,
-.yki-topic-btn[data-topic="Arkielämä"].yki-selected  { background: rgba(249,115,22,.12); border-color: #f97316; }
+.yki-topic-btn[data-topic="Arkielämä"].yki-selected
+    { background: rgba(249,115,22,.16); border-color: #f97316; box-shadow: 0 0 0 3px rgba(249,115,22,.12), var(--shadow-md); }
 
 .yki-topic-btn[data-topic="Luonto ja ympäristö"]     { border-left-color: #22c55e; background: rgba(34,197,94,.04); }
 .yki-topic-btn[data-topic="Luonto ja ympäristö"]:hover,
-.yki-topic-btn[data-topic="Luonto ja ympäristö"].yki-selected { background: rgba(34,197,94,.12); border-color: #22c55e; }
+.yki-topic-btn[data-topic="Luonto ja ympäristö"].yki-selected
+    { background: rgba(34,197,94,.16); border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.12), var(--shadow-md); }
 
 .yki-topic-btn[data-topic="Terveys ja hyvinvointi"]  { border-left-color: #06b6d4; background: rgba(6,182,212,.04); }
 .yki-topic-btn[data-topic="Terveys ja hyvinvointi"]:hover,
-.yki-topic-btn[data-topic="Terveys ja hyvinvointi"].yki-selected { background: rgba(6,182,212,.12); border-color: #06b6d4; }
+.yki-topic-btn[data-topic="Terveys ja hyvinvointi"].yki-selected
+    { background: rgba(6,182,212,.16); border-color: #06b6d4; box-shadow: 0 0 0 3px rgba(6,182,212,.12), var(--shadow-md); }
 
 .yki-topic-btn[data-topic="Työ ja koulutus"]         { border-left-color: #8b5cf6; background: rgba(139,92,246,.04); }
 .yki-topic-btn[data-topic="Työ ja koulutus"]:hover,
-.yki-topic-btn[data-topic="Työ ja koulutus"].yki-selected { background: rgba(139,92,246,.12); border-color: #8b5cf6; }
+.yki-topic-btn[data-topic="Työ ja koulutus"].yki-selected
+    { background: rgba(139,92,246,.16); border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,.12), var(--shadow-md); }
 
 .yki-topic-btn[data-topic="Vapaa-aika"]              { border-left-color: #eab308; background: rgba(234,179,8,.04); }
 .yki-topic-btn[data-topic="Vapaa-aika"]:hover,
-.yki-topic-btn[data-topic="Vapaa-aika"].yki-selected { background: rgba(234,179,8,.12); border-color: #eab308; }
+.yki-topic-btn[data-topic="Vapaa-aika"].yki-selected
+    { background: rgba(234,179,8,.16); border-color: #eab308; box-shadow: 0 0 0 3px rgba(234,179,8,.12), var(--shadow-md); }
 
 .yki-topic-btn[data-topic="Yhteiskunta"]             { border-left-color: #64748b; background: rgba(100,116,139,.04); }
 .yki-topic-btn[data-topic="Yhteiskunta"]:hover,
-.yki-topic-btn[data-topic="Yhteiskunta"].yki-selected { background: rgba(100,116,139,.12); border-color: #64748b; }
+.yki-topic-btn[data-topic="Yhteiskunta"].yki-selected
+    { background: rgba(100,116,139,.16); border-color: #64748b; box-shadow: 0 0 0 3px rgba(100,116,139,.12), var(--shadow-md); }
 
 .yki-topic-random {
     grid-column: 1 / -1;
@@ -169,16 +191,6 @@
 .yki-start-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
 /* ── Badges ── */
-.yki-category-badge {
-    background: var(--accent-soft);
-    color: var(--accent-deep);
-    border: 1px solid var(--accent-matcha);
-    border-radius: 999px;
-    padding: 0.35rem 1.1rem;
-    font-weight: 700; font-size: 1rem;
-    font-family: 'Nunito', sans-serif;
-}
-
 .yki-category-badge-sm {
     background: var(--accent-soft);
     color: var(--text-muted);
@@ -224,12 +236,13 @@
 .yki-phase-badge {
     border-radius: 999px;
     padding: 0.25rem 0.9rem;
-    font-size: 0.8rem; font-weight: 700;
+    font-size: 0.8rem;
+    font-weight: 700;
     font-family: 'Nunito', sans-serif;
 }
 
-.yki-phase-prep  { background: rgba(56,189,248,.15); color: #38bdf8; border: 1px solid rgba(56,189,248,.35); }
-.yki-phase-speak { background: rgba(34,197,94,.15);  color: #22c55e; border: 1px solid rgba(34,197,94,.35); }
+.yki-phase-prep  { background: rgba(56,189,248,.15);  color: #38bdf8; border: 1px solid rgba(56,189,248,.35); }
+.yki-phase-speak { background: rgba(34,197,94,.15);   color: #22c55e; border: 1px solid rgba(34,197,94,.35); }
 
 /* ── Big timer ── */
 .yki-timer-block {
@@ -238,6 +251,12 @@
     align-items: center;
     gap: 0.6rem;
     width: 100%;
+}
+
+.yki-timer-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .yki-timer-display {
@@ -275,6 +294,75 @@
     background: var(--accent-matcha);
     border-radius: 3px;
     transition: width 0.9s linear, background 0.3s;
+}
+
+/* ── Clock buttons (↺ and ⏸ stacked next to timer) ── */
+.yki-timer-clock-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.yki-timer-ctrl-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.25rem 0.55rem;
+    font-size: 1rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    transition: var(--transition);
+    line-height: 1;
+    min-width: 2.2rem;
+    text-align: center;
+}
+
+.yki-timer-ctrl-btn:hover {
+    border-color: var(--accent-matcha);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+}
+
+.yki-timer-ctrl-btn.yki-btn-active {
+    border-color: var(--accent-matcha);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+}
+
+/* ── Sentinel (invisible placeholder for IntersectionObserver) ── */
+.yki-timer-sentinel {
+    width: 100%;
+    height: 1px;
+    pointer-events: none;
+}
+
+/* ── Floating timer (auto pop-out when scrolled off screen) ── */
+#yki-timer-block.yki-popped {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 500;
+    width: auto;
+    min-width: 140px;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,.18);
+    gap: 0.4rem;
+}
+
+#yki-timer-block.yki-popped .yki-timer-display {
+    font-size: 2.4rem;
+}
+
+#yki-timer-block.yki-popped .yki-timer-bar-wrap {
+    max-width: 100%;
+}
+
+#yki-timer-block.yki-popped .yki-timer-clock-btns {
+    flex-direction: row;
 }
 
 /* ── Volume control ── */
@@ -338,6 +426,9 @@
     min-width: 0;
 }
 
+/* ── Inner wrapper (question / hint text) ── */
+.yki-scroll-inner {}
+
 /* ── Question box ── */
 .yki-question-box {
     background: var(--accent-soft);
@@ -388,37 +479,22 @@
     white-space: pre-line;
 }
 
-/* ── Translation box with toggle header ── */
+/* ── Translation box ── */
 .yki-trans-box {
     background: rgba(167,139,250,.06);
     border: 1px solid rgba(167,139,250,.2);
     border-radius: var(--radius);
     padding: 0.85rem 1rem;
     flex: 1;
+    /* position + overflow needed for peel animation on exam-panel boxes */
+    position: relative;
+    overflow: hidden;
 }
 
-.yki-trans-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.35rem;
+/* Plain trans box (done panel, history) — no peel, no overflow clip needed */
+.yki-trans-box.yki-trans-plain {
+    overflow: visible;
 }
-
-.yki-trans-header .yki-box-label { margin: 0; }
-
-.yki-toggle-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: color 0.2s;
-    white-space: nowrap;
-}
-
-.yki-toggle-btn:hover { color: var(--text-primary); }
 
 .yki-en-text {
     color: var(--text-muted);
@@ -427,6 +503,67 @@
     line-height: 1.6;
     margin: 0.35rem 0 0;
 }
+
+/* ── Peel reveal overlay ── */
+.yki-trans-box-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+}
+
+.yki-trans-box-top .yki-box-label { margin: 0; }
+
+.yki-trans-scroll {}
+
+.yki-peel-cover {
+    position: absolute;
+    inset: 0;
+    background: rgba(167,139,250,.16);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    cursor: pointer;
+    transition: transform 0.38s cubic-bezier(.4,0,.2,1);
+    z-index: 1;
+}
+
+.yki-trans-box.yki-revealed .yki-peel-cover {
+    transform: translateY(-110%);
+}
+
+.yki-peel-hint {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    user-select: none;
+    letter-spacing: 0.04em;
+}
+
+.yki-peel-hide-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+
+.yki-trans-box.yki-revealed .yki-peel-hide-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.yki-peel-hide-btn:hover { color: var(--text-primary); }
 
 /* ── Notes area ── */
 .yki-notes-area { width: 100%; }
@@ -450,7 +587,7 @@
 .yki-notes-textarea:focus       { border-color: var(--accent-matcha); }
 .yki-notes-textarea::placeholder { color: var(--text-muted); }
 
-/* ── Action buttons row (below content) ── */
+/* ── Action buttons row ── */
 .yki-action-row {
     display: flex;
     gap: 0.5rem;
@@ -485,15 +622,87 @@
     color: var(--accent-deep);
 }
 
-.yki-ctrl-end {
-    color: var(--accent-rose);
-    border-color: rgba(244,63,94,.4);
+.yki-ctrl-quit { color: var(--accent-rose); border-color: rgba(244,63,94,.4); }
+.yki-ctrl-quit:hover { background: rgba(244,63,94,.08); border-color: var(--accent-rose); color: var(--accent-rose); }
+
+.yki-ctrl-complete { color: #22c55e; border-color: rgba(34,197,94,.4); }
+.yki-ctrl-complete:hover { background: rgba(34,197,94,.08); border-color: #22c55e; color: #22c55e; }
+
+/* ── Inline translator panel ── */
+.yki-translator-panel {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-.yki-ctrl-end:hover {
-    background: rgba(244,63,94,.08);
-    border-color: var(--accent-rose);
-    color: var(--accent-rose);
+.yki-translator-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.yki-trans-select {
+    padding: 0.3rem 0.55rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-input, var(--bg-card));
+    color: var(--text-primary);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.yki-trans-select:focus { border-color: var(--accent-matcha); }
+
+.yki-trans-arrow {
+    color: var(--text-muted);
+    font-size: 1rem;
+    user-select: none;
+}
+
+.yki-trans-go-btn {
+    width: auto !important;
+    padding: 0.35rem 1rem !important;
+    font-size: 0.85rem !important;
+    margin-left: auto;
+}
+
+/* Two-column translator: input | output */
+.yki-translator-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+    align-items: start;
+}
+
+.yki-trans-output {
+    min-height: 6rem;
+    background: rgba(167,139,250,.06);
+    border: 1px solid rgba(167,139,250,.2);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.yki-trans-output:empty::before {
+    content: 'Translation appears here…';
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.85rem;
 }
 
 /* ── Secondary / link buttons ── */
@@ -516,21 +725,8 @@
     color: var(--accent-deep);
 }
 
-.yki-link-btn {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.875rem;
-    cursor: pointer;
-    padding: 0.25rem;
-    transition: var(--transition);
-}
-
-.yki-link-btn:hover { color: var(--text-primary); text-decoration: underline; }
-
 /* ── Done panel ── */
-.yki-done-icon  { font-size: 3rem; line-height: 1; }
+.yki-done-icon { font-size: 3rem; line-height: 1; }
 
 .yki-done-title {
     font-family: 'Cormorant Garamond', serif;
@@ -648,11 +844,12 @@
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
-    .yki-topic-grid        { grid-template-columns: repeat(2, 1fr); }
-    .yki-topic-random      { width: calc(50% - 0.3rem); }
-    .yki-category-grid     { flex-direction: column; align-items: stretch; }
-    .yki-content-grid      { grid-template-columns: 1fr; }
-    .yki-timer-display     { font-size: 4.5rem; }
+    .yki-topic-grid           { grid-template-columns: repeat(2, 1fr); }
+    .yki-topic-random         { width: calc(50% - 0.3rem); }
+    .yki-category-grid        { flex-direction: column; align-items: stretch; }
+    .yki-content-grid         { grid-template-columns: 1fr; }
+    .yki-translator-cols      { grid-template-columns: 1fr; }
+    .yki-timer-display        { font-size: 4.5rem; }
 
     .yki-cat-btn {
         max-width: 100%;
@@ -670,6 +867,9 @@
         gap: 0.1rem;
     }
 
-    .yki-done-actions           { flex-direction: column; width: 100%; }
-    .yki-done-actions button    { width: 100%; }
+    .yki-done-actions        { flex-direction: column; width: 100%; }
+    .yki-done-actions button { width: 100%; }
+
+    #yki-timer-block.yki-popped { bottom: 1rem; right: 1rem; }
+    #yki-timer-block.yki-popped .yki-timer-display { font-size: 1.8rem; }
 }
