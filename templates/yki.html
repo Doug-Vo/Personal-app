@@ -10,7 +10,7 @@
 <div class="yki-page">
 <div class="translator-card yki-card">
 
-    <!-- ══ PANEL 1: Start — category + topic + launch ══ -->
+    <!-- ══ PANEL 1: Start ══ -->
     <div id="yki-panel-start" class="yki-panel">
         <h2 class="yki-heading">YKI Mock Speaking Exam</h2>
 
@@ -77,7 +77,7 @@
         <button id="yki-start-btn" class="auth-button yki-start-btn" disabled>Start Exam</button>
     </div>
 
-    <!-- ══ PANEL 2: Exam (prep + speak share this panel) ══ -->
+    <!-- ══ PANEL 2: Exam ══ -->
     <div id="yki-panel-exam" class="yki-panel hidden">
 
         <div class="yki-phase-row">
@@ -86,20 +86,28 @@
             <span id="yki-exam-topic" class="yki-topic-badge"></span>
         </div>
 
-        <!-- Sound warning — only during prep -->
+        <!-- Sound warning — prep only -->
         <div id="yki-prep-sound-warning" class="yki-sound-warning hidden">
             🔊 A loud crowd noise will play when speaking time starts. Adjust volume once it begins.
         </div>
 
-        <!-- Big timer -->
-        <div class="yki-timer-block">
-            <div id="yki-timer-display" class="yki-timer-display">0:00</div>
+        <!-- Timer block (auto-pops when scrolled off screen) -->
+        <div id="yki-timer-block" class="yki-timer-block">
+            <div class="yki-timer-row">
+                <div id="yki-timer-display" class="yki-timer-display">0:00</div>
+                <div class="yki-timer-clock-btns">
+                    <button id="yki-restart-timer-btn" class="yki-timer-ctrl-btn" title="Restart timer">↺</button>
+                    <button id="yki-clock-pause-btn" class="yki-timer-ctrl-btn" title="Pause / Resume">⏸</button>
+                </div>
+            </div>
             <div class="yki-timer-bar-wrap">
                 <div id="yki-timer-bar" class="yki-timer-bar-fill"></div>
             </div>
         </div>
+        <!-- Sentinel: watched by IntersectionObserver to trigger auto pop-out -->
+        <div id="yki-timer-sentinel" class="yki-timer-sentinel"></div>
 
-        <!-- Volume control — only visible during speak phase -->
+        <!-- Volume control — speak phase only -->
         <div id="yki-volume-row" class="yki-volume-row hidden">
             <button id="yki-mute-btn" class="yki-icon-btn" title="Mute / Unmute">🔊</button>
             <input id="yki-volume-slider" type="range" min="0" max="1" step="0.05"
@@ -111,32 +119,46 @@
             <div class="yki-qcol-fi">
                 <div class="yki-question-box">
                     <p class="yki-box-label">Question</p>
-                    <p id="yki-question-text" class="yki-question-text"></p>
+                    <div class="yki-scroll-inner">
+                        <p id="yki-question-text" class="yki-question-text"></p>
+                    </div>
                 </div>
                 <div id="yki-hint-block" class="yki-hint-block hidden">
                     <p class="yki-hint-label">Guiding questions</p>
-                    <p id="yki-hint-text" class="yki-hint-text"></p>
+                    <div class="yki-scroll-inner">
+                        <p id="yki-hint-text" class="yki-hint-text"></p>
+                    </div>
                 </div>
             </div>
             <div class="yki-qcol-en">
-                <div class="yki-trans-box">
-                    <div class="yki-trans-header">
+                <div id="yki-q-trans-box" class="yki-trans-box">
+                    <div class="yki-trans-box-top">
                         <p class="yki-box-label">Translation</p>
-                        <button id="yki-q-translate-btn" class="yki-toggle-btn">▼ Show</button>
+                        <button class="yki-peel-hide-btn">▲ Hide</button>
                     </div>
-                    <p id="yki-question-translation" class="yki-en-text hidden"></p>
+                    <div class="yki-trans-scroll">
+                        <p id="yki-question-translation" class="yki-en-text"></p>
+                    </div>
+                    <div class="yki-peel-cover">
+                        <span class="yki-peel-hint">▼ Reveal translation</span>
+                    </div>
                 </div>
                 <div id="yki-hint-trans-block" class="yki-trans-box hidden">
-                    <div class="yki-trans-header">
+                    <div class="yki-trans-box-top">
                         <p class="yki-box-label">Hint translation</p>
-                        <button id="yki-h-translate-btn" class="yki-toggle-btn">▼ Show</button>
+                        <button class="yki-peel-hide-btn">▲ Hide</button>
                     </div>
-                    <p id="yki-hint-translation" class="yki-en-text hidden"></p>
+                    <div class="yki-trans-scroll">
+                        <p id="yki-hint-translation" class="yki-en-text"></p>
+                    </div>
+                    <div class="yki-peel-cover">
+                        <span class="yki-peel-hint">▼ Reveal hint</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Notes area -->
+        <!-- Notes area (above action row) -->
         <div id="yki-notes-area" class="yki-notes-area hidden">
             <textarea id="yki-notes-text" class="yki-notes-textarea"
                       placeholder="Jot down your ideas here…" rows="4"></textarea>
@@ -144,12 +166,37 @@
 
         <!-- Action buttons row -->
         <div class="yki-action-row">
-            <button id="yki-skip-prep-btn" class="yki-ctrl-btn hidden">⏩ Skip Prep</button>
-            <button id="yki-pause-btn" class="yki-ctrl-btn">⏸ Pause</button>
-            <button id="yki-notes-toggle-btn" class="yki-ctrl-btn">📝 Notes</button>
+            <button id="yki-quit-btn" class="yki-ctrl-btn yki-ctrl-quit">✕ Quit</button>
             <button id="yki-pick-another-btn" class="yki-ctrl-btn">🔀 Pick Another (Same Topic)</button>
-            <button id="yki-restart-btn" class="yki-ctrl-btn">↩ Restart</button>
-            <button id="yki-end-exam-btn" class="yki-ctrl-btn yki-ctrl-end">✕ End Exam</button>
+            <button id="yki-translator-toggle-btn" class="yki-ctrl-btn">🌐 Translator</button>
+            <button id="yki-notes-toggle-btn" class="yki-ctrl-btn">📝 Notes</button>
+            <button id="yki-pause-btn" class="yki-ctrl-btn">⏸ Pause</button>
+            <button id="yki-skip-prep-btn" class="yki-ctrl-btn hidden">⏩ Skip Prep</button>
+            <button id="yki-end-exam-btn" class="yki-ctrl-btn yki-ctrl-complete hidden">✓ Complete Exam</button>
+        </div>
+
+        <!-- Translator panel (below action row) -->
+        <div id="yki-translator-panel" class="yki-translator-panel hidden">
+            <div class="yki-translator-controls">
+                <select id="yki-trans-src" class="yki-trans-select">
+                    <option value="fi">Finnish</option>
+                    <option value="en">English</option>
+                    <option value="vi">Vietnamese</option>
+                </select>
+                <span class="yki-trans-arrow">→</span>
+                <select id="yki-trans-tgt" class="yki-trans-select">
+                    <option value="en">English</option>
+                    <option value="fi">Finnish</option>
+                    <option value="vi">Vietnamese</option>
+                </select>
+                <button id="yki-trans-swap-btn" class="yki-icon-btn" title="Swap languages">⇄</button>
+                <button id="yki-trans-go-btn" class="auth-button yki-trans-go-btn">Translate</button>
+            </div>
+            <div class="yki-translator-cols">
+                <textarea id="yki-trans-input" class="yki-notes-textarea"
+                          placeholder="Type text to translate…" rows="4"></textarea>
+                <div id="yki-trans-output" class="yki-trans-output"></div>
+            </div>
         </div>
     </div>
 
@@ -158,8 +205,39 @@
         <div class="yki-done-icon">✅</div>
         <h3 class="yki-done-title">Well done!</h3>
         <p class="yki-done-sub">You completed the speaking round.</p>
+
+        <!-- Question recap (always visible, no toggle) -->
+        <div class="yki-content-grid">
+            <div class="yki-qcol-fi">
+                <div class="yki-question-box">
+                    <p class="yki-box-label">Question</p>
+                    <div class="yki-scroll-inner">
+                        <p id="yki-done-question" class="yki-question-text"></p>
+                    </div>
+                </div>
+                <div id="yki-done-hint-wrap" class="yki-hint-block hidden">
+                    <p class="yki-hint-label">Guiding questions</p>
+                    <div class="yki-scroll-inner">
+                        <p id="yki-done-hint" class="yki-hint-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="yki-qcol-en">
+                <div class="yki-trans-box yki-trans-plain">
+                    <p class="yki-box-label">Translation</p>
+                    <p id="yki-done-translation" class="yki-en-text"></p>
+                </div>
+                <div id="yki-done-hint-trans-wrap" class="yki-trans-box yki-trans-plain hidden">
+                    <p class="yki-box-label">Hint translation</p>
+                    <p id="yki-done-hint-translation" class="yki-en-text"></p>
+                </div>
+            </div>
+        </div>
+
         <div class="yki-done-actions">
-            <button id="yki-try-another-btn" class="auth-button">Try Another Question</button>
+            <button id="yki-retake-btn" class="auth-button">↺ Retake this question</button>
+            <button id="yki-try-another-btn" class="yki-secondary-btn">Try Another Question</button>
+            <button id="yki-done-pick-another-btn" class="yki-secondary-btn">🔀 Pick Another (Same Topic)</button>
             <button id="yki-back-to-start-btn" class="yki-secondary-btn">← Back to Start</button>
             <button id="yki-view-history-btn" class="yki-secondary-btn">📋 View History</button>
         </div>
@@ -175,7 +253,7 @@
 </div>
 </div>
 
-<!-- Unsaved-progress warning modal (shared by Pick Another + Restart) -->
+<!-- Unsaved-progress warning modal (shared by Pick Another + Quit) -->
 <div id="yki-unsaved-modal" class="yki-modal hidden">
     <div class="yki-modal-box">
         <p class="yki-modal-msg">Your notes and this question <strong>won't be saved</strong> to history.</p>

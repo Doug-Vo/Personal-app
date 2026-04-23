@@ -17,47 +17,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn       = document.getElementById('yki-start-btn');
     const historyLinkBtn = document.getElementById('yki-history-link-btn');
 
-    // Exam panel
-    const phaseBadge   = document.getElementById('yki-phase-badge');
+    // Timer
+    const timerBlock      = document.getElementById('yki-timer-block');
+    const timerSentinel   = document.getElementById('yki-timer-sentinel');
+    const timerDisplay    = document.getElementById('yki-timer-display');
+    const timerBar        = document.getElementById('yki-timer-bar');
+    const restartTimerBtn = document.getElementById('yki-restart-timer-btn');
+    const clockPauseBtn   = document.getElementById('yki-clock-pause-btn');
+
+    // Phase / badges
+    const phaseBadge  = document.getElementById('yki-phase-badge');
     const examCategory = document.getElementById('yki-exam-category');
     const examTopic    = document.getElementById('yki-exam-topic');
-    const timerDisplay = document.getElementById('yki-timer-display');
-    const timerBar     = document.getElementById('yki-timer-bar');
 
+    // Exam panel misc
     const prepSoundWarn = document.getElementById('yki-prep-sound-warning');
     const volumeRow     = document.getElementById('yki-volume-row');
     const muteBtn       = document.getElementById('yki-mute-btn');
     const volumeSlider  = document.getElementById('yki-volume-slider');
 
+    // Question + peel-reveal translation boxes
     const questionText   = document.getElementById('yki-question-text');
-    const qTranslateBtn  = document.getElementById('yki-q-translate-btn');
     const questionTrans  = document.getElementById('yki-question-translation');
-
+    const qTransBox      = document.getElementById('yki-q-trans-box');
     const hintBlock      = document.getElementById('yki-hint-block');
     const hintText       = document.getElementById('yki-hint-text');
     const hintTransBlock = document.getElementById('yki-hint-trans-block');
-    const hTranslateBtn  = document.getElementById('yki-h-translate-btn');
     const hintTrans      = document.getElementById('yki-hint-translation');
 
-    const notesArea       = document.getElementById('yki-notes-area');
-    const notesText       = document.getElementById('yki-notes-text');
-    const skipPrepBtn     = document.getElementById('yki-skip-prep-btn');
-    const pauseBtn        = document.getElementById('yki-pause-btn');
-    const notesToggleBtn  = document.getElementById('yki-notes-toggle-btn');
-    const pickAnotherBtn  = document.getElementById('yki-pick-another-btn');
-    const restartBtn      = document.getElementById('yki-restart-btn');
-    const endExamBtn      = document.getElementById('yki-end-exam-btn');
+    // Notes
+    const notesArea     = document.getElementById('yki-notes-area');
+    const notesText     = document.getElementById('yki-notes-text');
+    const notesToggleBtn = document.getElementById('yki-notes-toggle-btn');
+
+    // Inline translator
+    const translatorToggleBtn = document.getElementById('yki-translator-toggle-btn');
+    const translatorPanel     = document.getElementById('yki-translator-panel');
+    const transSrcSel         = document.getElementById('yki-trans-src');
+    const transTgtSel         = document.getElementById('yki-trans-tgt');
+    const transSwapBtn        = document.getElementById('yki-trans-swap-btn');
+    const transInput          = document.getElementById('yki-trans-input');
+    const transGoBtn          = document.getElementById('yki-trans-go-btn');
+    const transOutput         = document.getElementById('yki-trans-output');
+
+    // Action row
+    const quitBtn        = document.getElementById('yki-quit-btn');
+    const pickAnotherBtn = document.getElementById('yki-pick-another-btn');
+    const skipPrepBtn    = document.getElementById('yki-skip-prep-btn');
+    const pauseBtn       = document.getElementById('yki-pause-btn');
+    const endExamBtn     = document.getElementById('yki-end-exam-btn');
 
     // Done panel
-    const tryAnotherBtn  = document.getElementById('yki-try-another-btn');
-    const backToStartBtn = document.getElementById('yki-back-to-start-btn');
+    const retakeBtn          = document.getElementById('yki-retake-btn');
+    const tryAnotherBtn      = document.getElementById('yki-try-another-btn');
+    const donePickAnotherBtn = document.getElementById('yki-done-pick-another-btn');
+    const backToStartBtn     = document.getElementById('yki-back-to-start-btn');
     const viewHistoryBtn = document.getElementById('yki-view-history-btn');
+    const doneQuestion   = document.getElementById('yki-done-question');
+    const doneHintWrap   = document.getElementById('yki-done-hint-wrap');
+    const doneHint       = document.getElementById('yki-done-hint');
+    const doneTranslation       = document.getElementById('yki-done-translation');
+    const doneHintTransWrap     = document.getElementById('yki-done-hint-trans-wrap');
+    const doneHintTranslation   = document.getElementById('yki-done-hint-translation');
 
     // History panel
     const historyList    = document.getElementById('yki-history-list');
     const historyBackBtn = document.getElementById('yki-history-back-btn');
 
-    // Unsaved modal (shared by Pick Another + Restart)
+    // Unsaved modal
     const unsavedModal   = document.getElementById('yki-unsaved-modal');
     const confirmUnsaved = document.getElementById('yki-confirm-unsaved');
     const cancelUnsaved  = document.getElementById('yki-cancel-unsaved');
@@ -70,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         Mielipide:  { prep: 120, speak: 120 },
         Reagointi:  { prep: 30,  speak: 30  },
     };
-
     const HISTORY_KEY = 'yki_history';
 
     // ── State ──
@@ -78,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         phase:            'START',
         category:         null,
         topic:            '',
+        topicActual:      '',
         question:         '',
         translation:      '',
         hint:             '',
@@ -88,11 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
         paused:           false,
     };
 
-    // UI selection on start panel
     let uiCategory    = null;
     let uiTopic       = null;
-
-    // Pending action for the unsaved modal
     let pendingAction = null;
 
     // ── CSRF ──
@@ -148,29 +172,60 @@ document.addEventListener('DOMContentLoaded', () => {
         timerBar.style.background = urgent ? 'var(--accent-rose)' : '';
     }
 
-    // ── Pause / Resume ──
+    // ── Auto pop-out timer (IntersectionObserver on sentinel) ──
+    function unPopTimer() {
+        timerBlock.classList.remove('yki-popped');
+    }
+
+    const timerObserver = new IntersectionObserver((entries) => {
+        if (panels.exam.classList.contains('hidden')) return;
+        const shouldPop = !entries[0].isIntersecting;
+        timerBlock.classList.toggle('yki-popped', shouldPop);
+    }, { threshold: 0 });
+
+    timerObserver.observe(timerSentinel);
+
+    // ── Pause / Resume — syncs both action-row button and clock button ──
+    function setPauseUI(paused) {
+        const label = paused ? '▶ Resume' : '⏸ Pause';
+        pauseBtn.textContent      = label;
+        clockPauseBtn.textContent = paused ? '▶' : '⏸';
+        pauseBtn.classList.toggle('yki-btn-active', paused);
+        clockPauseBtn.classList.toggle('yki-btn-active', paused);
+    }
+
     function togglePause() {
         if (!state.paused) {
             stopTimer();
             if (state.phase === 'SPEAK') crowdAudio.pause();
             state.paused = true;
-            pauseBtn.textContent = '▶ Resume';
-            pauseBtn.classList.add('yki-btn-active');
         } else {
             state.paused = false;
-            pauseBtn.textContent = '⏸ Pause';
-            pauseBtn.classList.remove('yki-btn-active');
             if (state.phase === 'SPEAK') crowdAudio.play().catch(() => {});
             state.timerId = setInterval(tick, 1000);
         }
+        setPauseUI(state.paused);
     }
+
+    pauseBtn.addEventListener('click', togglePause);
+    clockPauseBtn.addEventListener('click', togglePause);
+
+    // ── Restart timer ──
+    restartTimerBtn.addEventListener('click', () => {
+        const wasInSpeak = state.phase === 'SPEAK' && state.paused;
+        const duration   = state.phase === 'PREP'
+            ? TIMERS[state.category].prep
+            : TIMERS[state.category].speak;
+        startTimer(duration);
+        setPauseUI(false);
+        if (wasInSpeak) crowdAudio.play().catch(() => {});
+    });
 
     // ── Audio ──
     function startCrowd() {
         crowdAudio.currentTime = 0;
         crowdAudio.play().catch(() => {});
     }
-
     function stopCrowd() {
         crowdAudio.pause();
         crowdAudio.currentTime = 0;
@@ -223,22 +278,59 @@ document.addEventListener('DOMContentLoaded', () => {
         saveVolPrefs();
     });
 
-    // ── Translation toggles ──
+    // ── Peel reveal / hide ──
     function resetTranslationToggles() {
-        questionTrans.classList.add('hidden');
-        qTranslateBtn.textContent = '▼ Show';
-        hintTrans.classList.add('hidden');
-        hTranslateBtn.textContent = '▼ Show';
+        qTransBox.classList.remove('yki-revealed');
+        hintTransBlock.classList.remove('yki-revealed');
     }
 
-    qTranslateBtn.addEventListener('click', () => {
-        const hidden = questionTrans.classList.toggle('hidden');
-        qTranslateBtn.textContent = hidden ? '▼ Show' : '▲ Hide';
+    qTransBox.querySelector('.yki-peel-cover').addEventListener('click', () => {
+        qTransBox.classList.add('yki-revealed');
+    });
+    qTransBox.querySelector('.yki-peel-hide-btn').addEventListener('click', () => {
+        qTransBox.classList.remove('yki-revealed');
     });
 
-    hTranslateBtn.addEventListener('click', () => {
-        const hidden = hintTrans.classList.toggle('hidden');
-        hTranslateBtn.textContent = hidden ? '▼ Show' : '▲ Hide';
+    hintTransBlock.querySelector('.yki-peel-cover').addEventListener('click', () => {
+        hintTransBlock.classList.add('yki-revealed');
+    });
+    hintTransBlock.querySelector('.yki-peel-hide-btn').addEventListener('click', () => {
+        hintTransBlock.classList.remove('yki-revealed');
+    });
+
+    // ── Inline translator ──
+    translatorToggleBtn.addEventListener('click', () => {
+        const hidden = translatorPanel.classList.toggle('hidden');
+        translatorToggleBtn.classList.toggle('yki-btn-active', !hidden);
+    });
+
+    transSwapBtn.addEventListener('click', () => {
+        const src = transSrcSel.value;
+        transSrcSel.value = transTgtSel.value;
+        transTgtSel.value = src;
+    });
+
+    transGoBtn.addEventListener('click', async () => {
+        const text = transInput.value.trim();
+        if (!text) return;
+        transGoBtn.disabled    = true;
+        transGoBtn.textContent = '…';
+        try {
+            const res = await fetch('/api/translate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
+                body: JSON.stringify({ text, source_lang: transSrcSel.value }),
+            });
+            if (!res.ok) throw new Error();
+            const data   = await res.json();
+            const tgtKey = transTgtSel.value;
+            transOutput.textContent = data[tgtKey] || data[Object.keys(data)[0]] || '';
+        } catch {
+            transOutput.textContent = 'Translation failed. Please try again.';
+        } finally {
+            transGoBtn.disabled    = false;
+            transGoBtn.textContent = 'Translate';
+        }
     });
 
     // ── Notes persistence ──
@@ -271,7 +363,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveToHistory() {
         const entry = {
             category:         state.category,
-            topic:            state.topic || 'Random',
+            topic:            state.topicActual || state.topic || 'Random',
+            topicActual:      state.topicActual,
             question:         state.question,
             translation:      state.translation,
             hint:             state.hint,
@@ -285,9 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function escHtml(str) {
         return String(str || '')
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
     function renderHistory() {
@@ -315,11 +406,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>` : ''}
                     </div>
                     <div class="yki-qcol-en">
-                        <div class="yki-trans-box">
+                        <div class="yki-trans-box yki-trans-plain">
                             <p class="yki-box-label">Translation</p>
                             <p class="yki-en-text">${escHtml(e.translation)}</p>
                         </div>
-                        ${e.hint_translation ? `<div class="yki-trans-box">
+                        ${e.hint_translation ? `<div class="yki-trans-box yki-trans-plain">
                             <p class="yki-box-label">Hint translation</p>
                             <p class="yki-en-text">${escHtml(e.hint_translation)}</p>
                         </div>` : ''}
@@ -349,11 +440,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── State transitions ──
 
-    // → START
     function enterStart() {
+        unPopTimer();
         state.phase    = 'START';
         state.category = null;
         state.topic    = '';
+        state.topicActual = '';
         stopTimer();
         stopCrowd();
         showPanel('start');
@@ -366,16 +458,17 @@ document.addEventListener('DOMContentLoaded', () => {
         startBtn.disabled = true;
     }
 
-    // → PREP (preloaded = history entry to replay without fetching)
     async function enterPrep(category, topic, preloaded = null) {
-        state.category = category;
-        state.topic    = topic;
+        state.category    = category;
+        state.topic       = topic;
+        state.topicActual = '';
 
         if (preloaded) {
             state.question         = preloaded.question;
             state.translation      = preloaded.translation || '';
             state.hint             = preloaded.hint || '';
             state.hint_translation = preloaded.hint_translation || '';
+            state.topicActual      = preloaded.topicActual || preloaded.topic || topic || '';
         } else {
             startBtn.disabled    = true;
             startBtn.textContent = 'Loading…';
@@ -385,6 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 state.translation      = data.translation || '';
                 state.hint             = data.hint || '';
                 state.hint_translation = data.hint_translation || '';
+                state.topicActual      = data.topic || topic || '';
             } catch {
                 alert('Could not load question. Please try again.');
                 startBtn.disabled    = false;
@@ -397,7 +491,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         state.phase = 'PREP';
 
-        // Populate question/translation
         questionText.textContent  = state.question;
         questionTrans.textContent = state.translation;
 
@@ -414,7 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resetTranslationToggles();
 
-        // Fetch and populate previous notes
         const prevNotes = await fetchPreviousNotes(state.question);
         notesText.value = prevNotes;
         if (prevNotes) {
@@ -425,24 +517,33 @@ document.addEventListener('DOMContentLoaded', () => {
             notesToggleBtn.textContent = '📝 Notes';
         }
 
+        // Reset translator
+        translatorPanel.classList.add('hidden');
+        translatorToggleBtn.classList.remove('yki-btn-active');
+        transInput.value        = '';
+        transOutput.textContent = '';
+
+        // Topic badge: show actual topic for random picks
+        if (topic === '' && state.topicActual) {
+            examTopic.textContent = `Random · ${state.topicActual}`;
+        } else {
+            examTopic.textContent = state.topicActual || topic || 'Random';
+        }
         phaseBadge.textContent   = 'Prep time';
         phaseBadge.className     = 'yki-phase-badge yki-phase-prep';
         examCategory.textContent = state.category;
-        examTopic.textContent    = state.topic || 'Random';
 
         prepSoundWarn.classList.remove('hidden');
         skipPrepBtn.classList.remove('hidden');
         endExamBtn.classList.add('hidden');
         volumeRow.classList.add('hidden');
-        pauseBtn.textContent = '⏸ Pause';
-        pauseBtn.classList.remove('yki-btn-active');
+        setPauseUI(false);
         state.paused = false;
 
         showPanel('exam');
         startTimer(TIMERS[state.category].prep);
     }
 
-    // PREP → SPEAK
     function enterSpeak() {
         state.phase = 'SPEAK';
 
@@ -452,26 +553,42 @@ document.addEventListener('DOMContentLoaded', () => {
         skipPrepBtn.classList.add('hidden');
         endExamBtn.classList.remove('hidden');
         volumeRow.classList.remove('hidden');
-        pauseBtn.textContent = '⏸ Pause';
-        pauseBtn.classList.remove('yki-btn-active');
+        setPauseUI(false);
         state.paused = false;
 
         startCrowd();
         startTimer(TIMERS[state.category].speak);
     }
 
-    // → DONE (saves notes + history)
     async function finishExam() {
         stopTimer();
         stopCrowd();
+        unPopTimer();
         state.phase = 'DONE';
         saveToHistory();
         await saveNotesToDB();
+
+        // Populate done panel recap
+        doneQuestion.textContent = state.question;
+        doneTranslation.textContent = state.translation;
+        if (state.hint) {
+            doneHint.textContent = state.hint;
+            doneHintWrap.classList.remove('hidden');
+        } else {
+            doneHintWrap.classList.add('hidden');
+        }
+        if (state.hint_translation) {
+            doneHintTranslation.textContent = state.hint_translation;
+            doneHintTransWrap.classList.remove('hidden');
+        } else {
+            doneHintTransWrap.classList.add('hidden');
+        }
+
         showPanel('done');
     }
 
-    // → HISTORY
     function enterHistory() {
+        unPopTimer();
         state.phase = 'HISTORY';
         renderHistory();
         showPanel('history');
@@ -503,8 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     historyLinkBtn.addEventListener('click', enterHistory);
 
-    // ── Exam buttons ──
-    pauseBtn.addEventListener('click', togglePause);
+    // ── Exam control buttons ──
     skipPrepBtn.addEventListener('click', enterSpeak);
     endExamBtn.addEventListener('click', finishExam);
 
@@ -513,15 +629,13 @@ document.addEventListener('DOMContentLoaded', () => {
         notesToggleBtn.textContent = hidden ? '📝 Notes' : '📝 Hide Notes';
     });
 
-    // Pick Another — show modal, on confirm load new question (no save)
-    pickAnotherBtn.addEventListener('click', () => {
-        pendingAction = 'pickAnother';
+    quitBtn.addEventListener('click', () => {
+        pendingAction = 'quit';
         unsavedModal.classList.remove('hidden');
     });
 
-    // Restart — show modal, on confirm go back to start (no save)
-    restartBtn.addEventListener('click', () => {
-        pendingAction = 'restart';
+    pickAnotherBtn.addEventListener('click', () => {
+        pendingAction = 'pickAnother';
         unsavedModal.classList.remove('hidden');
     });
 
@@ -531,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stopTimer();
             stopCrowd();
             await enterPrep(state.category, state.topic);
-        } else if (pendingAction === 'restart') {
+        } else if (pendingAction === 'quit') {
             stopTimer();
             stopCrowd();
             resetStartPanel();
@@ -553,9 +667,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ── Done panel ──
-    tryAnotherBtn.addEventListener('click', () => {
-        enterPrep(state.category, state.topic);
+    retakeBtn.addEventListener('click', () => {
+        enterPrep(state.category, state.topicActual || state.topic, {
+            question:         state.question,
+            translation:      state.translation,
+            hint:             state.hint,
+            hint_translation: state.hint_translation,
+            topicActual:      state.topicActual,
+        });
     });
+
+    tryAnotherBtn.addEventListener('click', () => enterPrep(state.category, state.topic));
+    donePickAnotherBtn.addEventListener('click', () => enterPrep(state.category, state.topicActual || state.topic));
 
     backToStartBtn.addEventListener('click', () => {
         resetStartPanel();
@@ -567,15 +690,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── History panel ──
     historyBackBtn.addEventListener('click', enterStart);
 
-    // Practice a question from history (event delegation)
     historyList.addEventListener('click', e => {
         const btn = e.target.closest('[data-practice-idx]');
         if (!btn) return;
         const idx   = parseInt(btn.dataset.practiceIdx);
         const entry = getHistory()[idx];
         if (!entry) return;
-        const topic = (entry.topic === 'Random') ? '' : entry.topic;
-        enterPrep(entry.category, topic, entry);
+        enterPrep(entry.category, entry.topicActual || '', entry);
     });
 
 });
