@@ -7,7 +7,7 @@ import bcrypt
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_talisman import Talisman
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -27,6 +27,7 @@ app.config['SECRET_KEY']              = os.environ.get('SECRET_KEY', 'dev_key_on
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE']   = os.environ.get('SESSION_COOKIE_SECURE', 'false').lower() == 'true'
+app.config['WTF_CSRF_TIME_LIMIT']     = None
 
 # ── Security ──
 talisman = Talisman(app, content_security_policy=None, force_https=False)
