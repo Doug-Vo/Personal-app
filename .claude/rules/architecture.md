@@ -10,6 +10,12 @@
 | External API | Azure Cognitive Services (translation) |
 | Hosting | Azure App Service B1, Sweden Central (`oinky.azurewebsites.net`), Docker image `dougvo/bdapp` |
 
+## Config Notes
+
+| Setting | Value | Reason |
+| --- | --- | --- |
+| `WTF_CSRF_TIME_LIMIT` | `None` | YKI exam sessions can exceed 1 hour; disabling expiry prevents POST failures without weakening CSRF protection (token still validates against the session) |
+
 ## File Structure
 
 ```text
@@ -23,15 +29,14 @@ Personal-Translator/
 │   │   ├── base.css                # Global styles, navbar, dark mode
 │   │   ├── board.css               # Kanban board + calendar tab
 │   │   ├── journal.css             # Journal page
-│   │   └── summary.css             # Summary dashboard
+│   │   ├── summary.css             # Summary dashboard
+│   │   └── yki.css                 # YKI feature-scoped styles
 │   ├── js/
 │   │   ├── script.js               # Translator page (debounced input → POST /api/translate)
 │   │   ├── journal.js              # Journal tabs: write / entries / heatmap
 │   │   ├── board.js                # Kanban drag-and-drop, task modal, calendar tab
 │   │   ├── summary.js              # Exploding donut charts, mood piglet swap
-│   │   └── yki.js                  # YKI exam state machine + timers + audio
-│   ├── css/
-│   │   └── yki.css                 # YKI feature-scoped styles
+│   │   └── yki.js                  # YKI exam state machine + timers + audio + inline translator
 │   ├── sound/
 │   │   └── crowd-sound.mp3         # Crowd noise played during YKI speaking phase
 │   └── image/
@@ -45,7 +50,7 @@ Personal-Translator/
     ├── journal.html
     ├── board.html
     ├── summary.html
-    ├── yki.html                    # YKI speaking exam — START / EXAM / DONE / HISTORY panels
+    ├── yki.html                    # YKI speaking exam — START / EXAM / DONE / HISTORY panels; peel-reveal translations, floating timer, inline translator, notes area
     └── partials/                   # Inline SVG piglet illustrations (one per mood)
         ├── piglet.html             # Default piglet (used in navbar/header)
         ├── piglet_excited.html
