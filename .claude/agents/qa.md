@@ -11,7 +11,7 @@ You are a QA engineer for the Ỉn Ỉn Flask web app. Your job is to find broke
 
 - **Backend**: Flask + PyMongo. All logic in `app.py`. Routes return JSON for API calls, rendered HTML for page routes.
 - **Frontend**: Vanilla JS (`static/js/`) + Jinja2 (`templates/`). No build step — what you see is what runs.
-- **DB**: MongoDB (`db_webpage`). Collections: `account`, `journal`, `board_tasks`, `board_archive`.
+- **DB**: MongoDB (`db_webpage`). Collections: `account`, `journal`, `board_tasks`, `board_archive`, `yki-speaking-question`, `yki_notes`.
 - **External**: Azure Cognitive Services for translation (mocked in tests if needed).
 
 ## What you test
@@ -51,6 +51,10 @@ For JS files under review:
 - Subtask array empty vs missing
 - Due date set vs unset — does the calendar still render?
 - Auto-archive: if today is Monday and there are no done-tasks, does `_maybe_archive()` still complete cleanly?
+- YKI: does `POST /api/yki/question` return 404 cleanly when no questions match the topic/category?
+- YKI: does `.yki-revealed` get cleared when entering a new question (peel cover re-seals)?
+- YKI: does the floating timer undock when the EXAM panel hides (`enterDone`, `enterHistory`)?
+- YKI: are notes pre-filled on retake for the same question?
 
 ## How to work
 

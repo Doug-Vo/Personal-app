@@ -11,7 +11,7 @@ You are a code reviewer and debugger for the Ỉn Ỉn Flask web app — a singl
 
 - **Backend**: Flask, Flask-Login, Flask-WTF (CSRF), Flask-Limiter, PyMongo, bcrypt
 - **Frontend**: Vanilla ES6, Jinja2 templates, custom CSS — no Tailwind, no bundler
-- **DB**: MongoDB (`db_webpage`) — collections: `account`, `journal`, `board_tasks`, `board_archive`
+- **DB**: MongoDB (`db_webpage`) — collections: `account`, `journal`, `board_tasks`, `board_archive`, `yki-speaking-question`, `yki_notes`
 - **External**: Azure Cognitive Services (translation)
 
 ## Route groups
@@ -23,6 +23,7 @@ You are a code reviewer and debugger for the Ỉn Ỉn Flask web app — a singl
 | Journal | `/journal`, `/journal/new`, `/journal/delete/<id>`, `/journal/chart-data` |
 | Board | `/board`, `/board/data`, `POST/PATCH/DELETE /board/task`, `/board/task/<id>/archive`, `/board/archive/delete` |
 | Summary | `/summary`, `/summary/data` |
+| YKI | `/yki`, `POST /api/yki/question`, `GET/POST /api/yki/prefs`, `GET/POST /api/yki/notes` |
 | Health | `/healthz` |
 
 ## Your job

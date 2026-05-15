@@ -5,7 +5,8 @@
 - **User data isolation**: all queries on `journal`, `board_tasks`, `board_archive` must include `user_id: current_user.id` — a missing filter leaks one user's data to another
 - **CSRF**: POST/PATCH/DELETE routes use Flask-WTF. Forms need `{{ csrf_token() }}` hidden input; AJAX reads the token from `<meta name="csrf-token">` and sends it as `X-CSRFToken` header
 - **ObjectId safety**: always wrap `task_id` / `entry_id` in `ObjectId(...)` inside a `try/except` — malformed IDs crash the route with a 500 instead of returning a clean 400
-- **Rate limits**: `/api/translate` (40/min), `/login` (20/hr), `/register` (10/hr), `/change-password` (10/hr). Any new auth-adjacent or external-API route must have one too
+- **Rate limits**: `/api/translate` (40/min), `/login` (20/hr), `/register` (10/hr), `/change-password` (10/hr), `/api/yki/question` (60/min), `/api/yki/prefs` POST (30/min). Any new auth-adjacent or external-API route must have one too
+- **CSRF time limit**: set to `None` (`WTF_CSRF_TIME_LIMIT = None`) — tokens never expire so long exam sessions don't break POST requests. CSRF is still enforced; tokens are invalidated on logout with the session.
 
 ## Input Limits
 
