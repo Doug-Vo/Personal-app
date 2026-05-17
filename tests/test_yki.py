@@ -151,3 +151,162 @@ def test_yki_notes_truncated_at_2000_chars(auth_client):
     uid = get_user_id("user_a")
     doc = _app_module.yki_notes_col.find_one({"user_id": uid, "question": question})
     assert len(doc["notes"]) == 2000
+
+
+# ── /api/yki/questions GET ──────────────────────────────────────────────────
+
+def test_yki_questions_unauthenticated_redirects(client):
+    resp = client.get("/api/yki/questions?category=Kertominen&topic=Arkiel%C3%A4m%C3%A4")
+    assert resp.status_code == 302
+    assert "login" in resp.headers["Location"]
+
+
+def test_yki_questions_invalid_category_returns_400(auth_client):
+    resp = auth_client.get("/api/yki/questions?category=Invalid&topic=Arkiel%C3%A4m%C3%A4")
+    assert resp.status_code == 400
+
+
+def test_yki_questions_invalid_topic_returns_400(auth_client):
+    resp = auth_client.get("/api/yki/questions?category=Kertominen&topic=NotATopic")
+    assert resp.status_code == 400
+
+
+def test_yki_questions_empty_topic_returns_400(auth_client):
+    resp = auth_client.get("/api/yki/questions?category=Kertominen&topic=")
+    assert resp.status_code == 400
+
+
+def test_yki_questions_returns_all_matching_questions(auth_client):
+    _app_module.yki_col.insert_many([
+        {
+            "Category": "Kertominen",
+            "Topic": "Arkielämä",
+            "Main question": "Kerro arjestasi.",
+            "Translation of the main question in English": "Tell about your daily life.",
+            "Hint": "",
+            "Translation of the hint": "",
+        },
+        {
+            "Category": "Kertominen",
+            "Topic": "Arkielämä",
+            "Main question": "Mitä teet viikonloppuna?",
+            "Translation of the main question in English": "What do you do on weekends?",
+            "Hint": "Harrastukset?",
+            "Translation of the hint": "Hobbies?",
+        },
+        {
+            "Category": "Kertominen",
+            "Topic": "Vapaa-aika",  # different topic — should NOT appear
+            "Main question": "Kuvaile vapaa-aikaasi.",
+            "Translation of the main question in English": "Describe your free time.",
+            "Hint": "",
+            "Translation of the hint": "",
+        },
+    ])
+    resp = auth_client.get("/api/yki/questions?category=Kertominen&topic=Arkiel%C3%A4m%C3%A4")
+    assert resp.status_code == 200
+    data = resp.get_json()
+    assert len(data["questions"]) == 2
+    texts = [q["question"] for q in data["questions"]]
+    assert "Kerro arjestasi." in texts
+    assert "Mitä teet viikonloppuna?" in texts
+    assert "Kuvaile vapaa-aikaasi." not in texts
+
+
+def test_yki_questions_has_notes_flag_true_when_notes_exist(auth_client):
+    question_text = "Kerro arjestasi."
+    _app_module.yki_col.insert_one({
+        "Category": "Kertominen",
+        "Topic": "Arkielämä",
+        "Main question": question_text,
+        "Translation of the main question in English": "Tell about your daily life.",
+        "Hint": "",
+        "Translation of the hint": "",
+    })
+    _post_json(auth_client, "/api/yki/notes", {"question": question_text, "notes": "My notes"})
+
+    resp = auth_client.get("/api/yki/questions?category=Kertominen&topic=Arkiel%C3%A4m%C3%A4")
+    assert resp.status_code == 200
+    q = resp.get_json()["questions"][0]
+    assert q["has_notes"] is True
+
+
+def test_yki_questions_has_notes_flag_false_when_no_notes(auth_client):
+    _app_module.yki_col.insert_one({
+        "Category": "Mielipide",
+        "Topic": "Yhteiskunta",
+        "Main question": "Mitä mieltä olet?",
+        "Translation of the main question in English": "What do you think?",
+        "Hint": "",
+        "Translation of the hint": "",
+    })
+    resp = auth_client.get("/api/yki/questions?category=Mielipide&topic=Yhteiskunta")
+    assert resp.status_code == 200
+    q = resp.get_json()["questions"][0]
+    assert q["has_notes"] is False
+
+
+def test_yki_questions_has_notes_cross_user_isolation(auth_client, other_client):
+    question_text = "Kerro perheestäsi."
+    _app_module.yki_col.insert_one({
+        "Category": "Kertominen",
+        "Topic": "Ihminen ja lähipiiri",
+        "Main question": question_text,
+        "Translation of the main question in English": "Tell about your family.",
+        "Hint": "",
+        "Translation of the hint": "",
+    })
+    _post_json(auth_client, "/api/yki/notes", {"question": question_text, "notes": "My notes"})
+
+    resp_a = auth_client.get("/api/yki/questions?category=Kertominen&topic=Ihminen%20ja%20l%C3%A4hipiiri")
+    assert resp_a.get_json()["questions"][0]["has_notes"] is True
+
+    resp_b = other_client.get("/api/yki/questions?category=Kertominen&topic=Ihminen%20ja%20l%C3%A4hipiiri")
+    assert resp_b.get_json()["questions"][0]["has_notes"] is False
+
+
+def test_yki_questions_returns_empty_list_when_no_questions(auth_client):
+    resp = auth_client.get("/api/yki/questions?category=Reagointi&topic=Vapaa-aika")
+    assert resp.status_code == 200
+    assert resp.get_json()["questions"] == []
+
+
+def test_yki_questions_sorted_alphabetically(auth_client):
+    _app_module.yki_col.insert_many([
+        {
+            "Category": "Mielipide", "Topic": "Yhteiskunta",
+            "Main question": "Zebra question.",
+            "Translation of the main question in English": "",
+            "Hint": "", "Translation of the hint": "",
+        },
+        {
+            "Category": "Mielipide", "Topic": "Yhteiskunta",
+            "Main question": "Apple question.",
+            "Translation of the main question in English": "",
+            "Hint": "", "Translation of the hint": "",
+        },
+    ])
+    resp = auth_client.get("/api/yki/questions?category=Mielipide&topic=Yhteiskunta")
+    texts = [q["question"] for q in resp.get_json()["questions"]]
+    assert texts == sorted(texts)
+
+
+def test_yki_questions_returns_all_fields(auth_client):
+    _app_module.yki_col.insert_one({
+        "Category": "Reagointi",
+        "Topic": "Terveys ja hyvinvointi",
+        "Main question": "Miten voit?",
+        "Translation of the main question in English": "How are you?",
+        "Hint": "Kerro tunteistasi.",
+        "Translation of the hint": "Tell about your feelings.",
+    })
+    resp = auth_client.get("/api/yki/questions?category=Reagointi&topic=Terveys%20ja%20hyvinvointi")
+    assert resp.status_code == 200
+    q = resp.get_json()["questions"][0]
+    assert q["question"]         == "Miten voit?"
+    assert q["translation"]      == "How are you?"
+    assert q["hint"]             == "Kerro tunteistasi."
+    assert q["hint_translation"] == "Tell about your feelings."
+    assert q["topic"]            == "Terveys ja hyvinvointi"
+    assert q["category"]         == "Reagointi"
+    assert "has_notes" in q

@@ -84,6 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyList    = document.getElementById('yki-history-list');
     const historyBackBtn = document.getElementById('yki-history-back-btn');
 
+    // Question picker
+    const qpickerWrap = document.getElementById('yki-qpicker-wrap');
+    const qpickerList = document.getElementById('yki-qpicker-list');
+
     // Unsaved modal
     const unsavedModal   = document.getElementById('yki-unsaved-modal');
     const confirmUnsaved = document.getElementById('yki-confirm-unsaved');
@@ -115,9 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
         paused:           false,
     };
 
-    let uiCategory    = null;
-    let uiTopic       = null;
-    let pendingAction = null;
+    let uiCategory         = null;
+    let uiTopic            = null;
+    let pendingAction      = null;
+    let uiSelectedQuestion = null;  // null = random; object = specific question from picker
+    let qpickerFetchId     = 0;     // guards against stale fetch responses
+    let qpickerQuestions   = [];    // backing array for the rendered picker items
 
     // ── CSRF ──
     function getCsrf() {
@@ -438,6 +445,61 @@ document.addEventListener('DOMContentLoaded', () => {
         return res.json();
     }
 
+    // ── Question picker helpers ──
+
+    function hideQPicker() {
+        uiSelectedQuestion = null;
+        qpickerWrap.classList.add('hidden');
+        qpickerList.innerHTML = '';
+    }
+
+    function handleQPickerClick(e) {
+        const item = e.target.closest('.yki-qpicker-item');
+        if (!item) return;
+        qpickerList.querySelectorAll('.yki-qpicker-item').forEach(el => el.classList.remove('yki-qpicker-selected'));
+        item.classList.add('yki-qpicker-selected');
+        const idx = item.dataset.qidx;
+        uiSelectedQuestion = idx === 'random' ? null : qpickerQuestions[parseInt(idx)];
+    }
+
+    function renderQPicker(questions) {
+        const items = [`
+            <div class="yki-qpicker-item yki-qpicker-random yki-qpicker-selected" data-qidx="random">
+                <span class="yki-qpicker-shuffle">🔀</span>
+                <span class="yki-qpicker-text">Random from this topic</span>
+            </div>`];
+
+        questions.forEach((q, i) => {
+            items.push(`
+            <div class="yki-qpicker-item${q.has_notes ? ' yki-qpicker-done' : ''}" data-qidx="${i}">
+                ${q.has_notes ? '<span class="yki-qpicker-check" title="Notes saved">✓</span>' : '<span class="yki-qpicker-check yki-qpicker-check-empty"></span>'}
+                <span class="yki-qpicker-text">${escHtml(q.question)}</span>
+            </div>`);
+        });
+
+        qpickerQuestions = questions;
+        qpickerList.innerHTML = items.join('');
+        qpickerList.removeEventListener('click', handleQPickerClick);
+        qpickerList.addEventListener('click', handleQPickerClick);
+    }
+
+    async function fetchAndRenderQPicker(category, topic) {
+        const fetchId = ++qpickerFetchId;
+        qpickerWrap.classList.remove('hidden');
+        qpickerList.innerHTML = '<p class="yki-qpicker-loading">Loading questions…</p>';
+        uiSelectedQuestion = null;
+        try {
+            const res = await fetch(`/api/yki/questions?category=${encodeURIComponent(category)}&topic=${encodeURIComponent(topic)}`);
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            if (fetchId !== qpickerFetchId) return;
+            renderQPicker(data.questions || []);
+        } catch {
+            if (fetchId !== qpickerFetchId) return;
+            qpickerList.innerHTML = '<p class="yki-qpicker-loading">Could not load questions.</p>';
+        }
+    }
+
     // ── State transitions ──
 
     function enterStart() {
@@ -446,9 +508,11 @@ document.addEventListener('DOMContentLoaded', () => {
         state.category = null;
         state.topic    = '';
         state.topicActual = '';
+        uiSelectedQuestion = null;
         stopTimer();
         stopCrowd();
         showPanel('start');
+        if (uiCategory && uiTopic) fetchAndRenderQPicker(uiCategory, uiTopic);
     }
 
     function resetStartPanel() {
@@ -456,6 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
         uiCategory        = null;
         uiTopic           = null;
         startBtn.disabled = true;
+        hideQPicker();
     }
 
     async function enterPrep(category, topic, preloaded = null) {
@@ -602,6 +667,11 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('yki-selected');
             uiCategory        = btn.dataset.category;
             startBtn.disabled = false;
+            if (uiTopic) {
+                fetchAndRenderQPicker(uiCategory, uiTopic);
+            } else {
+                hideQPicker();
+            }
         });
     });
 
@@ -610,12 +680,21 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.yki-topic-btn').forEach(b => b.classList.remove('yki-selected'));
             btn.classList.add('yki-selected');
             uiTopic = btn.dataset.topic;
+            if (uiTopic && uiCategory) {
+                fetchAndRenderQPicker(uiCategory, uiTopic);
+            } else {
+                hideQPicker();
+            }
         });
     });
 
     startBtn.addEventListener('click', () => {
         if (!uiCategory) return;
-        enterPrep(uiCategory, uiTopic ?? '');
+        if (uiSelectedQuestion) {
+            enterPrep(uiCategory, uiSelectedQuestion.topic || uiTopic, uiSelectedQuestion);
+        } else {
+            enterPrep(uiCategory, uiTopic ?? '');
+        }
     });
 
     historyLinkBtn.addEventListener('click', enterHistory);
