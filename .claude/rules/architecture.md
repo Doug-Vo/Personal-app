@@ -72,7 +72,7 @@ Personal-Translator/
 | Journal | `GET /journal`, `POST /journal/new`, `POST /journal/delete/<id>`, `GET /journal/chart-data` |
 | Board | `GET /board`, `GET /board/data`, `POST /board/task`, `PATCH /board/task/<id>`, `DELETE /board/task/<id>`, `POST /board/task/<id>/archive`, `DELETE /board/archive/delete` |
 | Summary | `GET /summary`, `GET /summary/data` |
-| YKI | `GET /yki`, `POST /api/yki/question`, `GET /api/yki/prefs`, `POST /api/yki/prefs`, `GET /api/yki/notes`, `POST /api/yki/notes` |
+| YKI | `GET /yki`, `POST /api/yki/question`, `GET /api/yki/questions`, `GET /api/yki/prefs`, `POST /api/yki/prefs`, `GET /api/yki/notes`, `POST /api/yki/notes` |
 | Health | `GET /healthz` |
 
 ## MongoDB Collections
