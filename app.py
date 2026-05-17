@@ -840,6 +840,51 @@ def yki_question():
     )
 
 
+@app.route('/api/yki/questions', methods=['GET'])
+@login_required
+@limiter.limit("60 per minute")
+def yki_questions_list():
+    category = request.args.get('category', '').strip()
+    topic    = request.args.get('topic', '').strip()
+    if category not in VALID_YKI_CATEGORIES:
+        return jsonify(error="Invalid category"), 400
+    # Empty topic is intentionally rejected here (unlike /api/yki/question which accepts
+    # it as "any topic"). This route only makes sense for a named topic — the JS never
+    # calls it with an empty topic; it calls hideQPicker() for the Random selection instead.
+    if topic not in VALID_YKI_TOPICS:
+        return jsonify(error="Invalid topic"), 400
+
+    docs = list(yki_col.find(
+        {"Category": category, "Topic": topic},
+        {"_id": 0, "Main question": 1, "Translation of the main question in English": 1,
+         "Hint": 1, "Translation of the hint": 1, "Topic": 1}
+    ).sort("Main question", 1))
+
+    if not docs:
+        return jsonify(questions=[]), 200
+
+    question_texts = [d.get("Main question", "") for d in docs]
+    notes_docs = yki_notes_col.find(
+        {"user_id": current_user.id, "question": {"$in": question_texts}},
+        {"question": 1, "_id": 0}
+    )
+    has_notes_set = {n["question"] for n in notes_docs}
+
+    questions = [
+        {
+            "question":         d.get("Main question", ""),
+            "translation":      d.get("Translation of the main question in English", ""),
+            "hint":             d.get("Hint", ""),
+            "hint_translation": d.get("Translation of the hint", ""),
+            "topic":            d.get("Topic", topic),
+            "category":         category,
+            "has_notes":        d.get("Main question", "") in has_notes_set,
+        }
+        for d in docs
+    ]
+    return jsonify(questions=questions)
+
+
 @app.route('/api/yki/prefs', methods=['GET'])
 @login_required
 def yki_prefs_get():
