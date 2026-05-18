@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const TIMERS = {
         Kertominen: { prep: 90,  speak: 90  },
         Mielipide:  { prep: 120, speak: 120 },
-        Reagointi:  { prep: 30,  speak: 30  },
+        Reagointi:  { prep: 20,  speak: 30  },
     };
     const HISTORY_KEY = 'yki_history';
 
@@ -574,13 +574,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const prevNotes = await fetchPreviousNotes(state.question);
         notesText.value = prevNotes;
-        if (prevNotes) {
-            notesArea.classList.remove('hidden');
-            notesToggleBtn.textContent = '📝 Hide Notes';
-        } else {
-            notesArea.classList.add('hidden');
-            notesToggleBtn.textContent = '📝 Notes';
-        }
+        notesArea.classList.add('hidden');
+        notesToggleBtn.textContent = '📝 Notes';
 
         // Reset translator
         translatorPanel.classList.add('hidden');
