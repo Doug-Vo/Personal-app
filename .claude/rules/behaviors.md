@@ -24,6 +24,25 @@ When translating to `zh-Hans`, Azure returns both Chinese characters and Pinyin 
 
 The dominant mood's piglet SVG is pre-rendered server-side in hidden `<div>`s inside `summary.html`. `summary.js` clones the matching element into view — no extra fetch requests.
 
+### Birthday Feature (`birthday.js` / `birthday.css`)
+
+A decorative celebration feature. Loaded on every page for authenticated users only (`{% if current_user.is_authenticated %}`).
+
+**Birthday hat** — a `<g id="birthday-hat">` element is the last child of `<g id="piglet-group">` inside `templates/partials/piglet.html`. Being inside the group means it inherits all animations applied to `#piglet-group` (idle sway, bounce, wiggle, spin, birthday-dance). If you ever move the hat outside the group it will freeze in place during animations.
+
+**Floating button** — `#birthday-btn` (`.birthday-float-btn`), `position: fixed` bottom-right, `z-index: 200`. Pulses via `bday-btn-pulse` keyframe. Clicking it calls `startBirthday()` which resets any in-progress sequence then starts fresh.
+
+**3-act overlay sequence** (all state in `birthday.js` IIFE — no global variables):
+- **Act 1 — Present (~0–3 s):** box shakes, then lid flies off with burst stars
+- **Act 2 — Cake (~3–6 s):** two-tier cake with 5 flickering candles; candles blow out sequentially (220 ms stagger), then cake explodes
+- **Act 3 — Dance (~6 s+):** 55 confetti pieces scatter from center; Oinky is cloned from `#piglet-svg` via `cloneNode(true)`, renamed to `#bday-dancing-group` (to avoid duplicate IDs), and cycles through 6 dance move keyframes every 1.3 s via `setInterval`; "Happy Birthday" text bounces in
+
+**Replay correctness** — `resetSequence()` must be called before starting a new sequence. It cancels all tracked `sequenceTimers`, clears `danceInterval`, removes CSS classes, wipes confetti/piglet DOM nodes, and strips the `.animate` class from the text elements (text animations are class-toggled, not selector-level, so they restart on every open).
+
+**All `blowOutCandles` inner timers are pushed into `sequenceTimers`** so they get cancelled if the user closes mid-act-2.
+
+**Backdrop click / Escape** — the overlay closes on direct click of `#birthday-overlay` (works because `.bday-act` has `pointer-events: none`; content inside acts re-enables with `pointer-events: auto`) and on `Escape` keydown.
+
 ### YKI Speaking Exam (`yki.js`)
 
 `yki.js` is the most complex frontend file after `board.js`. It runs a state machine: **START → PREP → SPEAK → DONE**, with **HISTORY** accessible from START and DONE.

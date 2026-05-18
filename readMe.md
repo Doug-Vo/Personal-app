@@ -41,9 +41,28 @@ A Finnish speaking exam simulator with three question categories:
 
 - **Kertominen** — narrative tasks (90s prep / 90s speak)
 - **Mielipide** — opinion tasks (120s prep / 120s speak)
-- **Reagointi** — reaction tasks (30s prep / 30s speak)
+- **Reagointi** — reaction tasks (20s prep / 30s speak)
 
-Features an SVG countdown ring timer, crowd-noise audio during speaking time (with volume control persisted across sessions), instant English translation toggle, and mid-exam navigation to retry or switch category.
+Features:
+
+- **SVG countdown ring timer** — floats to the bottom-right corner when you scroll past it, so it stays visible
+- **Question picker** — when a named topic is selected, browse all available questions before starting; previously-answered questions are marked with an amber ✓
+- **Peel-reveal translations** — the English translation of the Finnish question and hint are hidden behind a frosted-glass cover; click to slide it open, click again to re-seal
+- **Notes area** — jot prep notes during the preparation phase; notes are saved per-question and pre-filled next time you practice the same question
+- **History panel** — last 10 completed sessions (with notes) stored locally; replay any past question directly from history
+- **Crowd-noise audio** — plays during speaking time; volume and mute state persist across sessions (saved server-side)
+- **Inline translator** — collapsible two-column translator panel below the action row for quick word lookups without leaving the page
+- **Pause / resume** — pause both the timer and the audio at any time during the exam
+
+### 🎂 Birthday Surprise
+
+A hidden celebration feature for authenticated users. A floating 🎁 button pulses in the bottom-right corner. Clicking it launches a fullscreen 3-act animation sequence:
+
+- **Act 1** — a CSS-drawn present box shakes and its lid flies off with burst emoji stars
+- **Act 2** — a two-tier birthday cake with 5 flickering candles; candles blow out one by one, then the cake explodes
+- **Act 3** — 55 confetti pieces scatter from centre while Oinky pops out and cycles through 6 dance moves (dance, jump, wave, spin, shimmy, victory); a personalised "Happy Birthday" message bounces in
+
+Oinky's birthday hat is visible at all times in the navbar and follows every animation (idle sway, bounce, wiggle, spin) because it lives inside the same SVG group. Close any time with ✕, Escape, or a click on the backdrop.
 
 ### 🔐 Auth
 
@@ -55,7 +74,7 @@ Username/password accounts (bcrypt). Supports register, login, logout, and chang
 
 | Layer | Technology |
 | --- | --- |
-| Backend | Python 3.11, Flask, Gunicorn |
+| Backend | Python 3.12, Flask, Gunicorn |
 | Database | MongoDB (pymongo) |
 | Translation | Azure Cognitive Services Translator |
 | Auth | Flask-Login, bcrypt, Flask-WTF (CSRF) |
